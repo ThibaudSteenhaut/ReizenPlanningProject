@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReizenPlanningProject.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace ReizenPlanningProject
         public MainPage()
         {
             this.InitializeComponent();
+            this.DataContext = new MainPageViewModel();
+
         }
     }
 }

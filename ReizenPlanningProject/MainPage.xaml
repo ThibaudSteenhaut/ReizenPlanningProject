@@ -8,7 +8,26 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
+    <NavigationView>
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Categorieën beheren" Icon="Play"  />
+            <NavigationViewItem Content="Voorbije reizen" Icon="Play"/>
+        </NavigationView.MenuItems>
+        <StackPanel>
+            <ListView ItemsSource="{Binding Reizen}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Bestemming}"
+                                   Style="{ThemeResource HeaderTextBlockStyle}"/>
+                            <TextBlock Text="{Binding VertrekDatum}"                         
+                                       Style="{ThemeResource CaptionTextBlockStyle}"/>
+                            <TextBlock Text="{Binding TerugDatum}" 
+                                       Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </NavigationView>
 </Page>
