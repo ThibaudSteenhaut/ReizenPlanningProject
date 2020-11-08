@@ -19,9 +19,5 @@ namespace ReizenPlanningProject.ViewModel
             this.Reizen = new ObservableCollection<Reis>(DummyDataSource.Reizen);
 
         }
-
-
-       
-    
-}
+    }
 }

@@ -7,30 +7,22 @@ namespace ReizenPlanningProject.Model
 {
     public class Reis : INotifyPropertyChanged
     {
-        private string bestemming;
+        
+        public string Bestemming { get; set; }
+        public DateTime VertrekDatum { get; set; }
+        public DateTime TerugDatum { get; set; }
 
-        public string Bestemming
+        public Reis(string bestemming, DateTime vertrek, DateTime terug)
         {
-            get { return bestemming; }
-            set { bestemming = value; }
+            this.Bestemming = bestemming;
+            this.VertrekDatum = vertrek;
+            this.TerugDatum = terug;
         }
 
-        private DateTime vertrekDatum;
-
-        public DateTime VertrekDatum
+        public Reis()
         {
-            get { return vertrekDatum; }
-            set { vertrekDatum = value; }
+
         }
-
-        private DateTime terugDatum;
-
-        public DateTime TerugDatum
-        {
-            get { return terugDatum; }
-            set { terugDatum = value; }
-        }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")

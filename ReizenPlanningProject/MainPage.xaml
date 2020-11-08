@@ -5,29 +5,60 @@
     xmlns:local="using:ReizenPlanningProject"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:ReizenPlanningProject.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <conv:DateFormatter x:Key="DateConverter"/>
+    </Page.Resources>
     <NavigationView>
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="Categorieën beheren" Icon="Play"  />
-            <NavigationViewItem Content="Voorbije reizen" Icon="Play"/>
+            <NavigationViewItem Content="Categorieën beheren" Icon="List"  />
+            <NavigationViewItem Content="Voorbije reizen" Icon="Calendar"/>
         </NavigationView.MenuItems>
-        <StackPanel>
-            <ListView ItemsSource="{Binding Reizen}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Bestemming}"
-                                   Style="{ThemeResource HeaderTextBlockStyle}"/>
-                            <TextBlock Text="{Binding VertrekDatum}"                         
-                                       Style="{ThemeResource CaptionTextBlockStyle}"/>
-                            <TextBlock Text="{Binding TerugDatum}" 
-                                       Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+        <ScrollViewer>
+            <StackPanel>
+                <TextBlock Text="Geplande reizen" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ListView ItemsSource="{Binding Reizen}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Background="#FFFFF6E8" HorizontalAlignment="Stretch" Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Rectangle Fill="#FFFFEBCC" Height="10" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                <TextBlock Text="{Binding Bestemming}" Style="{ThemeResource HeaderTextBlockStyle}" Margin="5"  Grid.Row="1" Grid.Column="0"/>
+                                <TextBlock  Style="{ThemeResource CaptionTextBlockStyle}" Margin="5" FontSize="18"  Grid.Row="2" Grid.Column="0">
+                                <Run Text="Leaving on"/> 
+                                <Run Text="{Binding VertrekDatum, Converter= { StaticResource DateConverter } }"/>
+                                </TextBlock>
+                                <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Margin="5" FontSize="18"  Grid.Row="3" Grid.Column="0">
+                                <Run Text="Returning "/>
+                                <Run Text="{Binding TerugDatum , Converter= { StaticResource DateConverter }}"/>
+                                </TextBlock>
+                                <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock Text="Aantal items reeds ingepakt" FontSize="18" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <ProgressBar Width="300" Height="30" Value="90" Foreground="#FF67DA5C"/>
+                                    <Button Content="Check items" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
     </NavigationView>
 </Page>
