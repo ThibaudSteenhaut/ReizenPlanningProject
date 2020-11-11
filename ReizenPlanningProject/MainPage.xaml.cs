@@ -29,5 +29,11 @@ namespace ReizenPlanningProject
             this.DataContext = new MainPageViewModel();
 
         }
+
+        private async void AddTripButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new NewTripContentDialog();
+            await dialog.ShowAsync();
+        }
     }
 }

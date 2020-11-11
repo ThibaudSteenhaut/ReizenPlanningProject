@@ -19,6 +19,7 @@
         <ScrollViewer>
             <StackPanel>
                 <TextBlock Text="Geplande reizen" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Content="Add trip" Click="AddTripButton_Click"></Button>
                 <ListView ItemsSource="{Binding Reizen}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">

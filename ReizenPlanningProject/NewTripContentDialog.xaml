@@ -1,0 +1,20 @@
+﻿<ContentDialog
+    x:Class="ReizenPlanningProject.NewTripContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ReizenPlanningProject"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="TITLE"
+    PrimaryButtonText="Save"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <StackPanel>
+        <TextBox PlaceholderText="Destination" x:Name="Destination" TextWrapping="Wrap"/>
+        <DatePicker Margin="100,23,0,0" x:Name="StartDate" VerticalAlignment="Top"/>
+        <DatePicker Margin="100,23,0,0" x:Name="EndDate" VerticalAlignment="Top"/>
+    </StackPanel>
+</ContentDialog>
