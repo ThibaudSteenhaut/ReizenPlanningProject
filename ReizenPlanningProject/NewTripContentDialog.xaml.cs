@@ -48,7 +48,7 @@ namespace ReizenPlanningProject
 
             await new Windows.UI.Popups.MessageDialog(destination+" " +startDate.ToString() +" "+ endDate.ToString()).ShowAsync();
 
-            Reis r = new Reis(destination, startDate, endDate);
+            Trip r = new Trip(destination, startDate, endDate);
 
 
         }

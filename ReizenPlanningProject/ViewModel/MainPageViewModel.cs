@@ -11,12 +11,12 @@ namespace ReizenPlanningProject.ViewModel
     class MainPageViewModel
     {
         //Data
-        public ObservableCollection<Reis> Reizen { get; set; }
+        public ObservableCollection<Trip> Trips { get; set; }
 
 
         public MainPageViewModel()
         {
-            this.Reizen = new ObservableCollection<Reis>(DummyDataSource.Reizen);
+            this.Trips = new ObservableCollection<Trip>(DummyDataSource.Trips);
 
         }
     }

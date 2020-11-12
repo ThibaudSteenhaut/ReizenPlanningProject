@@ -124,7 +124,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DummyDataSource.cs" />
-    <Compile Include="Model\Reis.cs" />
+    <Compile Include="Model\Trip.cs" />
     <Compile Include="NewTripContentDialog.xaml.cs">
       <DependentUpon>NewTripContentDialog.xaml</DependentUpon>
     </Compile>
