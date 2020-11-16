@@ -7,6 +7,9 @@ using TravelAPI.Models;
 
 namespace TravelAPI.Controllers
 {
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Produces("application/json")]
+    [Route("api/[controller]")]
     public class TripController : ControllerBase
     {
         private readonly ITripRepository _tripRepository;
@@ -16,14 +19,16 @@ namespace TravelAPI.Controllers
             _tripRepository = context;
         }
 
-        //GET: api/Trips
+        #region Methods 
+        //GET: api/Routes 
+        /// <summary> 
+        /// Get all routes 
+        /// </summary> 
         [HttpGet]
-        public IEnumerable<Trip> GetTrips(string destination = null)
+        public ActionResult<IEnumerable<Trip>> GetTrips()
         {
-            if (string.IsNullOrEmpty(destination))
-                return _tripRepository.GetAll();
-            return _tripRepository.GetBy(destination);
-
+            return Ok(_tripRepository.GetAll());
         }
+        #endregion
     }
 }

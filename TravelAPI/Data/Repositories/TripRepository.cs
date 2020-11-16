@@ -9,13 +9,15 @@ namespace TravelAPI.Data.Repositories
 {
     public class TripRepository : ITripRepository
     {
-        private readonly TripContext _context;
+        #region Fields
+        private readonly ApplicationDbContext _context;
         private readonly DbSet<Trip> _trips;
-        
-        public TripRepository(TripContext dbContext)
+        #endregion
+
+        public TripRepository(ApplicationDbContext dbContext)
         {
             _context = dbContext;
-            _trips = dbContext.trips;
+            _trips = dbContext.Trips;
         }
 
         public void Add(Trip trip)
