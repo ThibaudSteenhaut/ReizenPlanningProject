@@ -15,6 +15,7 @@ namespace TravelAPI.Data
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<TripItem> TripItems { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         { 
@@ -28,6 +29,9 @@ namespace TravelAPI.Data
             builder.ApplyConfiguration(new TripConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new ItemConfiguration());
+
+            builder.Entity<TripItem>().HasKey(ci => new { ci.TripId, ci.ItemId });
+
         }
     }
 }

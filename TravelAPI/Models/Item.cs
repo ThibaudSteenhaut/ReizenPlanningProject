@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using TravelAPI.DTOs;
 
 namespace TravelAPI.Models
 {
@@ -13,9 +14,9 @@ namespace TravelAPI.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Range(0, int.MaxValue)]
-        [Required]
-        public int Amount { get; set; }
+
+        public ICollection<TripItem> TripItems { get; set; }
+
         #endregion
 
         #region Constructor
@@ -28,7 +29,11 @@ namespace TravelAPI.Models
         public Item(string name, int amount)
         {
             Name = name;
-            Amount = amount; 
+        }
+
+        public Item(ItemDTO dto)
+        {
+            Name = dto.Name;
         }
         
         #endregion

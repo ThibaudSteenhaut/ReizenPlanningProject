@@ -13,7 +13,7 @@ namespace TravelAPI.Data.Mappers
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.Property(c => c.Name).IsRequired();
-            builder.HasMany(c => c.Items).WithOne();
+            builder.HasMany(c => c.Items).WithOne().OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

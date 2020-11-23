@@ -15,7 +15,6 @@ namespace TravelAPI.Data.Mappers
             builder.Property(t => t.Destination).IsRequired();
             builder.Property(t => t.DepartureDate).IsRequired();
             builder.Property(t => t.ReturnDate).IsRequired();
-            builder.HasMany(t => t.Categories);
 
         }
     }

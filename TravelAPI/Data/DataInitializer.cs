@@ -38,6 +38,11 @@ namespace TravelAPI.Data.Repositories
                 Category c3 = new Category("Kleren");
                 Category c4 = new Category("Verzorging");
 
+                _context.Categories.Add(c1);
+                _context.Categories.Add(c2);
+                _context.Categories.Add(c3);
+                _context.Categories.Add(c4);
+
                 Item i1 = new Item("Gsm", 2);
                 Item i2 = new Item("Oplader", 2);
                 Item i3 = new Item("Fototoestel", 1);
@@ -45,17 +50,23 @@ namespace TravelAPI.Data.Repositories
                 Item i5 = new Item("Broek", 2);
                 Item i6 = new Item("T-shirt", 4);
 
+                TripItem tripItem1 = new TripItem { Trip = t1, Item = i1, Amount = 3 };
+                TripItem tripItem2 = new TripItem { Trip = t1, Item = i2, Amount = 3 };
+                TripItem tripItem3 = new TripItem { Trip = t1, Item = i3, Amount = 3 };
+                TripItem tripItem4 = new TripItem { Trip = t1, Item = i4, Amount = 3 };
+
+
+                _context.TripItems.Add(tripItem1);
+                _context.TripItems.Add(tripItem2);
+                _context.TripItems.Add(tripItem3);
+                _context.TripItems.Add(tripItem4);
+             
                 c1.AddItem(i1);
                 c1.AddItem(i2);
                 c1.AddItem(i3);
                 c2.AddItem(i4);
                 c3.AddItem(i5);
                 c3.AddItem(i6);
-
-                t1.AddCategory(c1);
-                t1.AddCategory(c2);
-                t1.AddCategory(c3);
-                t1.AddCategory(c4);
 
                 _context.Trips.Add(t1);
                 _context.Trips.Add(t2);

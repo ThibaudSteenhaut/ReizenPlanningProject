@@ -40,6 +40,11 @@ namespace TravelAPI.Data.Repositories
             return _trips.SingleOrDefault(r => r.Id == id);
         }
 
+        public void AddTripItem(TripItem tripItem)
+        {
+            _context.TripItems.Add(tripItem);
+        }
+
         public IEnumerable<Trip> GetBy(string destination = null)
         {
             throw new NotImplementedException();

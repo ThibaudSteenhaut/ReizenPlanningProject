@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using TravelAPI.DTOs;
 
 namespace TravelAPI.Models
 {
@@ -21,13 +22,14 @@ namespace TravelAPI.Models
         [Required]
         public DateTime ReturnDate { get; set; }
 
-        public ICollection<Category> Categories { get; set; }
+        public ICollection<TripItem> TripItems { get; set; }
+
+
         #endregion
 
         #region Constructors 
         public Trip()
         {
-            Categories = new List<Category>(); 
         }
 
         public Trip(string destination, DateTime departure, DateTime returnDate)
@@ -36,14 +38,14 @@ namespace TravelAPI.Models
             DepartureDate = departure;
             ReturnDate = returnDate;
         }
-        #endregion
 
-        #region Methods
-        public void AddCategory(Category c)
+        public Trip(TripDTO tripDTO)
         {
-            Categories.Add(c); 
+            Destination = tripDTO.Destination;
+            DepartureDate = tripDTO.DepartureDate;
+            ReturnDate = tripDTO.ReturnDate;
         }
-
         #endregion
+
     }
 }

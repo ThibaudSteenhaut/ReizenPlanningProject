@@ -20,18 +20,10 @@ namespace TravelAPI.Data.Repositories
             _context = context;
             _categories = context.Categories;
         }
-        #endregion
-
-
 
         public void Add(Category category)
         {
-            _categories.Add(category); 
-        }
-
-        public void AddItem(int id, Item item)
-        {
-            _categories.SingleOrDefault(c => c.Id == id).AddItem(item);
+            _categories.Add(category);
         }
 
         public void Delete(Category category)
@@ -41,17 +33,17 @@ namespace TravelAPI.Data.Repositories
 
         public IEnumerable<Category> GetAll()
         {
-            return _categories.OrderByDescending(c => c.Name).ToList(); 
+            return _categories.Include(c => c.Items);
         }
 
         public Category GetBy(int id)
         {
-            return _categories.SingleOrDefault(c => c.Id == id);
+            return _categories.Include(c => c.Items).FirstOrDefault(c => c.Id == id); 
         }
 
-        public IEnumerable<Item> GetItems(int id)
+        public Item GetItemBy(int categoryId, int itemId)
         {
-            return _categories.SingleOrDefault(c => c.Id == id).Items;
+            return _categories.SingleOrDefault(c => c.Id == categoryId).Items.SingleOrDefault(i => i.Id == itemId);
         }
 
         public void SaveChanges()
@@ -63,5 +55,9 @@ namespace TravelAPI.Data.Repositories
         {
             _categories.Update(category);
         }
+        #endregion
+
+
+
     }
 }

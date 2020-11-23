@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using TravelAPI.DTOs;
 
 namespace TravelAPI.Models
 {
@@ -13,6 +14,7 @@ namespace TravelAPI.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        
         public ICollection<Item> Items { get; set; }
 
         #endregion
@@ -21,7 +23,7 @@ namespace TravelAPI.Models
 
         public Category()
         {
-            Items = new List<Item>(); 
+            Items = new List<Item>();
         }
 
         public Category(string name)
@@ -29,12 +31,23 @@ namespace TravelAPI.Models
             Name = name;
             Items = new List<Item>();
         }
+
+        public Category(CategoryDTO dto)
+        {
+            Name = dto.Name;
+            Items = new List<Item>();
+        } 
         #endregion
 
         #region Methods
         public void AddItem(Item item)
         {
             Items.Add(item); 
+        }
+
+        public void RemoveItem(Item item)
+        {
+            Items.Remove(item);
         }
 
         #endregion  

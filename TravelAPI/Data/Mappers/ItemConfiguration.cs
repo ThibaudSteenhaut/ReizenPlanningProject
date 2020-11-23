@@ -13,7 +13,6 @@ namespace TravelAPI.Data.Mappers
         public void Configure(EntityTypeBuilder<Item> builder)
         {
             builder.Property(i => i.Name).IsRequired();
-            builder.Property(i => i.Amount).IsRequired();
         }
     }
 }

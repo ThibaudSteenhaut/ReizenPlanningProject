@@ -38,7 +38,11 @@ namespace TravelAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddSwaggerDocument();
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -49,6 +53,7 @@ namespace TravelAPI
             services.AddScoped<DataInitializer>();
             services.AddScoped<ITripRepository, TripRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>(); 
+            services.AddScoped<IItemRepository, ItemRepository>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
