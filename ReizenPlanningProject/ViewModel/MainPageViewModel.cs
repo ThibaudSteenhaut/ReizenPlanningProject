@@ -31,7 +31,7 @@ namespace ReizenPlanningProject.ViewModel
         private async void HaalDataOp()
         {
             HttpClient client = new HttpClient();
-            var json = await client.GetStringAsync(new Uri("https://localhost:5001/api/trip"));
+            var json = await client.GetStringAsync(new Uri("https://localhost:44316/api/trip"));
             var lst = JsonConvert.DeserializeObject<ObservableCollection<Trip>>(json);
             foreach (Trip t in lst)
             {
