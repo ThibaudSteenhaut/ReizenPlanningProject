@@ -19,7 +19,11 @@
         <ScrollViewer>
             <StackPanel>
                 <TextBlock Text="Planned trips" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Button Content="Add trip" Click="AddTripButton_Click"></Button>
+                <Button Content="Add trip"      
+                         Click="AddTripButton_Click"  
+                        Command="{Binding AddTripCommand}"
+                     CommandParameter="This is the title"
+                ></Button>
                 <ListView ItemsSource="{Binding Trips}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
