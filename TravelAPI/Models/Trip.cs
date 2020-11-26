@@ -30,6 +30,7 @@ namespace TravelAPI.Models
         #region Constructors 
         public Trip()
         {
+
         }
 
         public Trip(string destination, DateTime departure, DateTime returnDate)

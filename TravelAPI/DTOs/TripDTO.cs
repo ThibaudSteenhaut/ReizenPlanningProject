@@ -12,16 +12,11 @@ namespace TravelAPI.DTOs
         #region Fields 
         public int Id { get; set; }
 
-        [Required]
         public string Destination { get; set; }
 
-        [Required]
         public DateTime DepartureDate { get; set; }
 
-        [Required]
         public DateTime ReturnDate { get; set; }
-
-        public ICollection<Category> Categories { get; set; }
 
 
         #endregion
@@ -38,7 +33,6 @@ namespace TravelAPI.DTOs
             Destination = trip.Destination;
             DepartureDate = trip.DepartureDate;
             ReturnDate = trip.ReturnDate;
-            //Categories = trip.Categories;
         }
         #endregion
     }

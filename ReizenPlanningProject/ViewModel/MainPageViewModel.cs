@@ -9,13 +9,16 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.Web.Http;
-using HttpClient = System.Net.Http.HttpClient;
+using System.Net.Http;
+using System.Diagnostics;
 
 namespace ReizenPlanningProject.ViewModel
 {
     class MainPageViewModel
     {
+
+        private static readonly HttpClient _client = new HttpClient();
+        private static readonly String _baseUrl = "https://localhost:44316/api/trip";
         public ObservableCollection<Trip> Trips { get; set; }
 
         public RelayCommand AddTripCommand { get; set; }
@@ -35,8 +38,7 @@ namespace ReizenPlanningProject.ViewModel
 
         private async void LoadTrips()
         {
-            HttpClient client = new HttpClient();
-            var json = await client.GetStringAsync(new Uri("https://localhost:44316/api/trip"));
+            var json = await _client.GetStringAsync(new Uri(_baseUrl));
             var lst = JsonConvert.DeserializeObject<ObservableCollection<Trip>>(json);
             foreach (Trip t in lst)
             {
@@ -49,16 +51,13 @@ namespace ReizenPlanningProject.ViewModel
 
             Trip trip = new Trip() { Destination = "Brussel", DepartureDate = new DateTime(2022, 12, 30), ReturnDate = new DateTime(2023, 1, 10) };
             var tripJson = JsonConvert.SerializeObject(trip);
+            var stringContent = new StringContent(tripJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage response =  await _client.PostAsync(new Uri(_baseUrl), stringContent);
 
-            Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
-            var res = await client.PostAsync(new Uri("https://localhost:44316/api/trip"),
-                new HttpStringContent(tripJson, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json"));
-
-            if (res.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
-                Trips.Add(JsonConvert.DeserializeObject<Trip>(res.Content.ToString()));
-            }
-           
+                Trips.Add(JsonConvert.DeserializeObject<Trip>(response.Content.ReadAsStringAsync().Result));
+            } 
         }
     }
 }

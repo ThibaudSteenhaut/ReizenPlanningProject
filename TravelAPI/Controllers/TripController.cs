@@ -37,6 +37,7 @@ namespace TravelAPI.Controllers
         [AllowAnonymous]
         public ActionResult<IEnumerable<Trip>> GetTrips()
         {
+            Debug.WriteLine("get all tripssssssssssssssssssssssssssssssss");
             return Ok(_tripRepository.GetAll());
         }
 
@@ -65,8 +66,13 @@ namespace TravelAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [AllowAnonymous]
-        public ActionResult<Trip> PostTrip(TripDTO tripDTO)
+        public ActionResult<Trip> PostTrip([FromBody] TripDTO tripDTO)
         {
+
+            if (!ModelState.IsValid) 
+            {
+                return BadRequest("Invalid model");
+            } 
 
             if (tripDTO == null)
             {

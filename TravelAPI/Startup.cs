@@ -53,7 +53,9 @@ namespace TravelAPI
             services.AddScoped<DataInitializer>();
             services.AddScoped<ITripRepository, TripRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>(); 
-            services.AddScoped<IItemRepository, ItemRepository>(); 
+            services.AddScoped<IItemRepository, ItemRepository>();
+
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +65,9 @@ namespace TravelAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
+            app.UseCors("AllowAllOrigins");
+
             app.UseOpenApi();
             app.UseSwaggerUi3();
             
