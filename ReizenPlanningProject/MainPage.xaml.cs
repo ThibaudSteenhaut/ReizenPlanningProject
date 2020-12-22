@@ -1,9 +1,11 @@
-﻿using ReizenPlanningProject.ViewModel;
+﻿using ReizenPlanningProject.Model;
+using ReizenPlanningProject.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -23,10 +25,13 @@ namespace ReizenPlanningProject
     /// </summary>
     public sealed partial class MainPage : Page
     {
+            Trip t;
+
         public MainPage()
         {
             this.InitializeComponent();
-            this.DataContext = new MainPageViewModel();
+            this.DataContext = new MainPageViewModel();          
+            //t = new Trip() { Destination = "Peru", DepartureDate = new DateTime(2022, 12, 30), ReturnDate = new DateTime(2023, 1, 10) };
 
         }
 
@@ -34,6 +39,40 @@ namespace ReizenPlanningProject
         {
             var dialog = new NewTripContentDialog();
             await dialog.ShowAsync();
+            
+            //t = dialog.trip;
         }
+
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            ContentDialogResult result = await test.ShowAsync();
+
+            
+                String start = null;
+                String einde = null;
+                DateTime startDate = DateTime.Now;
+                DateTime endDate = DateTime.Now;
+
+                if (this.StartDate.SelectedDate != null)
+                {
+                    start = this.StartDate.SelectedDate.ToString();
+                    startDate = Convert.ToDateTime(start);
+                }
+                if (this.StartDate.SelectedDate != null)
+                {
+                    einde = this.EndDate.SelectedDate.ToString();
+                    endDate = Convert.ToDateTime(einde);
+                }
+
+                t = new Trip { Destination = this.Destination.Text, DepartureDate = startDate, ReturnDate = endDate };
+            
+
+
+           
+        }
+
+
     }
 }

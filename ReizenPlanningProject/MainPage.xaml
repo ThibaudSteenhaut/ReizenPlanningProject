@@ -20,9 +20,9 @@
             <StackPanel>
                 <TextBlock Text="Planned trips" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Button Content="Add trip"      
-                         Click="AddTripButton_Click"  
                         Command="{Binding AddTripCommand}"
-                     CommandParameter="This is the title"
+                     CommandParameter="{x:Bind t}"
+                        x:Name="addTrip"
                 ></Button>
                 <ListView ItemsSource="{Binding Trips}">
                     <ListView.ItemContainerStyle>
@@ -63,7 +63,27 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                
+                
+                
+                <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="This is ContentDialog"/>
+                    <Button Click="Button_Click" Content="ClickMe"/>
+                    <ContentDialog x:Name="test" PrimaryButtonText="Ok" SecondaryButtonText="Cancel" PrimaryButtonCommand="{Binding AddTripCommand}" PrimaryButtonCommandParameter="{x:Bind t}"   >
+                        <StackPanel>
+                            <TextBox PlaceholderText="Destination" x:Name="Destination" TextWrapping="Wrap"/>
+                            <DatePicker Margin="100,23,0,0" x:Name="StartDate" VerticalAlignment="Top"/>
+                            <DatePicker Margin="100,23,0,0" x:Name="EndDate" VerticalAlignment="Top"/>
+                        </StackPanel>
+                    </ContentDialog>
+                </Grid>
+                
+                
+                
             </StackPanel>
+            
         </ScrollViewer>
+        
     </NavigationView>
+
 </Page>

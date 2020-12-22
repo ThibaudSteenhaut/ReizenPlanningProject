@@ -46,10 +46,10 @@ namespace ReizenPlanningProject.ViewModel
             }
         }
 
-        private async Task AddTripAsync(object p)
+        private async Task AddTripAsync(Object trip)
         {
-
-            Trip trip = new Trip() { Destination = "Brussel", DepartureDate = new DateTime(2022, 12, 30), ReturnDate = new DateTime(2023, 1, 10) };
+           
+            //Trip trip = new Trip() { Destination = "Brussel", DepartureDate = new DateTime(2022, 12, 30), ReturnDate = new DateTime(2023, 1, 10) };
             var tripJson = JsonConvert.SerializeObject(trip);
             var stringContent = new StringContent(tripJson, Encoding.UTF8, "application/json");
             HttpResponseMessage response =  await _client.PostAsync(new Uri(_baseUrl), stringContent);
