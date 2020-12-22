@@ -11,9 +11,11 @@ namespace TravelAPI.DTOs
     {
 
         #region Methods
-        [Required]
         public string Name { get; set; }
         
+        public string Category { get; set; }
+
+        public int Amount { get; set; } = 1;
         #endregion
 
         #region Constructors
@@ -21,9 +23,11 @@ namespace TravelAPI.DTOs
         {
         }
 
-        public ItemDTO(Item item)
+        public ItemDTO(string name, string category, int amount)
         {
-            Name = item.Name;
+            Name = name;
+            Category = category;
+            Amount = amount;
         }
         #endregion  
     }

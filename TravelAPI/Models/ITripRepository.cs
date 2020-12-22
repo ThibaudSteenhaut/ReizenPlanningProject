@@ -10,6 +10,7 @@ namespace TravelAPI.Models
         Trip GetBy(int id);
         IEnumerable<Trip> GetAll();
         IEnumerable<Trip> GetBy(string destination= null);
+        IEnumerable<TripItem> GetItemsBy(int id); 
         void AddTripItem(TripItem tripItem);
         void Add(Trip trip);
         void Delete(Trip trip);

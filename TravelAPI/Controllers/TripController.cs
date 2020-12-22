@@ -37,7 +37,6 @@ namespace TravelAPI.Controllers
         [AllowAnonymous]
         public ActionResult<IEnumerable<Trip>> GetTrips()
         {
-            Debug.WriteLine("get all tripssssssssssssssssssssssssssssssss");
             return Ok(_tripRepository.GetAll());
         }
 
@@ -56,6 +55,28 @@ namespace TravelAPI.Controllers
             if (trip == null)
                 return NotFound();
             return Ok(new TripDTO(trip));
+        }
+
+        //GET: api/Trips/{id}/Items
+        /// <summary> 
+        /// Get all items of a trip 
+        /// </summary> 
+        /// <param name="id">The id of the trip</param> 
+        [HttpGet("{id}/items")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
+        public ActionResult<TripDTO> GetItemsBy(int id)
+        {
+
+            if (id < 0) return NotFound("Id can't be found");
+            
+            IEnumerable<TripItem> tripItems = _tripRepository.GetItemsBy(id);
+            if (tripItems == null) return NotFound("Id can't be found");
+
+            IEnumerable<ItemDTO> itemDTOs = tripItems.Select(ti => new ItemDTO(ti.Item.Name, ti.Item.Category, ti.Amount));
+
+            return Ok(itemDTOs);
         }
 
         //POST: api/Trip 

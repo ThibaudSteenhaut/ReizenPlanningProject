@@ -15,6 +15,8 @@ namespace TravelAPI.Models
         [Required]
         public string Name { get; set; }
 
+        public string Category { get; set; }
+
         public ICollection<TripItem> TripItems { get; set; }
 
         #endregion
@@ -26,9 +28,10 @@ namespace TravelAPI.Models
 
         }
 
-        public Item(string name, int amount)
+        public Item(string name, string category, int amount)
         {
             Name = name;
+            Category = category;
         }
 
         public Item(ItemDTO dto)

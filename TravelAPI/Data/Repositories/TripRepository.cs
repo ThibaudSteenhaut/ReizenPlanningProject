@@ -59,5 +59,10 @@ namespace TravelAPI.Data.Repositories
         {
             _trips.Update(trip);
         }
+
+        public IEnumerable<TripItem> GetItemsBy(int id)
+        {
+            return _trips.Include(t => t.TripItems).ThenInclude(ti => ti.Item).SingleOrDefault(r => r.Id == id).TripItems;
+        }
     }
 }

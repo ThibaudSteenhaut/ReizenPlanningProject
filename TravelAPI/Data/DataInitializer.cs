@@ -43,12 +43,12 @@ namespace TravelAPI.Data.Repositories
                 _context.Categories.Add(c3);
                 _context.Categories.Add(c4);
 
-                Item i1 = new Item("Gsm", 2);
-                Item i2 = new Item("Oplader", 2);
-                Item i3 = new Item("Fototoestel", 1);
-                Item i4 = new Item("Tandenborstel", 2);
-                Item i5 = new Item("Broek", 2);
-                Item i6 = new Item("T-shirt", 4);
+                Item i1 = new Item("Gsm","Electronica",2);
+                Item i2 = new Item("Oplader","Electronica", 2);
+                Item i3 = new Item("Fototoestel", "Electronica",1);
+                Item i4 = new Item("Tandenborstel","Toiletspullen",2);
+                Item i5 = new Item("Broek","Kleren", 2);
+                Item i6 = new Item("T-shirt", "Kleren",4);
 
                 TripItem tripItem1 = new TripItem { Trip = t1, Item = i1, Amount = 3 };
                 TripItem tripItem2 = new TripItem { Trip = t1, Item = i2, Amount = 3 };

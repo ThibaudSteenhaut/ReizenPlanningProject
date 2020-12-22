@@ -18,6 +18,8 @@ namespace TravelAPI.DTOs
 
         public DateTime ReturnDate { get; set; }
 
+        public ICollection<TripItem> TripItems { get; set; }
+
 
         #endregion
 
@@ -33,6 +35,7 @@ namespace TravelAPI.DTOs
             Destination = trip.Destination;
             DepartureDate = trip.DepartureDate;
             ReturnDate = trip.ReturnDate;
+            TripItems = trip.TripItems;
         }
         #endregion
     }
