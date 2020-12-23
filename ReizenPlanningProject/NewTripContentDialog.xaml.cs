@@ -20,12 +20,12 @@ namespace ReizenPlanningProject
 {
     public sealed partial class NewTripContentDialog : ContentDialog
     {
-       // public Trip trip;
         public NewTripContentDialog()
         {
             this.InitializeComponent();
-           // trip = new Trip();
         }
+        public Trip trip { get; set; }
+        
 
         private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -50,9 +50,9 @@ namespace ReizenPlanningProject
 
             await new Windows.UI.Popups.MessageDialog(destination+" " +startDate.ToString() +" "+ endDate.ToString()).ShowAsync();
 
-           // trip.Destination = destination;
-           // trip.DepartureDate = startDate;
-          //  trip.ReturnDate = endDate;
+            trip.Destination = destination;
+            trip.DepartureDate = startDate;
+            trip.ReturnDate = endDate;
             
 
 

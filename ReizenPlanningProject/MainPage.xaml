@@ -24,7 +24,7 @@
                      CommandParameter="{x:Bind t}"
                         x:Name="addTrip"
                 ></Button>
-                <ListView ItemsSource="{Binding Trips}">
+                <ListView ItemsSource="{Binding Trips}" x:Name="lv" SelectionChanged="lv_SelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />

@@ -32,19 +32,20 @@ namespace ReizenPlanningProject
         {
             this.InitializeComponent();
             this.DataContext = new MainPageViewModel();
-            //t = new Trip() { Destination = "Peru", DepartureDate = new DateTime(2022, 12, 30), ReturnDate = new DateTime(2023, 1, 10) };
 
         }
 
         private async void AddTripButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new NewTripContentDialog();
-            await dialog.ShowAsync();
-
-            //t = dialog.trip;
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                t = dialog.trip;
+            }
         }
 
-
+       
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -53,31 +54,32 @@ namespace ReizenPlanningProject
             if(result == ContentDialogResult.Primary)
             {
                 Debug.WriteLine(this.Destination.Text);
-            }
 
-            String start = null;
-            String einde = null;
-            DateTime startDate = DateTime.Now;
-            DateTime endDate = DateTime.Now;
+                String start = null;
+                String einde = null;
+                DateTime startDate = DateTime.Now;
+                DateTime endDate = DateTime.Now;
 
-            if (this.StartDate.SelectedDate != null)
-            {
-                start = this.StartDate.SelectedDate.ToString();
-                startDate = Convert.ToDateTime(start);
-            }
-            if (this.StartDate.SelectedDate != null)
-            {
-                einde = this.EndDate.SelectedDate.ToString();
-                endDate = Convert.ToDateTime(einde);
-            }
+                if (this.StartDate.SelectedDate != null)
+                {
+                    start = this.StartDate.SelectedDate.ToString();
+                    startDate = Convert.ToDateTime(start);
+                }
+                if (this.StartDate.SelectedDate != null)
+                {
+                    einde = this.EndDate.SelectedDate.ToString();
+                    endDate = Convert.ToDateTime(einde);
+                }
 
-            t = new Trip { Destination = this.Destination.Text, DepartureDate = startDate, ReturnDate = endDate };
-
-
-
-
+                t = new Trip { Destination = this.Destination.Text, DepartureDate = startDate, ReturnDate = endDate };
+                
+            }     
         }
-
-
+        
+        private void lv_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Trip selectedTrip = (Trip)lv.SelectedItem;
+            Frame.Navigate(typeof(DetailsPage), selectedTrip);
+        }
     }
 }

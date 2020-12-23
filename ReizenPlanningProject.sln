@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReizenPlanningProject", "ReizenPlanningProject\ReizenPlanningProject.csproj", "{302E2206-5B0B-4421-8488-6C445177DB21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAPI", "TravelAPI\TravelAPI.csproj", "{9BE652B9-34AB-454C-9FC3-AFB1C7975838}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelAPI", "TravelAPI\TravelAPI.csproj", "{9BE652B9-34AB-454C-9FC3-AFB1C7975838}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
