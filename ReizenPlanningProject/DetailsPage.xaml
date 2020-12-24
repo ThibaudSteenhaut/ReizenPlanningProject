@@ -7,6 +7,31 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer>
+        <StackPanel>
+            <TextBlock Text="{Binding Path=Trip.Destination}" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-    <Button>Details page</Button>
+            <ListView ItemsSource="{Binding Path=Trip.Categories}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        
+
+                        <ListView ItemsSource="{Binding Path=Trip.Categories.Items}">
+                            
+                        </ListView>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+        </StackPanel>
+    </ScrollViewer>
 </Page>
+
+

@@ -14,7 +14,7 @@ namespace ReizenPlanningProject.Model.Repositories
     {
 
         private static readonly HttpClient _client = new HttpClient();
-        private static readonly string _baseUrl = "https://localhost:44316/api/trip";
+        private static readonly string _baseUrl = "https://localhost:44316/api/trip/";
 
         public TripRepository()
         {
@@ -42,6 +42,11 @@ namespace ReizenPlanningProject.Model.Repositories
             var json = _client.GetStringAsync(new Uri(_baseUrl)).Result;
             var trips = JsonConvert.DeserializeObject<ObservableCollection<Trip>>(json);
 
+            foreach(Trip trip in trips)
+            {
+                var json2 = _client.GetStringAsync(new Uri(_baseUrl+trip.Id+"/items")).Result;
+                trip.Items = JsonConvert.DeserializeObject<ObservableCollection<Item>>(json2);
+            }
             return trips;
         }
 

@@ -14,12 +14,13 @@ namespace ReizenPlanningProject.ViewModel
 {
     class DetailsPageViewModel
     {
-       
+
         public Trip Trip { get; set; }
 
         public DetailsPageViewModel(Trip trip)
         {
             this.Trip = trip;
+
         }
 
        
