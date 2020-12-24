@@ -26,60 +26,32 @@ namespace ReizenPlanningProject
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        Trip t;
+        //Trip t;
 
         public MainPage()
         {
             this.InitializeComponent();
-            this.DataContext = new MainPageViewModel();
+            contentFrame.Navigate(typeof(TripsOverviewPage));
 
         }
 
-        private async void AddTripButton_Click(object sender, RoutedEventArgs e)
+        private void nvMain_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            var dialog = new NewTripContentDialog();
-            var result = await dialog.ShowAsync();
-            if (result == ContentDialogResult.Primary)
+
+            var item = (NavigationViewItem)args.SelectedItem;
+
+            switch (item.Tag)
             {
-                t = dialog.trip;
+
+                case "TripList":
+                    contentFrame.Navigate(typeof(TripsOverviewPage));
+                    break;
+
+                case "Category":
+                    contentFrame.Navigate(typeof(CategoryPage));
+                    break;
+
             }
-        }
-
-       
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            ContentDialogResult result = await test.ShowAsync();
-
-            if(result == ContentDialogResult.Primary)
-            {
-                Debug.WriteLine(this.Destination.Text);
-
-                String start = null;
-                String einde = null;
-                DateTime startDate = DateTime.Now;
-                DateTime endDate = DateTime.Now;
-
-                if (this.StartDate.SelectedDate != null)
-                {
-                    start = this.StartDate.SelectedDate.ToString();
-                    startDate = Convert.ToDateTime(start);
-                }
-                if (this.StartDate.SelectedDate != null)
-                {
-                    einde = this.EndDate.SelectedDate.ToString();
-                    endDate = Convert.ToDateTime(einde);
-                }
-
-                t = new Trip { Destination = this.Destination.Text, DepartureDate = startDate, ReturnDate = endDate };
-                
-            }     
-        }
-        
-        private void lv_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Trip selectedTrip = (Trip)lv.SelectedItem;
-            Frame.Navigate(typeof(DetailsPage), selectedTrip);
         }
     }
 }

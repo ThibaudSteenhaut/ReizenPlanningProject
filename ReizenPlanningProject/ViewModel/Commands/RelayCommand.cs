@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace ReizenPlanningProject.ViewModel.Commands
 {
-    class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
         public void RaiseCanExecuteChanged()

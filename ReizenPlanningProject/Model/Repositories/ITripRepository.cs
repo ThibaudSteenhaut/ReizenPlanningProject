@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +9,8 @@ namespace ReizenPlanningProject.Model.Repositories
 {
     public interface ITripRepository
     {
-        Task<IEnumerable<Trip>> GetAllTripsAsync();
+        ObservableCollection<Trip> GetTrips();
         Task<Trip> GetTripByDestinationAsync(string destination);
-        void Add(Trip trip);
-        void SaveChanges();
-
+        Task<bool> Add(Trip trip);
     }
 }

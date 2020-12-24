@@ -6,15 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="TITLE"
-    PrimaryButtonText="Save"
+    Title="Add a new trip"
+    PrimaryButtonText="Add"
     SecondaryButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <StackPanel>
-        <TextBox PlaceholderText="Destination" x:Name="Destination" TextWrapping="Wrap"/>
-        <DatePicker Margin="100,23,0,0" x:Name="StartDate" VerticalAlignment="Top"/>
-        <DatePicker Margin="100,23,0,0" x:Name="EndDate" VerticalAlignment="Top"/>
+        <TextBlock Margin="0 5" FontSize="18">Destination</TextBlock>
+        <TextBox Margin="0 5" PlaceholderText="Destination" x:Name="DestinationNameBox" TextWrapping="Wrap"/>
+        <TextBlock Margin="0 5" FontSize="18">Departure date and time</TextBlock>
+        <DatePicker Margin="0 5" x:Name="DepartureDatePicker" VerticalAlignment="Top"/>
+        <TimePicker Margin="0 5" x:Name="DepartureHourPicker" VerticalAlignment="Top"></TimePicker>
+        <TextBlock Margin="0 5" FontSize="18">Return date</TextBlock>
+        <DatePicker Margin="0 5" x:Name="ReturnDatePicker" VerticalAlignment="Top"/>
+        <TimePicker Margin="0 5" x:Name="ReturnHourPicker" VerticalAlignment="Top"></TimePicker>
     </StackPanel>
 </ContentDialog>

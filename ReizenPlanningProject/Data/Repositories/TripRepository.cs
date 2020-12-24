@@ -1,41 +1,53 @@
-﻿using ReizenPlanningProject.Model;
-using ReizenPlanningProject.Model.Repositories;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
-
-namespace ReizenPlanningProject.Data
+namespace ReizenPlanningProject.Model.Repositories
 {
-    class TripRepository : ITripRepository
+    public class TripRepository : ITripRepository
     {
-        private readonly ApplicationDbContext _context;
-        private readonly DbSet<Trip> _trips;
 
-        public TripRepository(ApplicationDbContext dbContext)
-        {
-            _context = dbContext;
-            _trips = dbContext.Trips;
-        }      
+        private static readonly HttpClient _client = new HttpClient();
+        private static readonly string _baseUrl = "https://localhost:44316/api/trip";
 
-        public async Task<IEnumerable<Trip>> GetAllTripsAsync()
+        public TripRepository()
         {
-            return await _trips.ToListAsync();
+
+        }
+
+        public async Task<bool> Add(Trip tripToAdd)
+        {
+
+            var tripJson = JsonConvert.SerializeObject(tripToAdd);
+            var stringContent = new StringContent(tripJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync(new Uri(_baseUrl), stringContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public ObservableCollection<Trip> GetTrips()
+        {
+
+            var json = _client.GetStringAsync(new Uri(_baseUrl)).Result;
+            var trips = JsonConvert.DeserializeObject<ObservableCollection<Trip>>(json);
+
+            return trips;
         }
 
         public Task<Trip> GetTripByDestinationAsync(string destination)
         {
-            return _trips.FirstOrDefaultAsync(t => t.Destination == destination);
-        }
-        public void Add(Trip trip)
-        {
-            _trips.Add(trip);
-        }
-
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }

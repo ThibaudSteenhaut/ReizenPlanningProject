@@ -1,9 +1,11 @@
 ﻿using ReizenPlanningProject.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -20,47 +22,50 @@ namespace ReizenPlanningProject
 {
     public sealed partial class NewTripContentDialog : ContentDialog
     {
+
+        public string DestinationName 
+        {
+            get { return DestinationNameBox.Text; }
+            set { DestinationNameBox.Text = value; } 
+        }
+
+        public DateTime DepartureDate
+        {
+            get { return DepartureDatePicker.SelectedDate.GetValueOrDefault().UtcDateTime; }
+        }
+
+        public DateTime ReturnDate
+        {
+            get { return ReturnDatePicker.SelectedDate.GetValueOrDefault().UtcDateTime; }
+        }
+
+        public TimeSpan DepartureTime
+        {
+            get { return DepartureHourPicker.SelectedTime.GetValueOrDefault(); }
+        }
+
+        public TimeSpan ReturnTime
+        {
+            get { return ReturnHourPicker.SelectedTime.GetValueOrDefault(); }
+        }
+
+
         public NewTripContentDialog()
         {
             this.InitializeComponent();
+            Trip newTrip = new Trip();
+            this.DataContext = newTrip; 
         }
-        public Trip trip { get; set; }
         
 
-        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            //SAVE
-            String destination = this.Destination.Text;
-            String start=null;
-            String einde=null;
-            DateTime startDate = DateTime.Now;
-            DateTime endDate=DateTime.Now;
-
-            if (this.StartDate.SelectedDate != null)
-            {
-                start = this.StartDate.SelectedDate.ToString();
-                 startDate = Convert.ToDateTime(start);
-            }
-            if (this.StartDate.SelectedDate != null)
-            {
-                einde = this.EndDate.SelectedDate.ToString();
-                endDate = Convert.ToDateTime(einde);
-
-            }
-
-            await new Windows.UI.Popups.MessageDialog(destination+" " +startDate.ToString() +" "+ endDate.ToString()).ShowAsync();
-
-            trip.Destination = destination;
-            trip.DepartureDate = startDate;
-            trip.ReturnDate = endDate;
-            
-
-
+            //add new trip
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            //CANCEL
+            
         }
     }
 }
