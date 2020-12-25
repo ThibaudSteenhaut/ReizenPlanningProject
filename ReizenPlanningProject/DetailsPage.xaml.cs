@@ -24,6 +24,8 @@ namespace ReizenPlanningProject
     /// </summary>
     public sealed partial class DetailsPage : Page
     {
+        public DetailsPageViewModel _detailsPageViewModel { get; set; }
+
         public DetailsPage()
         {
             this.InitializeComponent();
@@ -33,7 +35,21 @@ namespace ReizenPlanningProject
         {
             base.OnNavigatedTo(e);
             Trip selectedTrip = (Trip)e.Parameter;
-            this.DataContext = new DetailsPageViewModel(selectedTrip);
+
+            this._detailsPageViewModel = new DetailsPageViewModel(selectedTrip);
+            this.DataContext = _detailsPageViewModel;
         }
+
+        private async void AddCategoriesButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddCategoryToTripContentDialog dialog = new AddCategoryToTripContentDialog(_detailsPageViewModel.Categories);
+            ContentDialogResult result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+               // dialog.checkedCategories
+            }
+        }
+
     }
 }

@@ -116,6 +116,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AddCategoryToTripContentDialog.xaml.cs">
+      <DependentUpon>AddCategoryToTripContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,7 @@
       <DependentUpon>CategoryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DateFormatter.cs" />
+    <Compile Include="Data\Repositories\CategoryRepository.cs" />
     <Compile Include="DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
@@ -132,6 +136,7 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\DummyDataSource.cs" />
     <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\Repositories\ICategoryRepository.cs" />
     <Compile Include="Model\Repositories\ITripRepository.cs" />
     <Compile Include="Data\Repositories\TripRepository.cs" />
     <Compile Include="Model\Trip.cs" />
@@ -166,6 +171,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AddCategoryToTripContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CategoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
