@@ -19,6 +19,8 @@ namespace ReizenPlanningProject.ViewModel
     public class TripOverviewViewModel : INotifyPropertyChanged
     {
 
+        private readonly ITripRepository _tripRepository = new TripRepository();
+
         public ObservableCollection<Trip> Trips { get; set; } = new ObservableCollection<Trip>();
 
         public RelayCommand AddTripCommand { get; set; }
@@ -26,8 +28,15 @@ namespace ReizenPlanningProject.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         private bool isProgressRingActive = false;
-
-        private readonly ITripRepository _tripRepository = new TripRepository();
+        public bool IsProgressRingActive
+        {
+            get { return this.isProgressRingActive; }
+            set
+            {
+                this.isProgressRingActive = value;
+                this.RisePropertyChanged(nameof(this.IsProgressRingActive));
+            }
+        }
 
         public TripOverviewViewModel()
         {
@@ -56,19 +65,8 @@ namespace ReizenPlanningProject.ViewModel
 
             //TODO geef positieve feedback als correct toegevoegd is
             bool succes = await _tripRepository.Add(tripToAdd);
-            this.Trips.Add(tripToAdd); 
+            this.Trips.Add(tripToAdd);
 
-        }
-
-
-        public bool IsProgressRingActive
-        {
-            get { return this.isProgressRingActive; }
-            set
-            {
-                this.isProgressRingActive = value;
-                this.RisePropertyChanged(nameof(this.IsProgressRingActive));
-            }
         }
 
         private void RisePropertyChanged(string propertyName)

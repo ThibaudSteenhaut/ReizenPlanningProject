@@ -59,8 +59,6 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <ProgressRing IsActive="{Binding IsProgressRingActive}"  Width="100" Height="100" />
-
         </StackPanel>
         
     </ScrollViewer>

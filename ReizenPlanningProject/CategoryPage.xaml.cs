@@ -1,5 +1,8 @@
-﻿using System;
+﻿using ReizenPlanningProject.Model;
+using ReizenPlanningProject.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,9 +25,14 @@ namespace ReizenPlanningProject
     /// </summary>
     public sealed partial class CategoryPage : Page
     {
+
+        private CategoryOverviewViewModel _categoryViewModel { get; set; }
+
         public CategoryPage()
         {
             this.InitializeComponent();
+            this._categoryViewModel = new CategoryOverviewViewModel(); 
+            this.DataContext = _categoryViewModel;
         }
     }
 }

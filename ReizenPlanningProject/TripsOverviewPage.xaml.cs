@@ -24,7 +24,7 @@ namespace ReizenPlanningProject
     public sealed partial class TripsOverviewPage : Page
     {
 
-        public TripOverviewViewModel _tripOverviewViewModel { get; set; }
+        private TripOverviewViewModel _tripOverviewViewModel { get; set; }
          
         public TripsOverviewPage()
         {

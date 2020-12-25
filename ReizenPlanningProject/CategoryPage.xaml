@@ -5,10 +5,69 @@
     xmlns:local="using:ReizenPlanningProject"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:ReizenPlanningProject.Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Grid>
-        <Button>Categories</Button>
-    </Grid>
+    <Page.Resources>
+        <DataTemplate x:Name="CategoryDisplay"
+                      x:DataType="model:Category">
+            <StackPanel Background="#FFFFF6E8" Orientation="Vertical" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Name}"
+                               FontSize="28"
+                               FontFamily="Bold"
+                               Margin="10">
+                    </TextBlock>
+                    <Button Content="+"
+                            Margin="5"
+                            Background="#FFFFF6E8"
+                            BorderBrush="Gray">
+                    </Button>
+                </StackPanel>
+                <Rectangle Fill="Gray"
+                           Height="1" />
+                <ListView ItemsSource="{Binding Items}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+    <ScrollViewer> 
+        <StackPanel>
+            <TextBlock Text="Beheer Categorieën"
+                       FontSize="48"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            <Button x:Name="addTrip"
+                    Content="Add new category"
+                    Margin="10">
+            </Button>
+            <GridView x:Name="CategoryGrid"
+                      ItemsSource="{Binding Categories}"
+                      ItemTemplate="{StaticResource CategoryDisplay}"
+                      SelectionMode="None">
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="Margin"
+                                Value="10" />
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Stretch" />
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch" />
+                    </Style>
+                </GridView.ItemContainerStyle>
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid x:Name="MaxItemsWrapGrid"
+                                       Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+            </GridView>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
