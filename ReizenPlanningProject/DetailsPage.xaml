@@ -4,9 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ReizenPlanningProject"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:models="using:ReizenPlanningProject.Model"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="TripSource" Source="{Binding Items}" IsSourceGrouped="true" />
+    </Page.Resources>
+
     <ScrollViewer>
         <StackPanel>
             <TextBlock Text="{Binding Path=Trip.Destination}"
@@ -14,31 +20,46 @@
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
-            
             <Button x:Name="addCategory"
                     Content="Add categories"      
                     Margin="15 15 15 15" 
                     Click="AddCategoriesButton_Click">
             </Button>
-            <ListView ItemsSource="{Binding Path=Trip.Categories}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+
+
+            <ListView ItemsSource="{Binding Source={StaticResource TripSource}}" SelectionMode="Multiple" >
+                <ListView.ItemContainerStyle >
+                    <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemExpanded}">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="models:Item">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
 
-                        
+                            <TextBox PlaceholderText="Amount" x:Name="AmountBox" Grid.Column="0"/>
+                            <TextBlock Text="{x:Bind Name}"  Grid.Column="1"/>
 
-                        <ListView ItemsSource="{Binding Path=Trip.Categories.Items}">
-                            
-                        </ListView>
-
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Key}" Margin="10,0"
+                               Foreground="Black" FontWeight="Bold" />
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
             </ListView>
-            
+
         </StackPanel>
     </ScrollViewer>
 </Page>

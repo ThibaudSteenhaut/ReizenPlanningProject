@@ -47,7 +47,7 @@ namespace ReizenPlanningProject
 
             if (result == ContentDialogResult.Primary)
             {
-               // dialog.checkedCategories
+                _detailsPageViewModel.AddItemsToTrip(dialog.checkedCategories);
             }
         }
 

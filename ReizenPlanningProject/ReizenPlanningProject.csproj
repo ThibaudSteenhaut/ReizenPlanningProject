@@ -143,6 +143,7 @@
     <Compile Include="Model\Repositories\ITripRepository.cs" />
     <Compile Include="Data\Repositories\TripRepository.cs" />
     <Compile Include="Model\Trip.cs" />
+    <Compile Include="Model\TripItem.cs" />
     <Compile Include="NewTripContentDialog.xaml.cs">
       <DependentUpon>NewTripContentDialog.xaml</DependentUpon>
     </Compile>

@@ -13,7 +13,6 @@ namespace ReizenPlanningProject.Model
         public string Name { get; set; }
         public ObservableCollection<Item> Items { get; set; }
 
-
         public Category()
         {
 
