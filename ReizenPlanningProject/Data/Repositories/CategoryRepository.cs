@@ -2,10 +2,13 @@
 using ReizenPlanningProject.Model;
 using ReizenPlanningProject.Model.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Diagnostics;
 
 namespace ReizenPlanningProject.Data.Repositories
 {
@@ -22,18 +25,33 @@ namespace ReizenPlanningProject.Data.Repositories
 
             if (response.IsSuccessStatusCode)
             {
+                Debug.WriteLine("Toevoegen gelukt");
                 return true;
             }
 
             return false;
         }
 
-        public ObservableCollection<Category> GetCategories()
+        public async Task<bool> DeleteItemAsync(int categoryId, int itemId)
+        {
+
+            string urlExtra = $"{categoryId}/Item/{itemId}";
+            string url = new Uri(_baseUrl) + urlExtra;
+            HttpResponseMessage response = await _client.DeleteAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false; 
+        }
+
+        public ObservableCollection<Category> GetAllCategoriesWithItems()
         {
             var json = _client.GetStringAsync(new Uri(_baseUrl)).Result;
-            var categories = JsonConvert.DeserializeObject<ObservableCollection<Category>>(json);
-
-            return categories;
+            List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(json);
+    
+            return new ObservableCollection<Category>(categories.OrderByDescending(c => c.Name.Length));
         }
     }
 }

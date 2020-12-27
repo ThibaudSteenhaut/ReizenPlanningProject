@@ -8,9 +8,14 @@ namespace ReizenPlanningProject.Model
 {
     public class Item
     {
-        public int ItemId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
 
+
+        public override string ToString()
+        {
+            return String.Concat($"id: {Id}, Name: {Name}, Category: {Category}");
+        }
     }
 }

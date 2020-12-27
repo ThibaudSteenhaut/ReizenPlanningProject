@@ -9,8 +9,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <ScrollViewer>
         <StackPanel>
-            <TextBlock Text="{Binding Path=Trip.Destination}" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+            <TextBlock Text="{Binding Path=Trip.Destination}"
+                       FontSize="48"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            
             <Button x:Name="addCategory"
                     Content="Add categories"      
                     Margin="15 15 15 15" 

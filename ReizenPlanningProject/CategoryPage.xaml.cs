@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -33,6 +34,42 @@ namespace ReizenPlanningProject
             this.InitializeComponent();
             this._categoryViewModel = new CategoryOverviewViewModel(); 
             this.DataContext = _categoryViewModel;
+        }
+
+        private void Category_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Category cat = (Category)CategoryGrid.SelectedItem;
+            if (cat != null) 
+            {
+                this._categoryViewModel.SelectedCategory = cat;
+            }
+        }
+
+        private void Category_Item_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            ListView listView = (ListView)sender;
+
+            Item item = (Item)listView.SelectedItem;
+
+            if (item != null)
+            {
+                this._categoryViewModel.SelectedItem = item;
+            }
+
+        }
+
+        private async void addCategory_Click(object sender, RoutedEventArgs e)
+        {
+            AddNewCategoryDialog dialog = new AddNewCategoryDialog();
+            ContentDialogResult result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                Debug.WriteLine("add new category");
+                Debug.WriteLine(dialog.CategoryName);
+                _categoryViewModel.AddCategory(dialog.CategoryName);
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ namespace ReizenPlanningProject.ViewModel
 
         private void GetCategories()
         {
-            this.Categories = _categoryRepository.GetCategories();
+            this.Categories = _categoryRepository.GetAllCategoriesWithItems();
         }
 
     }

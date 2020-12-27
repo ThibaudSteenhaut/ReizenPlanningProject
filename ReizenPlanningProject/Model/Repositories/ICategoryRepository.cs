@@ -9,7 +9,9 @@ namespace ReizenPlanningProject.Model.Repositories
 {
     public interface ICategoryRepository
     {
-        ObservableCollection<Category> GetCategories();
+        ObservableCollection<Category> GetAllCategoriesWithItems();
         Task<bool> Add(Category category);
+        Task<bool> DeleteItemAsync(int categoryId, int itemId);
+
     }
 }
