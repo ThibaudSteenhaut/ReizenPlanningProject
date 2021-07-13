@@ -28,12 +28,14 @@ namespace ReizenPlanningProject.Model.Repositories
             var stringContent = new StringContent(tripJson, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await _client.PostAsync(new Uri(_baseUrl), stringContent);
 
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
+            return response.IsSuccessStatusCode; 
+        }
 
-            return false;
+        public async Task<bool> Remove(int tripId)
+        {
+            Debug.WriteLine($"{_baseUrl}/{tripId}");
+            HttpResponseMessage response = await _client.DeleteAsync($"{_baseUrl}{tripId}");
+            return response.IsSuccessStatusCode; 
         }
 
         public ObservableCollection<Trip> GetTrips()

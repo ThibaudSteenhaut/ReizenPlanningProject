@@ -38,7 +38,5 @@ namespace ReizenPlanningProject
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
         }
-
-        
     }
 }

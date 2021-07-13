@@ -24,15 +24,11 @@ namespace TravelAPI.Data.Repositories
             if (_context.Database.EnsureCreated())
             {
 
-                Trip t1 = new Trip() { Destination = "Rome", DepartureDate = new DateTime(2020, 12, 30), ReturnDate = new DateTime(2021, 1, 10) };
-                Trip t2 = new Trip() { Destination = "Parijs", DepartureDate = new DateTime(2021, 1, 10), ReturnDate = new DateTime(2021, 2, 10) };
-                Trip t3 = new Trip() { Destination = "Praag", DepartureDate = new DateTime(2021, 2, 21), ReturnDate = new DateTime(2021, 3, 10) };
-                Trip t4 = new Trip() { Destination = "Praag", DepartureDate = new DateTime(2021, 2, 21), ReturnDate = new DateTime(2021, 3, 10) };
-                Trip t5 = new Trip() { Destination = "Praag", DepartureDate = new DateTime(2021, 2, 21), ReturnDate = new DateTime(2021, 3, 10) };
-                Trip t6 = new Trip() { Destination = "Praag", DepartureDate = new DateTime(2021, 2, 21), ReturnDate = new DateTime(2021, 3, 10) };
-                Trip t7 = new Trip() { Destination = "Praag", DepartureDate = new DateTime(2021, 2, 21), ReturnDate = new DateTime(2021, 3, 10) };
-                Trip t8 = new Trip() { Destination = "Praag", DepartureDate = new DateTime(2021, 2, 21), ReturnDate = new DateTime(2021, 3, 10) };
+                Trip t1 = new Trip() { Destination = "Rome", DepartureDate = new DateTime(2020, 12, 30, 12, 30, 00), ReturnDate = new DateTime(2021, 1, 10, 14, 30, 00) };
+                Trip t2 = new Trip() { Destination = "Parijs", DepartureDate = new DateTime(2021, 1, 10, 13, 30, 00), ReturnDate = new DateTime(2021, 2, 10, 21, 45, 00) };
+                Trip t3 = new Trip() { Destination = "Praag", DepartureDate = new DateTime(2021, 2, 21, 6, 15, 00), ReturnDate = new DateTime(2021, 3, 10, 23, 45, 00) };
 
+            
                 Category c1 = new Category("Electronica");
                 Category c2 = new Category("Toiletspullen");
                 Category c3 = new Category("Kleren");
@@ -101,11 +97,6 @@ namespace TravelAPI.Data.Repositories
                 _context.Trips.Add(t1);
                 _context.Trips.Add(t2);
                 _context.Trips.Add(t3);
-                _context.Trips.Add(t4);
-                _context.Trips.Add(t5);
-                _context.Trips.Add(t6);
-                _context.Trips.Add(t7);
-                _context.Trips.Add(t8);
 
                 _context.SaveChanges(); 
             }

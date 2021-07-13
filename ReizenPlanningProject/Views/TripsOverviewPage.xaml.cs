@@ -48,8 +48,41 @@ namespace ReizenPlanningProject
 
         private void lv_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Trip selectedTrip = (Trip)lv.SelectedItem;
+            Trip selectedTrip = (Trip)tripLv.SelectedItem;
             Frame.Navigate(typeof(DetailsPage), selectedTrip);
+        }
+
+        private void MenuFlyout_Opening(object sender, object e)
+        {
+            MenuFlyout senderAsMenuFlyout = sender as MenuFlyout;
+
+            foreach (object menuFlyoutItem in senderAsMenuFlyout.Items)
+            {
+                if (menuFlyoutItem.GetType() == typeof(MenuFlyoutItem))
+                {
+                    // Associate the particular FeedItem with the menu flyout (so the MenuFlyoutItem knows which FeedItem to act upon)
+                    ListViewItem itemContainer = senderAsMenuFlyout.Target as ListViewItem;
+
+                    //var data = favoriteListView.ItemFromContainer(itemContainer);
+
+                    //(menuFlyoutItem as MenuFlyoutItem).CommandParameter = data;
+                }
+            }
+        }
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteTrip_Click(object sender, RoutedEventArgs e)
+        {
+
+            Button btn = (Button)sender;
+
+            Trip trip = btn.DataContext as Trip;
+
+            _tripOverviewViewModel.DeleteCommand.Execute(trip); 
         }
     }
 }

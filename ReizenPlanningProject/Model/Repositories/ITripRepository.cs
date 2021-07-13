@@ -12,5 +12,7 @@ namespace ReizenPlanningProject.Model.Repositories
         ObservableCollection<Trip> GetTrips();
         Task<Trip> GetTripByDestinationAsync(string destination);
         Task<bool> Add(Trip trip);
+        Task<bool> Remove(int tripId);
+
     }
 }

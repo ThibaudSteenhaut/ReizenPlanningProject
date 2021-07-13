@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using ReizenPlanningProject.Model.Repositories;
+using System.Diagnostics;
 
 namespace ReizenPlanningProject.ViewModel
 {
@@ -12,13 +13,15 @@ namespace ReizenPlanningProject.ViewModel
 
         private readonly ITripRepository _tripRepository = new TripRepository();
 
-        public ObservableCollection<Trip> Trips { get; set; } = new ObservableCollection<Trip>();
+        public ObservableCollection<Trip> Trips { get; private set; } = new ObservableCollection<Trip>();
 
+        public RelayCommand DeleteCommand { get; private set; }
         public RelayCommand AddTripCommand { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private bool isProgressRingActive = false;
+
         public bool IsProgressRingActive
         {
             get { return this.isProgressRingActive; }
@@ -33,6 +36,7 @@ namespace ReizenPlanningProject.ViewModel
         {
             //this.Trips = new ObservableCollection<Trip>(DummyDataSource.Trips);
             //AddTripCommand = new RelayCommand((param) => AddTripAsync(param));
+            DeleteCommand = new RelayCommand(DeleteTrip); 
             GetTrips();
 
         }
@@ -58,6 +62,15 @@ namespace ReizenPlanningProject.ViewModel
             bool succes = await _tripRepository.Add(tripToAdd);
             this.Trips.Add(tripToAdd);
 
+        }
+
+        public void DeleteTrip(object obj)
+        {
+
+            Trip trip = obj as Trip;
+            Trips.Remove(trip);
+            Debug.WriteLine("Remove trip met id: " + trip.Id);
+            _tripRepository.Remove(trip.Id); 
         }
 
         private void RisePropertyChanged(string propertyName)

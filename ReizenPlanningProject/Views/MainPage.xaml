@@ -14,9 +14,9 @@
     </Page.Resources>
     <NavigationView x:Name="nvMain" SelectionChanged="nvMain_SelectionChanged">
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="Geplande reizen" Icon="List" Tag="TripList" />
-            <NavigationViewItem Content="Categorieën beheren" Icon="List" Tag="Category"  />
-            <NavigationViewItem Content="Voorbije reizen" Icon="Calendar"/>
+            <NavigationViewItem Content="Planned Trips" Icon="List" Tag="TripList" />
+            <NavigationViewItem Content="Manage categories" Icon="List" Tag="Category"  />
+            <NavigationViewItem Content="History" Icon="Calendar"/>
         </NavigationView.MenuItems>
         <Frame x:Name="contentFrame">
         </Frame>

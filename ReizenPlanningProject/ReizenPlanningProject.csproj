@@ -116,24 +116,24 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AddCategoryToTripContentDialog.xaml.cs">
+    <Compile Include="Views\AddCategoryToTripContentDialog.xaml.cs">
       <DependentUpon>AddCategoryToTripContentDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddNewCategoryDialog.xaml.cs">
+    <Compile Include="Views\AddNewCategoryDialog.xaml.cs">
       <DependentUpon>AddNewCategoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CategoryPage.xaml.cs">
+    <Compile Include="Views\CategoryPage.xaml.cs">
       <DependentUpon>CategoryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DateFormatter.cs" />
     <Compile Include="Data\Repositories\CategoryRepository.cs" />
-    <Compile Include="DetailsPage.xaml.cs">
+    <Compile Include="Views\DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Category.cs" />
@@ -143,11 +143,11 @@
     <Compile Include="Model\Repositories\ITripRepository.cs" />
     <Compile Include="Data\Repositories\TripRepository.cs" />
     <Compile Include="Model\Trip.cs" />
-    <Compile Include="NewTripContentDialog.xaml.cs">
+    <Compile Include="Views\NewTripContentDialog.xaml.cs">
       <DependentUpon>NewTripContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TripsOverviewPage.xaml.cs">
+    <Compile Include="Views\TripsOverviewPage.xaml.cs">
       <DependentUpon>TripsOverviewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\CategoryOverviewViewModel.cs" />
@@ -175,31 +175,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AddCategoryToTripContentDialog.xaml">
+    <Page Include="Views\AddCategoryToTripContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddNewCategoryDialog.xaml">
+    <Page Include="Views\AddNewCategoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CategoryPage.xaml">
+    <Page Include="Views\CategoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DetailsPage.xaml">
+    <Page Include="Views\DetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NewTripContentDialog.xaml">
+    <Page Include="Views\NewTripContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TripsOverviewPage.xaml">
+    <Page Include="Views\TripsOverviewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
