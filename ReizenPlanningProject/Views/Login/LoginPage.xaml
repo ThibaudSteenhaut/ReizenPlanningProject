@@ -1,0 +1,74 @@
+﻿<Page x:Class="ReizenPlanningProject.Views.Login.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:ReizenPlanningProject.Views.Login"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="WhiteSmoke"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.Background>
+                <ImageBrush Stretch="UniformToFill"
+                            ImageSource="/Assets/islands.bmp" />
+            </Grid.Background>
+        </Grid>
+        <StackPanel Grid.Column="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    BorderBrush="DarkGray"
+                    BorderThickness="3"
+                    Background="GhostWhite"
+                    Padding="25">
+
+            <TextBlock Text="Login"
+                       Margin="0,0,0,25"
+                       FontSize="48"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"/>
+
+            <TextBlock Text="E-mail"
+                       Margin="0,0,0,10"
+                       FontSize="24"
+                       FontWeight="SemiBold" />
+
+            <TextBox Width="250"
+                     Margin="0,0,0,15" />
+
+            <TextBlock Text="Password"
+                       Margin="0,0,0,10"
+                       FontSize="24"
+                       FontWeight="SemiBold" />
+
+            <PasswordBox Width="250"/>
+
+            <Grid Margin="0, 20, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.6*" />
+                    <ColumnDefinition Width="0.2*" />
+                </Grid.ColumnDefinitions>
+               
+                <Button Content="Login"
+                        Grid.Column="0" 
+                        FontSize="18"/>
+                
+                <Rectangle Grid.Column="1" />
+                
+                <Button Content="Register"
+                        Grid.Column="2"
+                        FontSize="18"/>
+                
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>

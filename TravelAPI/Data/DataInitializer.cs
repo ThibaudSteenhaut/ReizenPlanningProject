@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,11 +11,13 @@ namespace TravelAPI.Data.Repositories
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
 
-        public DataInitializer(ApplicationDbContext context)
+        public DataInitializer(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager; 
         }
 
         public async Task InitializeDataAsync()
@@ -23,6 +26,9 @@ namespace TravelAPI.Data.Repositories
             _context.Database.EnsureDeleted();
             if (_context.Database.EnsureCreated())
             {
+
+                IdentityUser user = new IdentityUser { UserName = "thibaud@mail.com", Email = "thibaud@mail.com" };
+                await _userManager.CreateAsync(user, "0123456789");
 
                 Trip t1 = new Trip() { Destination = "Rome", DepartureDate = new DateTime(2020, 12, 30, 12, 30, 00), ReturnDate = new DateTime(2021, 1, 10, 14, 30, 00) };
                 Trip t2 = new Trip() { Destination = "Parijs", DepartureDate = new DateTime(2021, 1, 10, 13, 30, 00), ReturnDate = new DateTime(2021, 2, 10, 21, 45, 00) };
