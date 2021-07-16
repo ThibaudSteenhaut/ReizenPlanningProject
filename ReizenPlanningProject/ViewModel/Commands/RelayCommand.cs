@@ -13,11 +13,11 @@ namespace ReizenPlanningProject.ViewModel.Commands
 
         private readonly Action<object> _execute;
 
-        private readonly Func<bool> _canExecute; 
+        private readonly Func<bool> _canExecute;
 
         public RelayCommand(Action<object> execute) : this(execute, null)
         {
-            Debug.WriteLine("delete command wordt gemaakt met null param voor can execute"); 
+
         }
 
         public RelayCommand(Action<object> execute, Func<bool> canExecute)

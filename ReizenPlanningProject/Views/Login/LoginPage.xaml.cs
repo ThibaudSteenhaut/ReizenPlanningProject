@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ReizenPlanningProject.ViewModel;
+using ReizenPlanningProject.ViewModel.Login;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +24,13 @@ namespace ReizenPlanningProject.Views.Login
     /// </summary>
     public sealed partial class LoginPage : Page
     {
+        private LoginViewModel _loginVM { get; set; }
+
         public LoginPage()
         {
             this.InitializeComponent();
+            this._loginVM = new LoginViewModel();
+            this.DataContext = _loginVM; 
         }
     }
 }

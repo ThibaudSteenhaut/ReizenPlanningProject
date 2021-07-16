@@ -116,6 +116,11 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Converters\BooleanToVisibilityConverterXAML.cs" />
+    <Compile Include="Data\Repositories\AccountRepository.cs" />
+    <Compile Include="Model\Authentication\LoginRequest.cs" />
+    <Compile Include="Model\IRepositories\IAccountRepository.cs" />
+    <Compile Include="ViewModel\Login\LoginViewModel.cs" />
     <Compile Include="Views\AddCategoryToTripContentDialog.xaml.cs">
       <DependentUpon>AddCategoryToTripContentDialog.xaml</DependentUpon>
     </Compile>
@@ -142,8 +147,8 @@
     <Compile Include="Model\Domain\Category.cs" />
     <Compile Include="Model\DummyDataSource.cs" />
     <Compile Include="Model\Domain\Item.cs" />
-    <Compile Include="Model\Repositories\ICategoryRepository.cs" />
-    <Compile Include="Model\Repositories\ITripRepository.cs" />
+    <Compile Include="Model\IRepositories\ICategoryRepository.cs" />
+    <Compile Include="Model\IRepositories\ITripRepository.cs" />
     <Compile Include="Data\Repositories\TripRepository.cs" />
     <Compile Include="Model\Domain\Trip.cs" />
     <Compile Include="Views\Dialogs\NewTripContentDialog.xaml.cs">

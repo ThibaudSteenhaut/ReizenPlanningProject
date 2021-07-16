@@ -69,7 +69,6 @@ namespace ReizenPlanningProject.ViewModel
 
             Trip trip = obj as Trip;
             Trips.Remove(trip);
-            Debug.WriteLine("Remove trip met id: " + trip.Id);
             _tripRepository.Remove(trip.Id); 
         }
 

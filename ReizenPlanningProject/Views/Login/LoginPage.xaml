@@ -4,13 +4,18 @@
       xmlns:local="using:ReizenPlanningProject.Views.Login"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:viewModel="using:ReizenPlanningProject.ViewModel.Login"
+      xmlns:conv="using:ReizenPlanningProject.Converters"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <conv:BooleanToVisibilityConverterXAML x:Key="converter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.Background>
-            <SolidColorBrush Color="WhiteSmoke"/>
+            <SolidColorBrush Color="WhiteSmoke" />
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*" />
@@ -31,17 +36,31 @@
                     Padding="25">
 
             <TextBlock Text="Login"
-                       Margin="0,0,0,25"
+                       Margin="0,0,0,10"
                        FontSize="48"
                        FontWeight="SemiBold"
-                       HorizontalAlignment="Center"/>
+                       HorizontalAlignment="Center" />
+
+            <Grid BorderBrush="#E3CBCF"
+                  BorderThickness="2"
+                  Visibility="{x:Bind _loginVM.ShowError, Converter={StaticResource converter}, Mode=OneWay}">
+
+                <Rectangle Fill="#FFDCE0" />
+                <TextBlock Text="Invalid e-mail or password."
+                           Margin="5"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           Foreground="#841010"
+                           HorizontalAlignment="Center" />
+            </Grid>
 
             <TextBlock Text="E-mail"
-                       Margin="0,0,0,10"
+                       Margin="0,5,0,10"
                        FontSize="24"
                        FontWeight="SemiBold" />
 
-            <TextBox Width="250"
+            <TextBox Text="{x:Bind _loginVM.LoginRequest.Email, Mode=TwoWay}"
+                     Width="250"
                      Margin="0,0,0,15" />
 
             <TextBlock Text="Password"
@@ -49,7 +68,8 @@
                        FontSize="24"
                        FontWeight="SemiBold" />
 
-            <PasswordBox Width="250"/>
+            <PasswordBox Width="250"
+                         Password="{x:Bind _loginVM.LoginRequest.Password, Mode=TwoWay}" />
 
             <Grid Margin="0, 20, 0, 0">
                 <Grid.ColumnDefinitions>
@@ -57,17 +77,18 @@
                     <ColumnDefinition Width="0.6*" />
                     <ColumnDefinition Width="0.2*" />
                 </Grid.ColumnDefinitions>
-               
+
                 <Button Content="Login"
-                        Grid.Column="0" 
-                        FontSize="18"/>
-                
+                        Grid.Column="0"
+                        FontSize="18"
+                        Command="{x:Bind _loginVM.LoginCommand}" />
+
                 <Rectangle Grid.Column="1" />
-                
+
                 <Button Content="Register"
                         Grid.Column="2"
-                        FontSize="18"/>
-                
+                        FontSize="18" />
+
             </Grid>
         </StackPanel>
     </Grid>
