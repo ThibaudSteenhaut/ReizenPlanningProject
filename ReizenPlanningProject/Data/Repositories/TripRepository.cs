@@ -33,7 +33,6 @@ namespace ReizenPlanningProject.Model.Repositories
 
         public async Task<bool> Remove(int tripId)
         {
-            Debug.WriteLine($"{_baseUrl}/{tripId}");
             HttpResponseMessage response = await _client.DeleteAsync($"{_baseUrl}{tripId}");
             return response.IsSuccessStatusCode; 
         }

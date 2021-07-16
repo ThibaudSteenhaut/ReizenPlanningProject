@@ -50,11 +50,13 @@
 
                             <TextBlock Text="{Binding Destination}"
                                        Style="{ThemeResource HeaderTextBlockStyle}"
+                                       Margin="5,0,0,0"
                                        Grid.Row="1"
                                        Grid.Column="0"
                                        FontWeight="SemiBold" />
 
                             <Button Content="X"
+                                    FontWeight="SemiBold"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     HorizontalAlignment="Right"

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -52,37 +53,32 @@ namespace ReizenPlanningProject
             Frame.Navigate(typeof(DetailsPage), selectedTrip);
         }
 
-        private void MenuFlyout_Opening(object sender, object e)
-        {
-            MenuFlyout senderAsMenuFlyout = sender as MenuFlyout;
-
-            foreach (object menuFlyoutItem in senderAsMenuFlyout.Items)
-            {
-                if (menuFlyoutItem.GetType() == typeof(MenuFlyoutItem))
-                {
-                    // Associate the particular FeedItem with the menu flyout (so the MenuFlyoutItem knows which FeedItem to act upon)
-                    ListViewItem itemContainer = senderAsMenuFlyout.Target as ListViewItem;
-
-                    //var data = favoriteListView.ItemFromContainer(itemContainer);
-
-                    //(menuFlyoutItem as MenuFlyoutItem).CommandParameter = data;
-                }
-            }
-        }
-
-        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void DeleteTrip_Click(object sender, RoutedEventArgs e)
+        private async void DeleteTrip_Click(object sender, RoutedEventArgs e)
         {
 
             Button btn = (Button)sender;
-
             Trip trip = btn.DataContext as Trip;
 
-            _tripOverviewViewModel.DeleteCommand.Execute(trip); 
+            ContentDialogResult result = await ShowDeleteDialogAsync(trip.Destination);
+
+            if(result == ContentDialogResult.Primary)
+            {
+                _tripOverviewViewModel.DeleteCommand.Execute(trip);
+            }
+        }
+
+        private async Task<ContentDialogResult> ShowDeleteDialogAsync(string destination)
+        {
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "Delete trip?",
+                Content = $"Are you sure you want to delete the trip to {destination}?",
+                PrimaryButtonText = "Delete",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary
+            };
+
+            return await dialog.ShowAsync();
         }
     }
 }

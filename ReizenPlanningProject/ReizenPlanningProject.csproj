@@ -136,14 +136,14 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Domain\Category.cs" />
     <Compile Include="Model\DummyDataSource.cs" />
-    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\Domain\Item.cs" />
     <Compile Include="Model\Repositories\ICategoryRepository.cs" />
     <Compile Include="Model\Repositories\ITripRepository.cs" />
     <Compile Include="Data\Repositories\TripRepository.cs" />
-    <Compile Include="Model\Trip.cs" />
-    <Compile Include="Views\NewTripContentDialog.xaml.cs">
+    <Compile Include="Model\Domain\Trip.cs" />
+    <Compile Include="Views\Dialogs\NewTripContentDialog.xaml.cs">
       <DependentUpon>NewTripContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -195,7 +195,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\NewTripContentDialog.xaml">
+    <Page Include="Views\Dialogs\NewTripContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
