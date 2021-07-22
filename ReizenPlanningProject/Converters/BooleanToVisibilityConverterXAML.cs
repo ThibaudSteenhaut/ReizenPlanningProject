@@ -15,8 +15,6 @@ namespace ReizenPlanningProject.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
 
-            Debug.WriteLine("convert");
-
             if (value is Boolean && (bool)value)
             {
                 return Visibility.Visible;
@@ -26,8 +24,6 @@ namespace ReizenPlanningProject.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-
-            Debug.WriteLine("convert back"); 
 
             if (value is Visibility && (Visibility)value == Visibility.Visible)
             {

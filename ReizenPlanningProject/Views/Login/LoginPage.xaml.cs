@@ -2,6 +2,7 @@
 using ReizenPlanningProject.ViewModel.Login;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -30,7 +31,24 @@ namespace ReizenPlanningProject.Views.Login
         {
             this.InitializeComponent();
             this._loginVM = new LoginViewModel();
-            this.DataContext = _loginVM; 
+            this.DataContext = _loginVM;
+        }
+
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(RegisterPage));
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+
+            if (e.Parameter is bool)
+            {
+                bool showSucces = (bool)e.Parameter;
+                _loginVM.ShowSucces = showSucces; 
+            }
+
+            base.OnNavigatedTo(e);
         }
     }
 }

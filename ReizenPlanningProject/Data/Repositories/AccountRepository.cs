@@ -17,18 +17,33 @@ namespace ReizenPlanningProject.Data.Repositories
         private static readonly HttpClient _client = new HttpClient();
         private static readonly string _baseUrl = "https://localhost:44316/api/Account";
 
-
-        public async Task<bool> LoginAsync(LoginRequest request)
+        public async Task<string> Login(LoginRequest request)
         {
-
-            Debug.WriteLine("login in repo");
 
             StringContent stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await _client.PostAsync(new Uri(_baseUrl), stringContent);
 
-            Debug.WriteLine(response.IsSuccessStatusCode); 
+            if(response.IsSuccessStatusCode) 
+                return await response.Content.ReadAsStringAsync();
 
+            return "";
+        }
+
+
+        public async Task<bool> CheckAvailableUserName(string email)
+        {
+            HttpResponseMessage response = await _client.GetAsync($"{_baseUrl}/checkusername?email={email}");
             return response.IsSuccessStatusCode; 
+        }
+
+        public async Task<bool> Register(RegisterRequest request)
+        {
+
+            var requestJson = JsonConvert.SerializeObject(request);
+            var stringContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync($"{_baseUrl}/register", stringContent);
+            
+            return response.IsSuccessStatusCode;
         }
     }
 }

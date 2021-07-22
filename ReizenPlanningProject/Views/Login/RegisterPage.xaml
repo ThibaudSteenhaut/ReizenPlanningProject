@@ -1,0 +1,98 @@
+﻿<Page x:Class="ReizenPlanningProject.Views.Login.RegisterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:ReizenPlanningProject.Views.Login"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:conv="using:ReizenPlanningProject.Converters"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <conv:BooleanToVisibilityConverterXAML x:Key="converter" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill"
+                        ImageSource="/Assets/wanderlust.jpg" />
+        </Grid.Background>
+        <StackPanel Grid.Column="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    BorderBrush="DarkGray"
+                    BorderThickness="3"
+                    Background="GhostWhite"
+                    Padding="25"
+                    Width="400">
+
+            <TextBlock Text="Register"
+                       Margin="0,0,0,10"
+                       FontSize="48"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center" />
+
+            <Grid BorderBrush="#E3CBCF"
+                  BorderThickness="2"
+                  Margin="0,10,0,10"
+                  Visibility="{x:Bind _registerVM.ShowError, Converter={StaticResource converter}, Mode=OneWay}">
+                <Rectangle Fill="#FFDCE0" />
+                <TextBlock Text="{x:Bind _registerVM.ErrorMessage, Mode=OneWay}"
+                           Margin="5"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           Foreground="#841010"
+                           HorizontalAlignment="Center" />
+            </Grid>
+
+            <TextBlock Text="First Name"
+                       Margin="0,5,0,10"
+                       FontSize="20" />
+
+            <TextBox Text="{x:Bind _registerVM.Request.Firstname, Mode=TwoWay}" />
+
+            <TextBlock Text="Last Name"
+                       Margin="0,5,0,10"
+                       FontSize="20" />
+
+            <TextBox Text="{x:Bind _registerVM.Request.Lastname, Mode=TwoWay}" />
+
+            <TextBlock Text="E-mail"
+                       Margin="0,5,0,10"
+                       FontSize="20" />
+
+            <TextBox Text="{x:Bind _registerVM.Request.Email, Mode=TwoWay}" />
+
+            <TextBlock Text="Password"
+                       Margin="0,5,0,10"
+                       FontSize="20" />
+
+            <PasswordBox Password="{x:Bind _registerVM.Request.Password, Mode=TwoWay}" />
+
+            <TextBlock Text="Password Confirmation"
+                       Margin="0,5,0,10"
+                       FontSize="20" />
+
+            <PasswordBox Password="{x:Bind _registerVM.Request.PasswordConfirmation, Mode=TwoWay}" />
+
+            <Grid Margin="0,18,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.3*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Login"
+                        Grid.Column="0"
+                        FontSize="18"
+                        Click="Login_Click" />
+
+                <Button Content="Register"
+                        HorizontalAlignment="Right"
+                        Grid.Column="2"
+                        FontSize="18"
+                        Command="{x:Bind _registerVM.RegisterCommand}" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>

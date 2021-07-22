@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,6 +23,10 @@ namespace TravelAPI.Models
         [Required]
         public DateTime ReturnDate { get; set; }
 
+        [Required]
+        public IdentityUser User { get; set; }
+
+
         public ICollection<TripItem> TripItems { get; set; }
 
 
@@ -33,18 +38,20 @@ namespace TravelAPI.Models
 
         }
 
-        public Trip(string destination, DateTime departure, DateTime returnDate)
+        public Trip(string destination, DateTime departure, DateTime returnDate, IdentityUser user)
         {
             Destination = destination;
             DepartureDate = departure;
             ReturnDate = returnDate;
+            User = user; 
         }
 
-        public Trip(TripDTO tripDTO)
+        public Trip(TripDTO tripDTO, IdentityUser user)
         {
             Destination = tripDTO.Destination;
             DepartureDate = tripDTO.DepartureDate;
             ReturnDate = tripDTO.ReturnDate;
+            User = user;
         }
         #endregion
 

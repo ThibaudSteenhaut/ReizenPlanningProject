@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -51,7 +52,7 @@ namespace TravelAPI.Controllers
 
                 if (result.Succeeded)
                 {
-                    string token = GetToken(user);
+                    string token = await GetToken(user);
                     return Created("", token); //returns only the token                    
                 }
             }
@@ -69,10 +70,11 @@ namespace TravelAPI.Controllers
         {
             IdentityUser user = new IdentityUser { UserName = model.Email, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
+            result = await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "user"));
 
             if (result.Succeeded)
             {
-                string token = GetToken(user);
+                string token = await GetToken(user);
                 return Created("", token);
             }
             return BadRequest();
@@ -91,14 +93,19 @@ namespace TravelAPI.Controllers
             return user == null;
         }
 
-        private String GetToken(IdentityUser user)
+        private async Task<String> GetToken(IdentityUser user)
         {
             // Create the token
-            var claims = new[]
+            var claims = new List<Claim>
             {
               new Claim(JwtRegisteredClaimNames.Sub, user.Email),
               new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
             };
+
+            var roles = await _userManager.GetClaimsAsync(user);
+            var role = roles.FirstOrDefault();
+            if (role != null)
+                claims.Add(new Claim("role", role.Value));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
 

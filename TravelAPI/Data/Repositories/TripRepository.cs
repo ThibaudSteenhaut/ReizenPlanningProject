@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TravelAPI.DTOs;
 using TravelAPI.Models;
 
 namespace TravelAPI.Data.Repositories
@@ -30,9 +31,9 @@ namespace TravelAPI.Data.Repositories
             _trips.Remove(trip);
         }
 
-        public IEnumerable<Trip> GetAll()
+        public IEnumerable<TripDTO> GetTrips(string userId)
         {
-            return _trips.ToList();
+            return _trips.Where(t => t.User.Id == userId).OrderBy(t => t.DepartureDate).Select(t => new TripDTO(t)); 
         }
 
         public Trip GetBy(int id)

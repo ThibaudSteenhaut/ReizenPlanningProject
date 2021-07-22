@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TravelAPI.DTOs;
 using TravelAPI.Models;
@@ -14,17 +17,21 @@ namespace TravelAPI.Controllers
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [ApiController]
     public class TripController : ControllerBase
     {
         private readonly ITripRepository _tripRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IItemRepository _itemRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public TripController(ITripRepository tripRepo, ICategoryRepository categoryRepo, IItemRepository itemRepo)
+        public TripController(ITripRepository tripRepo, ICategoryRepository categoryRepo, IItemRepository itemRepo, UserManager<IdentityUser> userManager)
         {
             _tripRepository = tripRepo;
             _categoryRepository = categoryRepo;
             _itemRepository = itemRepo;
+            _userManager = userManager;
         }
 
         #region Methods
@@ -34,10 +41,10 @@ namespace TravelAPI.Controllers
         /// Get all routes 
         /// </summary> 
         [HttpGet]
-        [AllowAnonymous]
-        public ActionResult<IEnumerable<Trip>> GetTrips()
+        [Authorize(Policy = "User")]
+        public ActionResult<IEnumerable<TripDTO>> GetTrips()
         {
-            return Ok(_tripRepository.GetAll());
+            return Ok(_tripRepository.GetTrips(GetCurrentUser().Id));
         }
 
         //GET: api/Trips/{id} 
@@ -46,9 +53,9 @@ namespace TravelAPI.Controllers
         /// </summary> 
         /// <param name="id">The id of the trip</param> 
         [HttpGet("{id}")]
+        [Authorize(Policy = "User")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [AllowAnonymous]
         public ActionResult<TripDTO> GetTrip(int id)
         {
             Trip trip = _tripRepository.GetBy(id);
@@ -65,7 +72,7 @@ namespace TravelAPI.Controllers
         [HttpGet("{id}/items")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [AllowAnonymous]
+        [Authorize(Policy = "User")]
         public ActionResult<TripDTO> GetItemsBy(int id)
         {
 
@@ -86,21 +93,14 @@ namespace TravelAPI.Controllers
         /// <param name="tripDTO">The trip to add</param> 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [AllowAnonymous]
+        [Authorize(Policy = "User")]
         public ActionResult<Trip> PostTrip([FromBody] TripDTO tripDTO)
         {
 
-            if (!ModelState.IsValid) 
-            {
+            if (!ModelState.IsValid || tripDTO == null) 
                 return BadRequest("Invalid model");
-            } 
-
-            if (tripDTO == null)
-            {
-                return NotFound();
-            }
-
-            Trip tripToCreate = new Trip(tripDTO);
+                      
+            Trip tripToCreate = new Trip(tripDTO, GetCurrentUser());
             _tripRepository.Add(tripToCreate);
             _tripRepository.SaveChanges();
             return CreatedAtAction(nameof(GetTrip), new { id = tripToCreate.Id }, tripToCreate);
@@ -115,7 +115,7 @@ namespace TravelAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [AllowAnonymous]
+        [Authorize(Policy = "User")]
         public ActionResult<Trip> DeleteTrip(int id)
         {
 
@@ -143,7 +143,7 @@ namespace TravelAPI.Controllers
         /// <param name="amount">How many times you want to take this item</param> 
         [HttpPost("{tripId}/Item/{itemId}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [AllowAnonymous]
+        [Authorize(Policy = "User")]
         public ActionResult<TripItem> AddItemToTrip(int tripId, int itemId, int amount)
         {
 
@@ -166,7 +166,10 @@ namespace TravelAPI.Controllers
 
         }
 
-
+        private IdentityUser GetCurrentUser()
+        {
+            return _userManager.FindByNameAsync(User.Identity.Name).Result; 
+        }
         #endregion     
     }
 }

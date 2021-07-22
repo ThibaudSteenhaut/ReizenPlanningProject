@@ -9,6 +9,8 @@ namespace ReizenPlanningProject.Model.IRepositories
 {
     public interface IAccountRepository
     {
-        Task<bool> LoginAsync(LoginRequest request);
+        Task<string> Login(LoginRequest request);
+        Task<bool> CheckAvailableUserName(string email);
+        Task<bool> Register(RegisterRequest request); 
     }
 }

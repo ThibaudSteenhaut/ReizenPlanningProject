@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,9 +19,6 @@ namespace TravelAPI.DTOs
 
         public DateTime ReturnDate { get; set; }
 
-        public ICollection<TripItem> TripItems { get; set; }
-
-
         #endregion
 
         #region Constructors
@@ -35,7 +33,6 @@ namespace TravelAPI.DTOs
             Destination = trip.Destination;
             DepartureDate = trip.DepartureDate;
             ReturnDate = trip.ReturnDate;
-            TripItems = trip.TripItems;
         }
         #endregion
     }

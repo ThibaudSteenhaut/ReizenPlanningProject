@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using IdentityModel;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TravelAPI.Models;
 
@@ -27,12 +29,37 @@ namespace TravelAPI.Data.Repositories
             if (_context.Database.EnsureCreated())
             {
 
-                IdentityUser user = new IdentityUser { UserName = "thibaud@mail.com", Email = "thibaud@mail.com" };
-                await _userManager.CreateAsync(user, "0123456789");
+                IdentityUser user1 = new IdentityUser { UserName = "thibaud@mail.com", Email = "thibaud@mail.com" };
+                IdentityUser user2 = new IdentityUser { UserName = "thibaud2@mail.com", Email = "thibaud2@mail.com" };
 
-                Trip t1 = new Trip() { Destination = "Rome", DepartureDate = new DateTime(2020, 12, 30, 12, 30, 00), ReturnDate = new DateTime(2021, 1, 10, 14, 30, 00) };
-                Trip t2 = new Trip() { Destination = "Parijs", DepartureDate = new DateTime(2021, 1, 10, 13, 30, 00), ReturnDate = new DateTime(2021, 2, 10, 21, 45, 00) };
-                Trip t3 = new Trip() { Destination = "Praag", DepartureDate = new DateTime(2021, 2, 21, 6, 15, 00), ReturnDate = new DateTime(2021, 3, 10, 23, 45, 00) };
+
+                await _userManager.CreateAsync(user1, "Test123456789");
+                await _userManager.AddClaimAsync(user1, new Claim(JwtClaimTypes.Role, "user"));
+
+                await _userManager.CreateAsync(user2, "Test123456789");
+                //await _userManager.AddClaimAsync(user2, new Claim(JwtClaimTypes.Role, "user"));
+
+                Trip t1 = new Trip() 
+                { 
+                    Destination = "Rome", 
+                    DepartureDate = new DateTime(2020, 12, 30, 12, 30, 00), 
+                    ReturnDate = new DateTime(2021, 1, 10, 14, 30, 00),
+                    User = user1
+                };
+                Trip t2 = new Trip() 
+                { 
+                    Destination = "Parijs", 
+                    DepartureDate = new DateTime(2021, 1, 10, 13, 30, 00), 
+                    ReturnDate = new DateTime(2021, 2, 10, 21, 45, 00),
+                    User = user1
+                };
+                Trip t3 = new Trip()
+                {
+                    Destination = "Praag",
+                    DepartureDate = new DateTime(2021, 2, 21, 6, 15, 00),
+                    ReturnDate = new DateTime(2021, 3, 10, 23, 45, 00),
+                    User = user2 
+                };
 
             
                 Category c1 = new Category("Electronica");
