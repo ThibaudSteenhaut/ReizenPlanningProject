@@ -11,26 +11,39 @@ namespace ReizenPlanningProject.ViewModel
     public class TripOverviewViewModel : INotifyPropertyChanged
     {
 
+        #region Fields 
+
         private readonly ITripRepository _tripRepository = new TripRepository();
+        private bool _isProgressRingActive = false;
+
+        #endregion
+
+        #region Properties 
 
         public ObservableCollection<Trip> Trips { get; private set; } = new ObservableCollection<Trip>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public bool IsProgressRingActive
+        {
+            get { return this._isProgressRingActive; }
+            set
+            {
+                this._isProgressRingActive = value;
+                this.RisePropertyChanged(nameof(this.IsProgressRingActive));
+            }
+        }
+
+        #endregion
+
+        #region Commands 
 
         public RelayCommand DeleteCommand { get; private set; }
         public RelayCommand AddTripCommand { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
 
-        private bool isProgressRingActive = false;
-
-        public bool IsProgressRingActive
-        {
-            get { return this.isProgressRingActive; }
-            set
-            {
-                this.isProgressRingActive = value;
-                this.RisePropertyChanged(nameof(this.IsProgressRingActive));
-            }
-        }
+        #region Constructors 
 
         public TripOverviewViewModel()
         {
@@ -39,7 +52,10 @@ namespace ReizenPlanningProject.ViewModel
             GetTrips();
         }
 
-        
+        #endregion
+
+        #region Methods 
+
         private void GetTrips()
         {
 
@@ -48,17 +64,6 @@ namespace ReizenPlanningProject.ViewModel
             this.Trips = _tripRepository.GetTrips();
 
             this.IsProgressRingActive = false;
-
-        }
-
-        public async void AddTrip(string destination, DateTime departureDate, DateTime returnDate)
-        {
-
-            Trip tripToAdd = new Trip { Destination = destination, DepartureDate = departureDate, ReturnDate = returnDate };
-
-            //TODO geef positieve feedback als correct toegevoegd is
-            bool succes = await _tripRepository.Add(tripToAdd);
-            this.Trips.Add(tripToAdd);
 
         }
 
@@ -75,5 +80,7 @@ namespace ReizenPlanningProject.ViewModel
             PropertyChangedEventArgs e = new PropertyChangedEventArgs(propertyName);
             this.PropertyChanged?.Invoke(this, e);
         }
+
+        #endregion
     }
 }

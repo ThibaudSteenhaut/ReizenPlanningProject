@@ -76,10 +76,13 @@ namespace TravelAPI.Controllers
         public ActionResult<TripDTO> GetItemsBy(int id)
         {
 
-            if (id < 0) return NotFound("Id can't be found");
+            if (id < 0) 
+                return NotFound("Id can't be found");
             
             IEnumerable<TripItem> tripItems = _tripRepository.GetItemsBy(id);
-            if (tripItems == null) return NotFound("Id can't be found");
+
+            if (tripItems == null) 
+                return NotFound("Id can't be found");
 
             IEnumerable<ItemDTO> itemDTOs = tripItems.Select(ti => new ItemDTO(ti.Item.Name, ti.Item.Category, ti.Amount));
 
@@ -94,7 +97,7 @@ namespace TravelAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [Authorize(Policy = "User")]
-        public ActionResult<Trip> PostTrip([FromBody] TripDTO tripDTO)
+        public ActionResult<int> PostTrip([FromBody] TripDTO tripDTO)
         {
 
             if (!ModelState.IsValid || tripDTO == null) 
@@ -103,7 +106,7 @@ namespace TravelAPI.Controllers
             Trip tripToCreate = new Trip(tripDTO, GetCurrentUser());
             _tripRepository.Add(tripToCreate);
             _tripRepository.SaveChanges();
-            return CreatedAtAction(nameof(GetTrip), new { id = tripToCreate.Id }, tripToCreate);
+            return Ok(tripToCreate.Id);
 
         }
 

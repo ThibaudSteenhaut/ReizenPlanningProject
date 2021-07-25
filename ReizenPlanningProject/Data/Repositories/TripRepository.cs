@@ -24,27 +24,43 @@ namespace ReizenPlanningProject.Model.Repositories
 
         }
 
-        public async Task<bool> Add(Trip tripToAdd)
+        public async Task<int> Add(Trip tripToAdd)
         {
 
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
             var tripJson = JsonConvert.SerializeObject(tripToAdd);
             var stringContent = new StringContent(tripJson, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await _client.PostAsync(_baseUrl, stringContent);
 
-            return response.IsSuccessStatusCode; 
+            string tripId = await response.Content.ReadAsStringAsync();
+
+            //na toevoegen van een nieuwe trip stuurt de backend de id terug, 
+            if (response.IsSuccessStatusCode)
+            {
+                return Int32.Parse(tripId);
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         public async Task<bool> Remove(int tripId)
         {
+
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
             HttpResponseMessage response = await _client.DeleteAsync($"{_baseUrl}/{tripId}");
+
             return response.IsSuccessStatusCode; 
         }
 
         public ObservableCollection<Trip> GetTrips()
         {
+
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
             var json = _client.GetStringAsync(_baseUrl).Result;
             var trips = JsonConvert.DeserializeObject<ObservableCollection<Trip>>(json);
+
             return trips;
         }
     }

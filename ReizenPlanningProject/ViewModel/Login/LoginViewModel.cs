@@ -75,6 +75,7 @@ namespace ReizenPlanningProject.ViewModel.Login
             if (!String.IsNullOrEmpty(LoginRequest.Email) && !String.IsNullOrEmpty(LoginRequest.Password))
             {
                 string token = await _accountRepository.Login(this.LoginRequest);
+
                 if (String.IsNullOrEmpty(token))
                 {
                     ShowError = true;
@@ -83,7 +84,7 @@ namespace ReizenPlanningProject.ViewModel.Login
                 {
                     TokenVault.Token = token; 
                     Frame frame = (Frame)Window.Current.Content;
-                    frame.Navigate(typeof(LoginPage));
+                    frame.Navigate(typeof(MainPage));
                 }
             }
         }

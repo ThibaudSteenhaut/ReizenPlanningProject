@@ -37,7 +37,7 @@ namespace TravelAPI.Data.Repositories
                 await _userManager.AddClaimAsync(user1, new Claim(JwtClaimTypes.Role, "user"));
 
                 await _userManager.CreateAsync(user2, "Test123456789");
-                //await _userManager.AddClaimAsync(user2, new Claim(JwtClaimTypes.Role, "user"));
+                await _userManager.AddClaimAsync(user2, new Claim(JwtClaimTypes.Role, "user"));
 
                 Trip t1 = new Trip() 
                 { 

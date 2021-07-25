@@ -14,15 +14,10 @@
         <StackPanel>
             <TextBlock Text="Planned trips"
                        FontSize="48"
-                       FontWeight="Bold"
+                       FontWeight="SemiBold"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
-            <Button x:Name="addTrip"
-                    Content="Add a new trip"
-                    Margin="15 15 15 15"
-                    Click="AddTripButton_Click">
-            </Button>
-
+            
             <ListView  x:Name="tripLv"
                        ItemsSource="{Binding Trips}"
                        SelectionChanged="lv_SelectionChanged">

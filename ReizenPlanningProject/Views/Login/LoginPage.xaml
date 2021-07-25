@@ -18,6 +18,7 @@
             <ImageBrush Stretch="UniformToFill"
                         ImageSource="/Assets/wanderlust.jpg" />
         </Grid.Background>
+        
         <StackPanel Grid.Column="1"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"

@@ -1,5 +1,6 @@
 ﻿using ReizenPlanningProject.Model;
 using ReizenPlanningProject.ViewModel;
+using ReizenPlanningProject.Views.Trips;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,9 +20,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ReizenPlanningProject
 {
-    /// <summary>
-    /// The page that will display the planned trips 
-    /// </summary>
+
     public sealed partial class TripsOverviewPage : Page
     {
 
@@ -32,19 +31,6 @@ namespace ReizenPlanningProject
             this.InitializeComponent();
             this._tripOverviewViewModel = new TripOverviewViewModel();
             this.DataContext = _tripOverviewViewModel;
-        }
-
-        private async void AddTripButton_Click(object sender, RoutedEventArgs e)
-        {
-            NewTripContentDialog dialog = new NewTripContentDialog();
-            ContentDialogResult result = await dialog.ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
-            {
-                DateTime dep = new DateTime(dialog.DepartureDate.Year, dialog.DepartureDate.Month, dialog.DepartureDate.Day, dialog.DepartureTime.Hours, dialog.DepartureTime.Minutes, 0);
-                DateTime ret = new DateTime(dialog.ReturnDate.Year, dialog.ReturnDate.Month, dialog.ReturnDate.Day, dialog.ReturnTime.Hours, dialog.ReturnTime.Minutes, 0);
-                _tripOverviewViewModel.AddTrip(dialog.DestinationName, dep, ret);
-            }
         }
 
         private void lv_SelectionChanged(object sender, SelectionChangedEventArgs e)

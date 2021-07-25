@@ -12,13 +12,32 @@
     <Page.Resources>
         <conv:DateFormatter x:Key="DateConverter"/>
     </Page.Resources>
-    <NavigationView x:Name="nvMain" SelectionChanged="nvMain_SelectionChanged">
+    <NavigationView x:Name="nvMain" 
+                    SelectionChanged="nvMain_SelectionChanged"
+                    IsBackEnabled="True">
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="Planned Trips" Icon="List" Tag="TripList" />
-            <NavigationViewItem Content="Manage categories" Icon="List" Tag="Category"  />
-            <NavigationViewItem Content="History" Icon="Calendar"/>
+            
+            <NavigationViewItem x:Name="TripListItem"
+                                Content="Planned Trips" 
+                                Icon="Calendar" 
+                                Tag="TripList" />
+            
+            <NavigationViewItem x:Name="AddTripItem"
+                                Content="Add trip"
+                                Icon="Add"/>
+            
+            <NavigationViewItem Content="Items"
+                                Icon="Edit" />
+            
+            <NavigationViewItem Content="History">
+                <NavigationViewItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets"
+                              Glyph="&#xE81C;" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
         </NavigationView.MenuItems>
-        <Frame x:Name="contentFrame">
-        </Frame>
+
+        <Frame x:Name="contentFrame" />
+
     </NavigationView>
 </Page>

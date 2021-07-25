@@ -124,6 +124,7 @@
     <Compile Include="Vault\TokenVault.cs" />
     <Compile Include="ViewModel\Login\LoginViewModel.cs" />
     <Compile Include="ViewModel\Login\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\Trips\AddTripViewModel.cs" />
     <Compile Include="Views\AddCategoryToTripContentDialog.xaml.cs">
       <DependentUpon>AddCategoryToTripContentDialog.xaml</DependentUpon>
     </Compile>
@@ -151,16 +152,15 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Domain\Category.cs" />
-    <Compile Include="Model\DummyDataSource.cs" />
     <Compile Include="Model\Domain\Item.cs" />
     <Compile Include="Model\IRepositories\ICategoryRepository.cs" />
     <Compile Include="Model\IRepositories\ITripRepository.cs" />
     <Compile Include="Data\Repositories\TripRepository.cs" />
     <Compile Include="Model\Domain\Trip.cs" />
-    <Compile Include="Views\Dialogs\NewTripContentDialog.xaml.cs">
-      <DependentUpon>NewTripContentDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Trips\AddTripPage.xaml.cs">
+      <DependentUpon>AddTripPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Trips\TripsOverviewPage.xaml.cs">
       <DependentUpon>TripsOverviewPage.xaml</DependentUpon>
     </Compile>
@@ -219,7 +219,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\NewTripContentDialog.xaml">
+    <Page Include="Views\Trips\AddTripPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -248,7 +248,10 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assets\Styles\" />
+    <Folder Include="Views\Dialogs\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

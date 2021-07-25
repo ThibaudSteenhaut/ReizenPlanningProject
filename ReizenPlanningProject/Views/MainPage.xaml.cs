@@ -1,5 +1,6 @@
 ﻿using ReizenPlanningProject.Model;
 using ReizenPlanningProject.ViewModel;
+using ReizenPlanningProject.Views.Trips;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,16 +18,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace ReizenPlanningProject
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class MainPage : Page
     {
-        //Trip t;
 
         public MainPage()
         {
@@ -40,17 +37,27 @@ namespace ReizenPlanningProject
 
             var item = (NavigationViewItem)args.SelectedItem;
 
-            switch (item.Tag)
+            switch (item.Name)
             {
 
-                case "TripList":
+                case "TripListItem":
                     contentFrame.Navigate(typeof(TripsOverviewPage));
                     break;
 
-                case "Category":
-                    contentFrame.Navigate(typeof(CategoryPage));
+                case "AddTripItem":
+                    contentFrame.Navigate(typeof(AddTripPage));
                     break;
+                       
+            }
+        }
 
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            switch ((string)args.Parameter)
+            {
+                case "TripList":
+                    nvMain.SelectedItem = TripListItem;
+                    break;
             }
         }
     }

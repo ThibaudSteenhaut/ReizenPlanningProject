@@ -1,0 +1,87 @@
+﻿<Page x:Class="ReizenPlanningProject.Views.Trips.AddTripPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:ReizenPlanningProject.Views.Trips"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Background="GhostWhite">
+        <TextBlock Text="Add a new trip"
+                   FontSize="48"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,35" />
+
+        <Grid BorderBrush="DarkGray"
+              BorderThickness="3"
+              Padding="25"
+              HorizontalAlignment="Center">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0"
+                        Margin="0,0,20,0">
+
+                <TextBlock  Text="Destination"
+                            FontSize="23"
+                            FontWeight="SemiBold" />
+
+                <TextBlock  Text="Departure date"
+                            Margin="0,40,0,0"
+                            FontSize="23"
+                            FontWeight="SemiBold" />
+
+                <TextBlock  Text="Return date"
+                            Margin="0,40,0,0"
+                            FontSize="23"
+                            FontWeight="SemiBold" />
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <TextBox PlaceholderText="Destination" 
+                         Text="{x:Bind _addTripVM.Destination, Mode=TwoWay}"/>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,40,0,0">
+                    <DatePicker SelectedDate="{x:Bind _addTripVM.DepartureDate, Mode=TwoWay}"/>
+                    <TextBlock Text="at"
+                               FontSize="23"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"
+                               Margin="10,0,10,0" />
+                    <TimePicker SelectedTime="{x:Bind _addTripVM.DepartureTime, Mode=TwoWay}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,40,0,0">
+                    <DatePicker SelectedDate="{x:Bind _addTripVM.ReturnDate, Mode=TwoWay}"/>
+                    <TextBlock Text="at"
+                               FontSize="23"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"
+                               Margin="10,0,10,0" />
+                    <TimePicker SelectedTime="{x:Bind _addTripVM.ReturnTime, Mode=TwoWay}"/>
+                </StackPanel>
+            </StackPanel>
+            
+            <Button Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Content="Add trip"
+                    FontSize="18"
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Center"
+                    Command="{x:Bind _addTripVM.AddTripCommand}"/>
+        </Grid>
+    </StackPanel>
+</Page>
