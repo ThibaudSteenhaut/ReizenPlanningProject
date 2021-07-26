@@ -22,14 +22,12 @@ namespace TravelAPI.Controllers
     public class TripController : ControllerBase
     {
         private readonly ITripRepository _tripRepository;
-        private readonly ICategoryRepository _categoryRepository;
         private readonly IItemRepository _itemRepository;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public TripController(ITripRepository tripRepo, ICategoryRepository categoryRepo, IItemRepository itemRepo, UserManager<IdentityUser> userManager)
+        public TripController(ITripRepository tripRepo, IItemRepository itemRepo, UserManager<IdentityUser> userManager)
         {
             _tripRepository = tripRepo;
-            _categoryRepository = categoryRepo;
             _itemRepository = itemRepo;
             _userManager = userManager;
         }
@@ -62,31 +60,6 @@ namespace TravelAPI.Controllers
             if (trip == null)
                 return NotFound();
             return Ok(new TripDTO(trip));
-        }
-
-        //GET: api/Trips/{id}/Items
-        /// <summary> 
-        /// Get all items of a trip 
-        /// </summary> 
-        /// <param name="id">The id of the trip</param> 
-        [HttpGet("{id}/items")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Policy = "User")]
-        public ActionResult<TripDTO> GetItemsBy(int id)
-        {
-
-            if (id < 0) 
-                return NotFound("Id can't be found");
-            
-            IEnumerable<TripItem> tripItems = _tripRepository.GetItemsBy(id);
-
-            if (tripItems == null) 
-                return NotFound("Id can't be found");
-
-            IEnumerable<ItemDTO> itemDTOs = tripItems.Select(ti => new ItemDTO(ti.Item.Name, ti.Item.Category, ti.Amount));
-
-            return Ok(itemDTOs);
         }
 
         //POST: api/Trip 
@@ -150,21 +123,21 @@ namespace TravelAPI.Controllers
         public ActionResult<TripItem> AddItemToTrip(int tripId, int itemId, int amount)
         {
 
-            if (tripId < 0) return BadRequest();
-            if (itemId < 0) return BadRequest();
+            //if (tripId < 0) return BadRequest();
+            //if (itemId < 0) return BadRequest();
 
-            Item item = _itemRepository.GetBy(itemId);
-            Trip trip = _tripRepository.GetBy(tripId);
+            //Item item = _itemRepository.GetBy(itemId);
+            //Trip trip = _tripRepository.GetBy(tripId);
 
-            if(item == null || trip == null)
-            {
-                return NotFound(); 
-            }
+            //if(item == null || trip == null)
+            //{
+            //    return NotFound(); 
+            //}
 
-            TripItem tripItem = new TripItem() { Trip = trip, Item = item, Amount = amount };
+            //TripItem tripItem = new TripItem() { Trip = trip, Item = item, Amount = amount };
 
-            _tripRepository.AddTripItem(tripItem);
-            _tripRepository.SaveChanges();
+            //_tripRepository.AddTripItem(tripItem);
+            //_tripRepository.SaveChanges();
             return Ok();
 
         }

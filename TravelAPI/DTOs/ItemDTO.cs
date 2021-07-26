@@ -15,19 +15,21 @@ namespace TravelAPI.DTOs
         
         public string Category { get; set; }
 
-        public int Amount { get; set; } = 1;
         #endregion
 
         #region Constructors
-        public ItemDTO()
+        public ItemDTO() { }
+
+        public ItemDTO(Item item)
         {
+            Name = item.Name;
+            Category = item.Category;
         }
 
-        public ItemDTO(string name, string category, int amount)
+        public ItemDTO(string name, string category)
         {
             Name = name;
             Category = category;
-            Amount = amount;
         }
         #endregion  
     }

@@ -53,7 +53,6 @@ namespace TravelAPI
             services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<DataInitializer>();
             services.AddScoped<ITripRepository, TripRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>(); 
             services.AddScoped<IItemRepository, ItemRepository>();
 
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();

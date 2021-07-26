@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 namespace TravelAPI.Models
 {
     public interface IItemRepository
-    { 
-        Item GetBy(int id);
+    {
+        IEnumerable<Item> GetItems(string userId);
         void SaveChanges();
     }
 }

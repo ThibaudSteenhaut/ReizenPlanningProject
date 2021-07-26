@@ -26,7 +26,8 @@
                                 Content="Add trip"
                                 Icon="Add"/>
             
-            <NavigationViewItem Content="Items"
+            <NavigationViewItem x:Name="GeneralItems"
+                                Content="Items"
                                 Icon="Edit" />
             
             <NavigationViewItem Content="History">

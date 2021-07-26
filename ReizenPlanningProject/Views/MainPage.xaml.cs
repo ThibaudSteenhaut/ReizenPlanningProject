@@ -1,5 +1,6 @@
 ﻿using ReizenPlanningProject.Model;
 using ReizenPlanningProject.ViewModel;
+using ReizenPlanningProject.Views.Items;
 using ReizenPlanningProject.Views.Trips;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,11 @@ namespace ReizenPlanningProject
                 case "AddTripItem":
                     contentFrame.Navigate(typeof(AddTripPage));
                     break;
-                       
+
+                case "GeneralItems":
+                    contentFrame.Navigate(typeof(GeneralItemPage));
+                    break;
+
             }
         }
 

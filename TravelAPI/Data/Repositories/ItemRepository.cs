@@ -18,9 +18,9 @@ namespace TravelAPI.Data.Repositories
             _context = context;
             _items = context.Items;
         }
-        public Item GetBy(int id)
+        public IEnumerable<Item> GetItems(string userId)
         {
-            return _items.FirstOrDefault(i => i.Id == id);
+            return _items.Where(i => i.User.Id == userId);
         }
 
         public void SaveChanges()

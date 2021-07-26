@@ -33,12 +33,6 @@ namespace ReizenPlanningProject
             this.DataContext = _tripOverviewViewModel;
         }
 
-        private void lv_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Trip selectedTrip = (Trip)tripLv.SelectedItem;
-            Frame.Navigate(typeof(DetailsPage), selectedTrip);
-        }
-
         private async void DeleteTrip_Click(object sender, RoutedEventArgs e)
         {
 

@@ -118,29 +118,23 @@
   <ItemGroup>
     <Compile Include="Converters\BooleanToVisibilityConverterXAML.cs" />
     <Compile Include="Data\Repositories\AccountRepository.cs" />
+    <Compile Include="Data\Repositories\ItemRepository.cs" />
     <Compile Include="Model\Authentication\LoginRequest.cs" />
     <Compile Include="Model\Authentication\RegisterRequest.cs" />
+    <Compile Include="Model\Domain\GroupItemList.cs" />
     <Compile Include="Model\IRepositories\IAccountRepository.cs" />
+    <Compile Include="Model\IRepositories\IItemRepository.cs" />
     <Compile Include="Vault\TokenVault.cs" />
+    <Compile Include="ViewModel\Items\GeneralItemsViewModel.cs" />
     <Compile Include="ViewModel\Login\LoginViewModel.cs" />
     <Compile Include="ViewModel\Login\RegisterViewModel.cs" />
     <Compile Include="ViewModel\Trips\AddTripViewModel.cs" />
-    <Compile Include="Views\AddCategoryToTripContentDialog.xaml.cs">
-      <DependentUpon>AddCategoryToTripContentDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AddNewCategoryDialog.xaml.cs">
-      <DependentUpon>AddNewCategoryDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CategoryPage.xaml.cs">
-      <DependentUpon>CategoryPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Converters\DateFormatter.cs" />
-    <Compile Include="Data\Repositories\CategoryRepository.cs" />
-    <Compile Include="Views\DetailsPage.xaml.cs">
-      <DependentUpon>DetailsPage.xaml</DependentUpon>
+    <Compile Include="Views\Items\GeneralItemPage.xaml.cs">
+      <DependentUpon>GeneralItemPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -153,7 +147,6 @@
     </Compile>
     <Compile Include="Model\Domain\Category.cs" />
     <Compile Include="Model\Domain\Item.cs" />
-    <Compile Include="Model\IRepositories\ICategoryRepository.cs" />
     <Compile Include="Model\IRepositories\ITripRepository.cs" />
     <Compile Include="Data\Repositories\TripRepository.cs" />
     <Compile Include="Model\Domain\Trip.cs" />
@@ -164,9 +157,7 @@
     <Compile Include="Views\Trips\TripsOverviewPage.xaml.cs">
       <DependentUpon>TripsOverviewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\CategoryOverviewViewModel.cs" />
     <Compile Include="ViewModel\Commands\RelayCommand.cs" />
-    <Compile Include="ViewModel\DetailsPageViewModel.cs" />
     <Compile Include="ViewModel\Trips\TripOverviewViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -191,19 +182,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\AddCategoryToTripContentDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AddNewCategoryDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CategoryPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\DetailsPage.xaml">
+    <Page Include="Views\Items\GeneralItemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

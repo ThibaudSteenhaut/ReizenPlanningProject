@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,14 +11,18 @@ namespace TravelAPI.Models
     public class Item
     {
 
-        #region Fields
+        #region Properties
+
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 
+        [Required] 
         public string Category { get; set; }
 
-        public ICollection<TripItem> TripItems { get; set; }
+        [Required]
+        public IdentityUser User { get; set; }
 
         #endregion
 
@@ -28,15 +33,17 @@ namespace TravelAPI.Models
 
         }
 
-        public Item(string name, string category, int amount)
+        public Item(string name, string category, IdentityUser user)
         {
             Name = name;
             Category = category;
+            User = user;
         }
 
-        public Item(ItemDTO dto)
+        public Item(ItemDTO dto, IdentityUser user)
         {
             Name = dto.Name;
+            User = user; 
         }
         
         #endregion
