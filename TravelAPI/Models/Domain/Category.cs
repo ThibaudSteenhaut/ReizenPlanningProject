@@ -1,25 +1,27 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace ReizenPlanningProject.Model
+namespace TravelAPI.Models.Domain
 {
     public class Category
     {
+        
         public int Id { get; set; }
         public string Name { get; set; }
-       
+        public IdentityUser User { get; set; }
+
         public Category()
         {
 
         }
-
-        public Category(string name)
+        
+        public Category(string name, IdentityUser user)
         {
             Name = name;
+            User = user;
         }
     }
 }

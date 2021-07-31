@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TravelAPI.Models;
+using TravelAPI.Models.Domain;
 
 namespace TravelAPI.Data.Repositories
 {
@@ -62,23 +63,38 @@ namespace TravelAPI.Data.Repositories
                 };
 
 
-                Item i1 = new Item("Gsm", "Electronica", user1);
-                Item i2 = new Item("Oplader","Electronica", user1);;
-                Item i3 = new Item("Fototoestel", "Electronica", user1);
-                Item i4 = new Item("Tandenborstel","Toiletspullen", user1);
-                Item i5 = new Item("Broek","Kleren", user1);
-                Item i6 = new Item("T-shirt", "Kleren", user1);
-                Item i7 = new Item("Laptop", "Electronica", user1);
-                Item i8 = new Item("Laptop oplader", "Electronica", user1); 
-                Item i9 = new Item("Zwembroek", "Kleren", user1);
-                Item i10 = new Item("Bikini", "Kleren", user1);
-                Item i11 = new Item("Kam", "Toiletspullen", user1);
-                Item i12 = new Item("Rekkers", "Toiletspullen", user1);
-                Item i13 = new Item("Boek 1 : Met een iets langere titel", "Boeken", user1);
-                Item i14 = new Item("Boek 2 : Blabla", "Boeken", user1);
-                Item i15 = new Item("Boek 3 : Blabla", "Boeken", user1);
-                Item i16 = new Item("Boek 4 : Blabla", "Boeken", user1);
-                Item i17 = new Item("Rekkers", "Prullen", user1);
+                Category c1 = new Category("Electronica", user1);
+                Category c2 = new Category("Toiletspullen", user1);
+                Category c3 = new Category("Kleren", user1);
+                Category c4 = new Category("Boeken", user1);
+                Category c5 = new Category("Prullen", user1);
+                Category c6 = new Category("Alfatest", user1);
+
+                _context.Categories.Add(c1);
+                _context.Categories.Add(c2);
+                _context.Categories.Add(c3);
+                _context.Categories.Add(c4);
+                _context.Categories.Add(c5);
+                _context.Categories.Add(c6);
+
+                Item i1 = new Item("Gsm", c1, user1);
+                Item i2 = new Item("Oplader",c1, user1);;
+                Item i3 = new Item("Fototoestel", c1, user1);
+                Item i4 = new Item("Tandenborstel", c1, user1);
+                Item i5 = new Item("Broek", c3, user1);
+                Item i6 = new Item("T-shirt", c3, user1);
+                Item i7 = new Item("Laptop", c1, user1);
+                Item i8 = new Item("Laptop oplader", c1, user1); 
+                Item i9 = new Item("Zwembroek", c3, user1);
+                Item i10 = new Item("Bikini", c3, user1);
+                Item i11 = new Item("Kam", c2, user1);
+                Item i12 = new Item("Rekkers", c2, user1);
+                Item i13 = new Item("Boek 1 : Met een iets langere titel", c4, user1);
+                Item i14 = new Item("Boek 2 : Blabla", c4, user1);
+                Item i15 = new Item("Boek 3 : Blabla", c4, user1);
+                Item i16 = new Item("Boek 4 : Blabla", c4, user1);
+                Item i17 = new Item("Rekkers", c5, user1);
+                Item i18 = new Item("Alfatest", c6, user1);
 
                 _context.Trips.Add(t1);
                 _context.Trips.Add(t2);
@@ -101,6 +117,7 @@ namespace TravelAPI.Data.Repositories
                 _context.Items.Add(i15);
                 _context.Items.Add(i16);
                 _context.Items.Add(i17);
+                _context.Items.Add(i18);
 
                 _context.SaveChanges(); 
             }

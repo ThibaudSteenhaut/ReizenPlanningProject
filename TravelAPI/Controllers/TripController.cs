@@ -75,8 +75,15 @@ namespace TravelAPI.Controllers
 
             if (!ModelState.IsValid || tripDTO == null) 
                 return BadRequest("Invalid model");
-                      
-            Trip tripToCreate = new Trip(tripDTO, GetCurrentUser());
+
+            IdentityUser currentUser = GetCurrentUser(); 
+
+            if(currentUser == null) 
+            {
+                return BadRequest();
+            }
+
+            Trip tripToCreate = new Trip(tripDTO, currentUser);
             _tripRepository.Add(tripToCreate);
             _tripRepository.SaveChanges();
             return Ok(tripToCreate.Id);

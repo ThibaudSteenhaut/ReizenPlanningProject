@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ReizenPlanningProject.Model.Domain
 {
-    public class GroupItemList : List<object>
+    public class GroupItemList : List<Item>
     {
-        public GroupItemList(IEnumerable<object> items) : base(items)
+        public GroupItemList(IEnumerable<Item> items) : base(items)
         {
 
         }
 
-        public object Key { get; set; }
+        public string Key { get; set; }
     }
 }

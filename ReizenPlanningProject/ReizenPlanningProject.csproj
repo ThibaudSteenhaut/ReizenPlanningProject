@@ -133,6 +133,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DateFormatter.cs" />
+    <Compile Include="Views\Dialogs\AddCategoryDialog.xaml.cs">
+      <DependentUpon>AddCategoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AddItemDialog.xaml.cs">
+      <DependentUpon>AddItemDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Items\GeneralItemPage.xaml.cs">
       <DependentUpon>GeneralItemPage.xaml</DependentUpon>
     </Compile>
@@ -182,6 +188,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\Dialogs\AddCategoryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\AddItemDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Items\GeneralItemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -229,7 +243,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Styles\" />
-    <Folder Include="Views\Dialogs\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

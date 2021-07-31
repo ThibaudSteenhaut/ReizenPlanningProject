@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using TravelAPI.DTOs;
+using TravelAPI.Models.Domain;
 
 namespace TravelAPI.Models
 {
@@ -19,7 +20,7 @@ namespace TravelAPI.Models
         public string Name { get; set; }
 
         [Required] 
-        public string Category { get; set; }
+        public Category Category { get; set; }
 
         [Required]
         public IdentityUser User { get; set; }
@@ -33,17 +34,18 @@ namespace TravelAPI.Models
 
         }
 
-        public Item(string name, string category, IdentityUser user)
+        public Item(string name, Category category, IdentityUser user)
         {
             Name = name;
             Category = category;
             User = user;
         }
 
-        public Item(ItemDTO dto, IdentityUser user)
+        public Item(ItemDTO item, Category category, IdentityUser user)
         {
-            Name = dto.Name;
-            User = user; 
+            Name = item.Name;
+            Category = category;
+            User = user;
         }
         
         #endregion

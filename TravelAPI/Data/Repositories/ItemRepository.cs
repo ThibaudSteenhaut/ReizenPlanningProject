@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TravelAPI.DTOs;
 using TravelAPI.Models;
+using TravelAPI.Models.Domain;
 
 namespace TravelAPI.Data.Repositories
 {
@@ -12,15 +14,33 @@ namespace TravelAPI.Data.Repositories
 
         private readonly ApplicationDbContext _context;
         private readonly DbSet<Item> _items;
+        private readonly DbSet<Category> _categories;
 
         public ItemRepository(ApplicationDbContext context)
         {
             _context = context;
             _items = context.Items;
+            _categories = context.Categories;
         }
+
         public IEnumerable<Item> GetItems(string userId)
         {
-            return _items.Where(i => i.User.Id == userId);
+            return _items.Include(i => i.Category).Where(i => i.User.Id == userId).OrderBy(i => i.Category).ThenBy(i => i.Name);
+        }
+
+        public IEnumerable<Category> GetCategories(string userId)
+        {
+            return _categories.Where(c => c.User.Id == userId).OrderBy(c => c.Name);
+        }
+
+        public void AddCategory(Category category)
+        {
+            _categories.Add(category);
+        }
+
+        public void Add(Item item)
+        {
+            _items.Attach(item); 
         }
 
         public void SaveChanges()

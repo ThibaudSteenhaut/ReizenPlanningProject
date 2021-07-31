@@ -4,36 +4,69 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:data="using:ReizenPlanningProject.Model.Domain"
+      xmlns:domain="using:ReizenPlanningProject.Model"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
         <CollectionViewSource x:Name="GroupedItems"
-                              Source="{x:Bind _itemsVM.GroupedItemsList}"
+                              Source="{x:Bind _itemsVM.GroupedItemsList, Mode=TwoWay}"
                               IsSourceGrouped="True">
         </CollectionViewSource>
     </Page.Resources>
     <ScrollViewer>
-        <ListView x:Name="itemsLv"
-                  ItemsSource="{x:Bind GroupedItems.View, Mode=OneWay}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Name }" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate x:DataType="data:GroupItemList">
-                            <TextBlock FontWeight="Bold"
-                                       FontSize="24"
-                                       Text="{x:Bind Key}" />
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
-        </ListView>
+        <StackPanel>
+            <TextBlock Text="General items"
+                       FontSize="48"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Add item"
+                        Margin="10"
+                        Command="{x:Bind _itemsVM.AddItemCommand}"/>
+                <Button Content="Add category"
+                        Margin="10"
+                        Command="{x:Bind _itemsVM.AddCategoryCommand}" />
+                <Button Command="{x:Bind _itemsVM.SaveCommand}">
+                    <Button.Content>
+                        <FontIcon FontFamily="Segoe MDL2 Assets"
+                                  Glyph="&#xE74E;" />
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            
+            <ProgressRing IsActive="{x:Bind _itemsVM.IsProgressRingActive, Mode=TwoWay}" />
+            
+            <ListView x:Name="itemsLv"
+                      ItemsSource="{x:Bind GroupedItems.View, Mode=OneWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="domain:Item" >
+                        <TextBlock Grid.Column="0"
+                                   Text="{x:Bind Name}" 
+                                   FontSize="18"
+                                   VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate x:DataType="data:GroupItemList">
+                                <TextBlock FontWeight="Bold"
+                                           FontSize="24"
+                                           Text="{x:Bind Key}" />
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+        </StackPanel>
     </ScrollViewer>
 </Page>

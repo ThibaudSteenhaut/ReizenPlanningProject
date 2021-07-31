@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TravelAPI.DTOs;
 using TravelAPI.Models;
+using TravelAPI.Models.Domain;
 
 namespace TravelAPI.Controllers
 {
@@ -42,6 +44,7 @@ namespace TravelAPI.Controllers
         [Authorize(Policy = "User")]
         public ActionResult<IEnumerable<ItemDTO>> GetItems()
         {
+
             IdentityUser currentUser = GetCurrentUser();
 
             if (currentUser == null)
@@ -53,6 +56,104 @@ namespace TravelAPI.Controllers
 
             return Ok(items);
         }
+
+        //POST: api/Items
+        /// <summary>
+        /// Add a general item to the logged in user 
+        /// </summary>
+        [HttpPost]
+        [Authorize(Policy = "User")]
+        public ActionResult<ItemDTO> AddItem(ItemDTO item)
+        {
+
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+
+            Item itemToCreate = new Item(item, item.Category, currentUser);
+
+            Debug.WriteLine(itemToCreate.Id);
+            Debug.WriteLine(itemToCreate.Name);
+            Debug.WriteLine(itemToCreate.Category.Name);
+            Debug.WriteLine(itemToCreate.Category.Id);
+            _itemRepository.Add(itemToCreate);
+            _itemRepository.SaveChanges();
+
+            return Ok(itemToCreate.Id);
+
+        }
+
+        //GET: api/Items/Categories
+        /// <summary> 
+        /// Gets the categories of the logged in user
+        /// </summary> 
+        [HttpGet("categories")]
+        [Authorize(Policy = "User")]
+        public ActionResult<IEnumerable<CategoryDTO>> GetCategories()
+        {
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            IEnumerable<CategoryDTO> categories = _itemRepository.GetCategories(GetCurrentUser().Id).Select(c => new CategoryDTO(c));
+
+            return Ok(categories);
+        }
+
+
+        //POST: api/Items
+        /// <summary>
+        /// Add a general item to the logged in user 
+        /// </summary>
+        [HttpPost("category")]
+        [Authorize(Policy = "User")]
+        public ActionResult<int> AddCategory(Category category)
+        {
+
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null || String.IsNullOrEmpty(category.Name))
+            {
+                return BadRequest();
+            }
+
+            Category categoryToCreate = new Category(category.Name, currentUser); 
+            _itemRepository.AddCategory(categoryToCreate);
+            _itemRepository.SaveChanges();
+
+            return Ok(categoryToCreate.Id);
+
+        }
+
+
+        //PUT: api/Items
+        /// <summary>
+        /// Updates the items of the logged in user
+        /// </summary>
+        [HttpPut]
+        [Authorize(Policy = "User")]
+        public ActionResult UpdateItems(List<ItemDTO> items)
+        {
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            //items.ForEach(i => _itemRepository.Update(i));
+            _itemRepository.SaveChanges();
+
+            return Ok();
+        }
+
 
         //GET: api/Trips/{id}/Items
         /// <summary> 
