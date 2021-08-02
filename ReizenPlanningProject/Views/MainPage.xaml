@@ -37,6 +37,16 @@
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
         </NavigationView.MenuItems>
+        <NavigationView.PaneFooter>
+            <NavigationViewItem x:Name="LogoutItem"
+                                Content="Logout"
+                                Tapped="LogoutItem_Tapped">
+                <NavigationViewItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets"
+                              Glyph="&#xF3B1;" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+        </NavigationView.PaneFooter>
 
         <Frame x:Name="contentFrame" />
 

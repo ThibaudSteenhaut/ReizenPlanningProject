@@ -1,6 +1,8 @@
 ﻿using ReizenPlanningProject.Model;
+using ReizenPlanningProject.Vault;
 using ReizenPlanningProject.ViewModel;
 using ReizenPlanningProject.Views.Items;
+using ReizenPlanningProject.Views.Login;
 using ReizenPlanningProject.Views.Trips;
 using System;
 using System.Collections.Generic;
@@ -64,6 +66,12 @@ namespace ReizenPlanningProject
                     nvMain.SelectedItem = TripListItem;
                     break;
             }
+        }
+
+        private void LogoutItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            TokenVault.Token = "";
+            Frame.Navigate(typeof(LoginPage));
         }
     }
 }
