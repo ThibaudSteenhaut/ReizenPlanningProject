@@ -48,8 +48,8 @@ namespace ReizenPlanningProject.ViewModel.Items
 
         #region Commands 
 
-        public RelayCommand SaveCommand { get; set; }
         public RelayCommand AddItemCommand { get; set; }
+        public RelayCommand DeleteItemCommand { get; set; }
         public RelayCommand AddCategoryCommand { get; set; }
 
         #endregion
@@ -60,9 +60,9 @@ namespace ReizenPlanningProject.ViewModel.Items
         {
             this.IsProgressRingActive = _isProgressRingActive;
             Initialize();
-            SaveCommand = new RelayCommand(param => this.Save());
             AddItemCommand = new RelayCommand(param => this.AddItem());
             AddCategoryCommand = new RelayCommand(param => this.AddCategory());
+            DeleteItemCommand = new RelayCommand(param => this.DeleteItem(param));
         }
 
         #endregion
@@ -93,7 +93,8 @@ namespace ReizenPlanningProject.ViewModel.Items
                 if (!String.IsNullOrEmpty(dialog.Name) && dialog.SelectedCategory != null)
                 {
                     Item itemToAdd = new Item(dialog.Name, dialog.SelectedCategory);
-                    _itemRepository.Add(itemToAdd);
+                    int id = await _itemRepository.Add(itemToAdd);
+                    itemToAdd.Id = id;
                     Items.Add(itemToAdd);
                     BuildItemList();
                 }
@@ -150,9 +151,14 @@ namespace ReizenPlanningProject.ViewModel.Items
             groupedItems.ForEach(g => GroupedItemsList.Add(g));
         }
 
-        public void Save()
+        private void DeleteItem(object param)
         {
 
+            Item i = (Item)param;
+            Debug.WriteLine(i.Id);
+            _itemRepository.Delete(i.Id);
+            Items.Remove(i);
+            BuildItemList();
         }
 
         public List<GroupItemList> GetItemsGrouped()

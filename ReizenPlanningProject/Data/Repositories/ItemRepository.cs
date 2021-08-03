@@ -34,14 +34,24 @@ namespace ReizenPlanningProject.Data.Repositories
             return items;
         }
 
-        public async void Add(Item itemToAdd)
+        public async Task<int> Add(Item itemToAdd)
         {
 
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
             var itemJson = JsonConvert.SerializeObject(itemToAdd);
             var stringContent = new StringContent(itemJson, Encoding.UTF8, "application/json");
-            await _client.PostAsync(_baseUrl, stringContent);
+            HttpResponseMessage response = await _client.PostAsync(_baseUrl, stringContent);
 
+            string itemId = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return Int32.Parse(itemId);
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         public async Task<int> AddCategory(Category categoryToAdd)
@@ -70,6 +80,12 @@ namespace ReizenPlanningProject.Data.Repositories
             var categories = JsonConvert.DeserializeObject<ObservableCollection<Category>>(json);
 
             return categories;
+        }
+
+        public async void Delete(int itemId)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            await _client.DeleteAsync($"{_baseUrl}/{itemId}");
         }
     }
 }

@@ -10,7 +10,8 @@ namespace ReizenPlanningProject.Model.IRepositories
     public interface IItemRepository
     {
         Task<int> AddCategory(Category category);
-        void Add(Item item);
+        Task<int> Add(Item item);
+        void Delete(int itemId); 
         ObservableCollection<Item> GetItems();
         ObservableCollection<Category> GetCategories(); 
     }

@@ -21,38 +21,41 @@
                        FontWeight="SemiBold"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
-            
+
             <StackPanel Orientation="Horizontal">
                 <Button Content="Add item"
                         Margin="10"
-                        Command="{x:Bind _itemsVM.AddItemCommand}"/>
+                        Command="{x:Bind _itemsVM.AddItemCommand}" />
                 <Button Content="Add category"
                         Margin="10"
                         Command="{x:Bind _itemsVM.AddCategoryCommand}" />
-                <Button Command="{x:Bind _itemsVM.SaveCommand}">
-                    <Button.Content>
-                        <FontIcon FontFamily="Segoe MDL2 Assets"
-                                  Glyph="&#xE74E;" />
-                    </Button.Content>
-                </Button>
             </StackPanel>
-            
+
             <ProgressRing IsActive="{x:Bind _itemsVM.IsProgressRingActive, Mode=TwoWay}" />
-            
+
             <ListView x:Name="itemsLv"
                       ItemsSource="{x:Bind GroupedItems.View, Mode=OneWay}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment"
                                 Value="Stretch" />
+                        <Setter Property="ContextFlyout">
+                            <Setter.Value>
+                                <MenuFlyout Opening="MenuFlyout_Opening">
+                                    <MenuFlyoutItem Text="Delete"
+                                                    Icon="Delete"
+                                                    Click="MenuFlyoutItem_Click"/>
+                                </MenuFlyout>
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="domain:Item" >
+                    <DataTemplate x:DataType="domain:Item">
                         <TextBlock Grid.Column="0"
-                                   Text="{x:Bind Name}" 
+                                   Text="{x:Bind Name}"
                                    FontSize="18"
-                                   VerticalAlignment="Center"/>
+                                   VerticalAlignment="Center" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.GroupStyle>

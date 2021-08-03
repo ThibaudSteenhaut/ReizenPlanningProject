@@ -73,18 +73,37 @@ namespace TravelAPI.Controllers
                 return BadRequest();
             }
 
-
             Item itemToCreate = new Item(item, item.Category, currentUser);
-
-            Debug.WriteLine(itemToCreate.Id);
-            Debug.WriteLine(itemToCreate.Name);
-            Debug.WriteLine(itemToCreate.Category.Name);
-            Debug.WriteLine(itemToCreate.Category.Id);
             _itemRepository.Add(itemToCreate);
             _itemRepository.SaveChanges();
 
             return Ok(itemToCreate.Id);
 
+        }
+
+        //DELETE: api/Items/{id} 
+        /// <summary> 
+        /// Delete an item 
+        /// </summary> 
+        /// <param name="id">The id of the item to delete</param> 
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "User")]
+        public ActionResult<Trip> DeleteItem(int id)
+        {
+
+            if (id < 0)
+                return BadRequest("Not a valid item id");
+
+            Item item = _itemRepository.GetBy(id);
+
+            if (item == null)
+                return NotFound();
+
+            _itemRepository.Delete(item);
+            _itemRepository.SaveChanges();
+            return Ok();
         }
 
         //GET: api/Items/Categories
