@@ -33,7 +33,7 @@ namespace TravelAPI.Data.Repositories
 
         public IEnumerable<TripDTO> GetTrips(string userId)
         {
-            return _trips.Where(t => t.User.Id == userId).OrderBy(t => t.DepartureDate).Select(t => new TripDTO(t)); 
+            return _trips.Where(t => t.User.Id == userId).Where(t => t.ReturnDate > DateTime.Now).OrderBy(t => t.DepartureDate).Select(t => new TripDTO(t)); 
         }
 
         public Trip GetBy(int id)

@@ -43,17 +43,25 @@ namespace TravelAPI.Data.Repositories
                 Trip t1 = new Trip() 
                 { 
                     Destination = "Rome", 
-                    DepartureDate = new DateTime(2020, 12, 30, 12, 30, 00), 
-                    ReturnDate = new DateTime(2021, 1, 10, 14, 30, 00),
+                    DepartureDate = new DateTime(2022, 12, 30, 12, 30, 00), 
+                    ReturnDate = new DateTime(2023, 1, 10, 14, 30, 00),
                     User = user1
                 };
                 Trip t2 = new Trip() 
                 { 
-                    Destination = "Parijs", 
-                    DepartureDate = new DateTime(2021, 1, 10, 13, 30, 00), 
+                    Destination = "Parijs, 2022", 
+                    DepartureDate = new DateTime(2022, 1, 10, 13, 30, 00), 
+                    ReturnDate = new DateTime(2022, 2, 10, 21, 45, 00),
+                    User = user1
+                };
+                Trip t4 = new Trip()
+                {
+                    Destination = "Parijs",
+                    DepartureDate = new DateTime(2021, 1, 10, 13, 30, 00),
                     ReturnDate = new DateTime(2021, 2, 10, 21, 45, 00),
                     User = user1
                 };
+
                 Trip t3 = new Trip()
                 {
                     Destination = "Praag",
@@ -99,6 +107,7 @@ namespace TravelAPI.Data.Repositories
                 _context.Trips.Add(t1);
                 _context.Trips.Add(t2);
                 _context.Trips.Add(t3);
+                _context.Trips.Add(t4);
 
                 _context.Items.Add(i1);
                 _context.Items.Add(i2);

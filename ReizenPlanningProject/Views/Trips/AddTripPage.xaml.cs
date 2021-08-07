@@ -1,6 +1,7 @@
 ﻿using ReizenPlanningProject.ViewModel.Trips;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -27,6 +28,15 @@ namespace ReizenPlanningProject.Views.Trips
             this.InitializeComponent();
             _addTripVM = new AddTripViewModel();
             this.DataContext = _addTripVM; 
+        }
+
+        private void CalendarDatePicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        {
+
+            if(DepartureDate.Date > ReturnDate.Date)
+            {
+                ReturnDate.Date = DepartureDate.Date.Value.AddDays(7);
+            }
         }
     }
 }

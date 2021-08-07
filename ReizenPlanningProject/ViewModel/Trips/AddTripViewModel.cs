@@ -24,13 +24,16 @@ namespace ReizenPlanningProject.ViewModel.Trips
 
         #region Properties 
 
+        public DateTimeOffset Today = new DateTimeOffset(DateTime.Now.ToUniversalTime());
+
         public string Destination { get; set; }
 
-        public DateTimeOffset DepartureDate { get; set; }
+        public DateTime DepartureDate { get; set; }
         public TimeSpan DepartureTime { get; set; }
 
-        public DateTimeOffset ReturnDate { get; set; }
+        public DateTime ReturnDate { get; set; }
         public TimeSpan ReturnTime { get; set; }
+
 
         #endregion
 
@@ -44,11 +47,10 @@ namespace ReizenPlanningProject.ViewModel.Trips
 
         public AddTripViewModel()
         {
-
             AddTripCommand = new RelayCommand(parm => AddTrip());
-            DepartureDate = DateTime.Now;
+            DepartureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             DepartureTime = DateTime.Now.TimeOfDay;
-            ReturnDate = DepartureDate.AddDays(1); 
+            ReturnDate = DepartureDate.AddDays(7); 
         }
 
         #endregion
@@ -57,27 +59,14 @@ namespace ReizenPlanningProject.ViewModel.Trips
 
         public async void AddTrip()
         {
+
             if(!String.IsNullOrEmpty(Destination))
             {
-                DateTime departureDt = new DateTime(
-                    DepartureDate.Year, 
-                    DepartureDate.Month, 
-                    DepartureDate.Month, 
-                    DepartureTime.Hours, 
-                    DepartureTime.Minutes, 
-                    DepartureTime.Seconds);
-              
-                DateTime returnDt = new DateTime(
-                    ReturnDate.Year,
-                    ReturnDate.Month,
-                    ReturnDate.Month,
-                    ReturnTime.Hours,
-                    ReturnTime.Minutes,
-                    ReturnTime.Seconds);
+                DepartureDate = DepartureDate.AddHours(DepartureTime.Hours).AddMinutes(DepartureTime.Minutes);
+                ReturnDate = ReturnDate.AddHours(ReturnTime.Hours).AddMinutes(ReturnTime.Minutes);
 
-                await _tripRepository.Add(new Trip(Destination, departureDt, returnDt));
+                await _tripRepository.Add(new Trip(Destination, DepartureDate, ReturnDate));
                 NavigateToListOverview();
-              
             }
 
         }

@@ -4,9 +4,14 @@
       xmlns:local="using:ReizenPlanningProject.Views.Trips"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:c="using:ReizenPlanningProject.Converters"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <c:DateTimeConverter x:Name="DateTimeConverter" />
+    </Page.Resources>
+    
     <StackPanel Background="GhostWhite">
         <TextBlock Text="Add a new trip"
                    FontSize="48"
@@ -54,24 +59,42 @@
 
                 <StackPanel Orientation="Horizontal"
                             Margin="0,40,0,0">
-                    <DatePicker SelectedDate="{x:Bind _addTripVM.DepartureDate, Mode=TwoWay}"/>
+
+                    <CalendarDatePicker x:Name="DepartureDate"
+                                        MinDate="{x:Bind _addTripVM.Today}"
+                                        Date="{x:Bind _addTripVM.DepartureDate, Mode=TwoWay, Converter={StaticResource DateTimeConverter}}"
+                                        DateFormat="{}{dayofweek.full}‎, ‎{month.full}‎ ‎{day.integer}‎, ‎{year.full}"
+                                        Width="250"
+                                        DateChanged="CalendarDatePicker_DateChanged"/> 
+                    
                     <TextBlock Text="at"
                                FontSize="23"
                                FontWeight="SemiBold"
                                VerticalAlignment="Center"
                                Margin="10,0,10,0" />
-                    <TimePicker SelectedTime="{x:Bind _addTripVM.DepartureTime, Mode=TwoWay}"/>
+                    
+                    <TimePicker SelectedTime="{x:Bind _addTripVM.DepartureTime, Mode=TwoWay}"
+                                MinuteIncrement="10"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal"
                             Margin="0,40,0,0">
-                    <DatePicker SelectedDate="{x:Bind _addTripVM.ReturnDate, Mode=TwoWay}"/>
+
+                    <CalendarDatePicker x:Name="ReturnDate"
+                                        Date="{x:Bind _addTripVM.ReturnDate, Mode=TwoWay, Converter={StaticResource DateTimeConverter}}"
+                                        DateFormat="{}{dayofweek.full}‎, ‎{month.full}‎ ‎{day.integer}‎, ‎{year.full}" 
+                                        MinDate="{Binding Date, ElementName=DepartureDate}"
+                                        Width="250"/>
+                    
                     <TextBlock Text="at"
                                FontSize="23"
                                FontWeight="SemiBold"
                                VerticalAlignment="Center"
                                Margin="10,0,10,0" />
-                    <TimePicker SelectedTime="{x:Bind _addTripVM.ReturnTime, Mode=TwoWay}"/>
+                    
+                    <TimePicker SelectedTime="{x:Bind _addTripVM.ReturnTime, Mode=TwoWay}"
+                                MinuteIncrement="10"/>
+                    
                 </StackPanel>
             </StackPanel>
             

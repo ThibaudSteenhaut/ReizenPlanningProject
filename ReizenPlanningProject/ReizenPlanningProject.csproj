@@ -117,6 +117,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Converters\BooleanToVisibilityConverterXAML.cs" />
+    <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Data\Repositories\AccountRepository.cs" />
     <Compile Include="Data\Repositories\ItemRepository.cs" />
     <Compile Include="Model\Authentication\LoginRequest.cs" />
