@@ -1,0 +1,121 @@
+﻿<Page x:Class="ReizenPlanningProject.Views.Trips.TripDetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:ReizenPlanningProject.Views.Trips"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:data="using:ReizenPlanningProject.Model.Domain"
+      xmlns:domain="using:ReizenPlanningProject.Model"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="GroupedTripItems"
+                              Source="{x:Bind _detailVM.GroupedTripItemsList, Mode=TwoWay}"
+                              IsSourceGrouped="True">
+        </CollectionViewSource>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Text="{x:Bind _detailVM.Trip.Destination, Mode=OneWay}"
+                   FontSize="48"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,25" />
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        BorderBrush="DarkGray"
+                        BorderThickness="2"
+                        Background="LightGray"
+                        Padding="15">
+                <TextBlock Text="From:"
+                           FontSize="24"
+                           FontWeight="SemiBold"
+                           Margin="0,0,5,0" />
+                <TextBlock Text="{x:Bind _detailVM.Trip.DepartureDate.ToLongDateString(), Mode=OneWay}"
+                           FontSize="24" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        BorderBrush="DarkGray"
+                        BorderThickness="2"
+                        Background="LightGray"
+                        Padding="15">
+                <TextBlock Text="To:"
+                           FontSize="24"
+                           FontWeight="SemiBold"
+                           Margin="0,0,5,0" />
+                <TextBlock Text="{x:Bind _detailVM.Trip.ReturnDate.ToLongDateString(), Mode=OneWay}"
+                           FontSize="24" />
+            </StackPanel>
+
+        </Grid>
+
+        <StackPanel Grid.Row="2"
+                    Padding="10">
+            <TextBlock Text="Items"
+                       FontSize="36"
+                       FontWeight="SemiBold"
+                       Padding="5" />
+            <Rectangle Fill="DarkGray"
+                       Height="2"></Rectangle>
+
+            <ListView x:Name="itemsLv"
+                      ItemsSource="{x:Bind GroupedTripItems.View, Mode=OneWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:TripItem">
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Bind Amount}"
+                                       FontSize="18"
+                                       FontWeight="SemiBold" />
+                            <TextBlock Text="x"
+                                       FontSize="18"
+                                       FontWeight="SemiBold" 
+                                       Margin="0,0,5,0"/>
+                            <TextBlock Text="{x:Bind Item.Name}"
+                                       FontSize="18"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate x:DataType="data:GroupTripItemList">
+                                <TextBlock FontWeight="Bold"
+                                           FontSize="24"
+                                           Text="{x:Bind Key}" />
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+        </StackPanel>
+        
+    </Grid>
+</Page>

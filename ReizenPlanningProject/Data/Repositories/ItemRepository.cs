@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using ReizenPlanningProject.Model;
+using ReizenPlanningProject.Model.Domain;
 using ReizenPlanningProject.Model.IRepositories;
 using ReizenPlanningProject.Vault;
 using System;
@@ -86,6 +87,18 @@ namespace ReizenPlanningProject.Data.Repositories
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
             await _client.DeleteAsync($"{_baseUrl}/{itemId}");
+        }
+
+        public ObservableCollection<TripItem> GetTripItems(int tripId)
+        {
+
+            Debug.WriteLine("Gettripitems in repo");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            Debug.WriteLine($"{_baseUrl}/{tripId}/tripitems");
+            var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/tripitems").Result;
+            var items = JsonConvert.DeserializeObject<ObservableCollection<TripItem>>(json);
+
+            return items;
         }
     }
 }

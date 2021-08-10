@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -28,10 +29,7 @@ namespace ReizenPlanningProject.Model
 
         public override string ToString()
         {
-            return String.Concat($"id: {Id}, " +
-                $"Destination: {Destination}, " +
-                $"DepartureDate: {DepartureDate} " +
-                $"ReturnDate: {ReturnDate}");
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

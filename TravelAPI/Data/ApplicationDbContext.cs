@@ -30,9 +30,8 @@ namespace TravelAPI.Data
             builder.ApplyConfiguration(new TripConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new ItemConfiguration());
-
-            builder.Entity<TripItem>().HasKey(ci => new { ci.TripId, ci.ItemId });
-
+            builder.ApplyConfiguration(new TripItemConfiguration());
+            
         }
     }
 }

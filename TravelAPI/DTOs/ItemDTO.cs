@@ -17,7 +17,9 @@ namespace TravelAPI.DTOs
 
         public string Name { get; set; }
         
-        public Category Category { get; set; }
+        public CategoryDTO Category { get; set; }
+
+        public bool IsGeneralItem { get; set; }
 
         #endregion
 
@@ -28,13 +30,15 @@ namespace TravelAPI.DTOs
         {
             Id = item.Id;
             Name = item.Name;
-            Category = item.Category;
+            Category = new CategoryDTO(item.Category);
+            IsGeneralItem = item.IsGeneralItem;
         }
 
-        public ItemDTO(string name, Category category)
+        public ItemDTO(string name, CategoryDTO category, bool isGeneralItem)
         {
             Name = name;
             Category = category;
+            IsGeneralItem = isGeneralItem;
         }
         #endregion  
     }

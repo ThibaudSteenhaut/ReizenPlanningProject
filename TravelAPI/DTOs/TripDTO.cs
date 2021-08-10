@@ -10,7 +10,8 @@ namespace TravelAPI.DTOs
 {
     public class TripDTO
     {
-        #region Fields 
+        #region Properties
+        
         public int Id { get; set; }
 
         public string Destination { get; set; }

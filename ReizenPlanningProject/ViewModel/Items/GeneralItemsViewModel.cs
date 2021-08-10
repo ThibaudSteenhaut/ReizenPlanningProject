@@ -155,7 +155,6 @@ namespace ReizenPlanningProject.ViewModel.Items
         {
 
             Item i = (Item)param;
-            Debug.WriteLine(i.Id);
             _itemRepository.Delete(i.Id);
             Items.Remove(i);
             BuildItemList();
@@ -172,12 +171,6 @@ namespace ReizenPlanningProject.ViewModel.Items
                         select new GroupItemList(g) { Key = g.Key };
 
             return new List<GroupItemList>(query);
-
-        }
-
-        private void AddCategoriesWithoutItems(ObservableCollection<GroupItemList> groupedItemsList)
-        {
-            //List<string> categories = _itemRepository.GetCategories(); 
 
         }
 

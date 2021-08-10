@@ -25,6 +25,9 @@ namespace TravelAPI.Models
         [Required]
         public IdentityUser User { get; set; }
 
+        [Required]
+        public bool IsGeneralItem { get; set; }
+
         #endregion
 
         #region Constructor
@@ -34,16 +37,18 @@ namespace TravelAPI.Models
 
         }
 
-        public Item(string name, Category category, IdentityUser user)
+        public Item(string name, Category category, IdentityUser user, bool isGeneralItem)
         {
             Name = name;
             Category = category;
             User = user;
+            IsGeneralItem = isGeneralItem;
         }
 
         public Item(ItemDTO item, Category category, IdentityUser user)
         {
             Name = item.Name;
+            IsGeneralItem = item.IsGeneralItem;
             Category = category;
             User = user;
         }

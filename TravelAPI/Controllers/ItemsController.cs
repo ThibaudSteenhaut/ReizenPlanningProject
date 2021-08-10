@@ -38,7 +38,7 @@ namespace TravelAPI.Controllers
 
         //GET: api/Items
         /// <summary> 
-        /// Gets the items of the logged in user
+        /// Gets the general items of the logged in user
         /// </summary> 
         [HttpGet]
         [Authorize(Policy = "User")]
@@ -52,7 +52,7 @@ namespace TravelAPI.Controllers
                 return BadRequest();
             }
 
-            IEnumerable<ItemDTO> items = _itemRepository.GetItems(GetCurrentUser().Id).Select(i => new ItemDTO(i));
+            IEnumerable<ItemDTO> items = _itemRepository.GetGeneralItems(GetCurrentUser().Id).Select(i => new ItemDTO(i));
 
             return Ok(items);
         }
@@ -73,12 +73,12 @@ namespace TravelAPI.Controllers
                 return BadRequest();
             }
 
-            Item itemToCreate = new Item(item, item.Category, currentUser);
+            Category category = _itemRepository.GetCategoryBy(item.Category.Id);
+            Item itemToCreate = new Item(item, category, currentUser);
             _itemRepository.Add(itemToCreate);
             _itemRepository.SaveChanges();
 
             return Ok(itemToCreate.Id);
-
         }
 
         //DELETE: api/Items/{id} 
@@ -174,30 +174,28 @@ namespace TravelAPI.Controllers
         }
 
 
-        //GET: api/Trips/{id}/Items
+        //GET: api/Trips/{id}/tripitems
         /// <summary> 
-        /// Get all items of a trip 
+        /// Get all trip items of a trip 
         /// </summary> 
         /// <param name="id">The id of the trip</param> 
-        [HttpGet("{id}/items")]
+        [HttpGet("{id}/tripitems")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Policy = "User")]
-        public ActionResult<TripDTO> GetItemsBy(int id)
+        public ActionResult<TripItemDTO> GetTripsItems(int id)
         {
 
-            //if (id < 0)
-            //    return NotFound("Id can't be found");
+            if (id < 0) return NotFound();
 
-            //IEnumerable<TripItem> tripItems = _tripRepository.GetItemsBy(id);
+            IEnumerable<TripItem> tripItems = _itemRepository.GetTripItems(id);
 
-            //if (tripItems == null)
-            //    return NotFound("Id can't be found");
+            if (tripItems == null)
+            {
+                return BadRequest();
+            }
 
-            //IEnumerable<ItemDTO> itemDTOs = tripItems.Select(ti => new ItemDTO(ti.Item.Name, ti.Item.Category, ti.Amount));
-
-            //return Ok(itemDTOs);
-            return Ok();
+            return Ok(tripItems.ToList().Select(t => new TripItemDTO(t)));
         }
 
         private IdentityUser GetCurrentUser()

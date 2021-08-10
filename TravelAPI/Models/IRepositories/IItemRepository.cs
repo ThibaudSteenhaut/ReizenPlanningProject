@@ -9,9 +9,11 @@ namespace TravelAPI.Models
 {
     public interface IItemRepository
     {
-        IEnumerable<Item> GetItems(string userId);
+        IEnumerable<Item> GetGeneralItems(string userId);
         Item GetBy(int itemId);
         IEnumerable<Category> GetCategories(string userId);
+        IEnumerable<TripItem> GetTripItems(int tripId); 
+        Category GetCategoryBy(int categoryId);
         void AddCategory(Category category);
         void Add(Item item);
         void Delete(Item item);

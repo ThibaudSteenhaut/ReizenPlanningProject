@@ -10,8 +10,6 @@ namespace TravelAPI.Models
     {
         Trip GetBy(int id);
         IEnumerable<TripDTO> GetTrips(string userId);
-        IEnumerable<Trip> GetBy(string destination= null);
-        IEnumerable<TripItem> GetItemsBy(int id); 
         void AddTripItem(TripItem tripItem);
         void Add(Trip trip);
         void Delete(Trip trip);

@@ -18,8 +18,9 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
             
-            <ListView  x:Name="tripLv"
-                       ItemsSource="{Binding Trips}">
+            <ListView x:Name="tripLv"
+                      ItemsSource="{Binding Trips}"
+                      SelectionChanged="tripLv_SelectionChanged">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment"

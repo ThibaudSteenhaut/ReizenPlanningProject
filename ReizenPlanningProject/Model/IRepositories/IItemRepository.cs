@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReizenPlanningProject.Model.Domain;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace ReizenPlanningProject.Model.IRepositories
         Task<int> Add(Item item);
         void Delete(int itemId); 
         ObservableCollection<Item> GetItems();
-        ObservableCollection<Category> GetCategories(); 
+        ObservableCollection<Category> GetCategories();
+        ObservableCollection<TripItem> GetTripItems(int tripId); 
     }
 }

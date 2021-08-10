@@ -14,21 +14,15 @@ namespace TravelAPI.Models
         #region Fields 
         public int Id { get; set; }
 
-        [Required]
         public string Destination { get; set; }
 
-        [Required]
         public DateTime DepartureDate { get; set; }
 
-        [Required]
         public DateTime ReturnDate { get; set; }
 
-        [Required]
         public IdentityUser User { get; set; }
 
-
-        public ICollection<TripItem> TripItems { get; set; }
-
+        public List<TripItem> TripItems { get; set; }
 
         #endregion
 
@@ -43,7 +37,8 @@ namespace TravelAPI.Models
             Destination = destination;
             DepartureDate = departure;
             ReturnDate = returnDate;
-            User = user; 
+            User = user;
+            TripItems = new List<TripItem>(); 
         }
 
         public Trip(TripDTO tripDTO, IdentityUser user)
@@ -52,6 +47,7 @@ namespace TravelAPI.Models
             DepartureDate = tripDTO.DepartureDate;
             ReturnDate = tripDTO.ReturnDate;
             User = user;
+            TripItems = new List<TripItem>();
         }
         #endregion
 

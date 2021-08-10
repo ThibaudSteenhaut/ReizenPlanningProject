@@ -60,5 +60,10 @@ namespace ReizenPlanningProject
 
             return await dialog.ShowAsync();
         }
+
+        private void tripLv_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Frame.Navigate(typeof(TripDetailPage), tripLv.SelectedItem);
+        }
     }
 }
