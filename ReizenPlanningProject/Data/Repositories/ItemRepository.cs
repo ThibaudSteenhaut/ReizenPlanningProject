@@ -77,7 +77,7 @@ namespace ReizenPlanningProject.Data.Repositories
         public ObservableCollection<Category> GetCategories()
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
-            var json = _client.GetStringAsync($"{_baseUrl}/categories").Result;
+            var json = _client.GetStringAsync($"{_baseUrl}/GeneralCategories").Result;
             var categories = JsonConvert.DeserializeObject<ObservableCollection<Category>>(json);
 
             return categories;
@@ -89,16 +89,5 @@ namespace ReizenPlanningProject.Data.Repositories
             await _client.DeleteAsync($"{_baseUrl}/{itemId}");
         }
 
-        public ObservableCollection<TripItem> GetTripItems(int tripId)
-        {
-
-            Debug.WriteLine("Gettripitems in repo");
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
-            Debug.WriteLine($"{_baseUrl}/{tripId}/tripitems");
-            var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/tripitems").Result;
-            var items = JsonConvert.DeserializeObject<ObservableCollection<TripItem>>(json);
-
-            return items;
-        }
     }
 }

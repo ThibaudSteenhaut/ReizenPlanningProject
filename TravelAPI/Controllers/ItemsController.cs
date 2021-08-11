@@ -110,9 +110,9 @@ namespace TravelAPI.Controllers
         /// <summary> 
         /// Gets the categories of the logged in user
         /// </summary> 
-        [HttpGet("categories")]
+        [HttpGet("GeneralCategories")]
         [Authorize(Policy = "User")]
-        public ActionResult<IEnumerable<CategoryDTO>> GetCategories()
+        public ActionResult<IEnumerable<CategoryDTO>> GetGeneralCategories()
         {
             IdentityUser currentUser = GetCurrentUser();
 
@@ -121,7 +121,7 @@ namespace TravelAPI.Controllers
                 return BadRequest();
             }
 
-            IEnumerable<CategoryDTO> categories = _itemRepository.GetCategories(GetCurrentUser().Id).Select(c => new CategoryDTO(c));
+            IEnumerable<CategoryDTO> categories = _itemRepository.GetGeneralCategories(GetCurrentUser().Id).Select(c => new CategoryDTO(c));
 
             return Ok(categories);
         }
@@ -133,7 +133,7 @@ namespace TravelAPI.Controllers
         /// </summary>
         [HttpPost("category")]
         [Authorize(Policy = "User")]
-        public ActionResult<int> AddCategory(Category category)
+        public ActionResult<int> AddGeneralCategory(CategoryDTO category)
         {
 
             IdentityUser currentUser = GetCurrentUser();
@@ -143,59 +143,12 @@ namespace TravelAPI.Controllers
                 return BadRequest();
             }
 
-            Category categoryToCreate = new Category(category.Name, currentUser); 
+            Category categoryToCreate = new Category(category.Name, currentUser, false); 
             _itemRepository.AddCategory(categoryToCreate);
             _itemRepository.SaveChanges();
 
             return Ok(categoryToCreate.Id);
 
-        }
-
-
-        //PUT: api/Items
-        /// <summary>
-        /// Updates the items of the logged in user
-        /// </summary>
-        [HttpPut]
-        [Authorize(Policy = "User")]
-        public ActionResult UpdateItems(List<ItemDTO> items)
-        {
-            IdentityUser currentUser = GetCurrentUser();
-
-            if (currentUser == null)
-            {
-                return BadRequest();
-            }
-
-            //items.ForEach(i => _itemRepository.Update(i));
-            _itemRepository.SaveChanges();
-
-            return Ok();
-        }
-
-
-        //GET: api/Trips/{id}/tripitems
-        /// <summary> 
-        /// Get all trip items of a trip 
-        /// </summary> 
-        /// <param name="id">The id of the trip</param> 
-        [HttpGet("{id}/tripitems")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Policy = "User")]
-        public ActionResult<TripItemDTO> GetTripsItems(int id)
-        {
-
-            if (id < 0) return NotFound();
-
-            IEnumerable<TripItem> tripItems = _itemRepository.GetTripItems(id);
-
-            if (tripItems == null)
-            {
-                return BadRequest();
-            }
-
-            return Ok(tripItems.ToList().Select(t => new TripItemDTO(t)));
         }
 
         private IdentityUser GetCurrentUser()

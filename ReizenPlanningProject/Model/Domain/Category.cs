@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace ReizenPlanningProject.Model
         public int Id { get; set; }
         public string Name { get; set; }
        
+       
         public Category()
         {
 
@@ -20,6 +22,11 @@ namespace ReizenPlanningProject.Model
         public Category(string name)
         {
             Name = name;
+        }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

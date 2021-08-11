@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ReizenPlanningProject.Model.Domain;
 using ReizenPlanningProject.Vault;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace ReizenPlanningProject.Model.Repositories
 
         private static readonly HttpClient _client = new HttpClient();
         private static readonly string _baseUrl = "https://localhost:44316/api/trip";
-        
+
 
         public TripRepository()
         {
@@ -51,7 +52,7 @@ namespace ReizenPlanningProject.Model.Repositories
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
             HttpResponseMessage response = await _client.DeleteAsync($"{_baseUrl}/{tripId}");
 
-            return response.IsSuccessStatusCode; 
+            return response.IsSuccessStatusCode;
         }
 
         public ObservableCollection<Trip> GetTrips()
@@ -62,6 +63,58 @@ namespace ReizenPlanningProject.Model.Repositories
             var trips = JsonConvert.DeserializeObject<ObservableCollection<Trip>>(json);
 
             return trips;
+        }
+
+
+        public ObservableCollection<TripItem> GetTripItems(int tripId)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/tripitems").Result;
+            var items = JsonConvert.DeserializeObject<ObservableCollection<TripItem>>(json);
+
+            return items;
+        }
+
+        public async void UpdateTripItems(int tripId, List<TripItem> tripItems)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            var tripItemsJson = JsonConvert.SerializeObject(tripItems);
+            var stringContent = new StringContent(tripItemsJson, Encoding.UTF8, "application/json");
+            await _client.PutAsync($"{_baseUrl}/{tripId}/TripItems", stringContent);
+        }
+
+
+        public List<Category> GetTripCategories(int tripId)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/Categories").Result;
+            var categories = JsonConvert.DeserializeObject<List<Category>>(json);
+
+            return categories;
+
+        }
+
+        public async Task<int> AddTripCategory(int tripId, Category category)
+        {
+
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            var categoryJson = JsonConvert.SerializeObject(category);
+            Debug.WriteLine(categoryJson);
+            Debug.WriteLine(tripId);
+            var stringContent = new StringContent(categoryJson, Encoding.UTF8, "application/json");
+            Debug.WriteLine($"{_baseUrl}/{tripId}/Category");
+            HttpResponseMessage response = await _client.PostAsync($"{_baseUrl}/{tripId}/Category", stringContent);
+
+            string categoryId = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return Int32.Parse(categoryId);
+            }
+            else
+            {
+                return -1;
+            }
         }
     }
 }

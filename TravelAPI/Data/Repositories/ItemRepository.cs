@@ -40,9 +40,14 @@ namespace TravelAPI.Data.Repositories
             return _categories.FirstOrDefault(c => c.Id == categoryId);
         }
 
-        public IEnumerable<Category> GetCategories(string userId)
+        public IEnumerable<Category> GetGeneralCategories(string userId)
         {
-            return _categories.Where(c => c.User.Id == userId).OrderBy(c => c.Name);
+            return _categories.Where(c => c.User.Id == userId && c.IsGeneralCategory == true).OrderBy(c => c.Name);
+        }
+
+        public IEnumerable<Category> GetTripCategories(string userId, int tripId)
+        {
+            return _categories.Where(c => c.User.Id == userId && c.Trip.Id == tripId).OrderBy(c => c.Name);
         }
 
         public IEnumerable<TripItem> GetTripItems(int tripId)
@@ -60,6 +65,10 @@ namespace TravelAPI.Data.Repositories
             _items.Attach(item); 
         }
 
+        public void Update(Item item)
+        {
+            _context.Update(item);
+        }
 
         public void Delete(Item item)
         {

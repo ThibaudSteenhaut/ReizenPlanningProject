@@ -74,12 +74,14 @@ namespace TravelAPI.Data.Repositories
                 };
 
 
-                Category c1 = new Category("Electronica", user1);
-                Category c2 = new Category("Toiletspullen", user1);
-                Category c3 = new Category("Kleren", user1);
-                Category c4 = new Category("Boeken", user1);
-                Category c5 = new Category("Prullen", user1);
-                Category c6 = new Category("Alfatest", user1);
+                Category c1 = new Category("Electronica", user1, true);
+                Category c2 = new Category("Toiletspullen", user1, true);
+                Category c3 = new Category("Kleren", user1, true);
+                Category c4 = new Category("Boeken", user1, true);
+                Category c5 = new Category("Prullen", user1, true);
+                Category c6 = new Category("Alfatest", user1, true);
+                Category c7 = new Category("Books for in Rome", user1, false, t1);
+                Category c8 = new Category("Swimming Gear", user1, false, t1);
 
                 _context.Categories.Add(c1);
                 _context.Categories.Add(c2);
@@ -87,6 +89,8 @@ namespace TravelAPI.Data.Repositories
                 _context.Categories.Add(c4);
                 _context.Categories.Add(c5);
                 _context.Categories.Add(c6);
+                _context.Categories.Add(c7);
+                _context.Categories.Add(c8);
 
                 Item generalItem1 = new Item("Gsm", c1, user1, true);
                 Item generalItem2 = new Item("Oplader", c1, user1, true);

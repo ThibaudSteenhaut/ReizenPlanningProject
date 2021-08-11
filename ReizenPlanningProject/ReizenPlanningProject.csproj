@@ -143,6 +143,9 @@
     <Compile Include="Views\Dialogs\AddItemDialog.xaml.cs">
       <DependentUpon>AddItemDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\AddTripItemDialog.xaml.cs">
+      <DependentUpon>AddTripItemDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Items\GeneralItemPage.xaml.cs">
       <DependentUpon>GeneralItemPage.xaml</DependentUpon>
     </Compile>
@@ -200,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\AddItemDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\AddTripItemDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

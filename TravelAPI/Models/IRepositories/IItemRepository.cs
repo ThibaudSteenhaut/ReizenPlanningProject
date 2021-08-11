@@ -11,9 +11,11 @@ namespace TravelAPI.Models
     {
         IEnumerable<Item> GetGeneralItems(string userId);
         Item GetBy(int itemId);
-        IEnumerable<Category> GetCategories(string userId);
+        IEnumerable<Category> GetGeneralCategories(string userId);
+        IEnumerable<Category> GetTripCategories(string userId, int tripId);
         IEnumerable<TripItem> GetTripItems(int tripId); 
         Category GetCategoryBy(int categoryId);
+        void Update(Item item);
         void AddCategory(Category category);
         void Add(Item item);
         void Delete(Item item);

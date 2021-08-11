@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using TravelAPI.DTOs;
 using TravelAPI.Models;
+using TravelAPI.Models.Domain;
 
 namespace TravelAPI.Controllers
 {
@@ -73,12 +74,12 @@ namespace TravelAPI.Controllers
         public ActionResult<int> PostTrip([FromBody] TripDTO tripDTO)
         {
 
-            if (!ModelState.IsValid || tripDTO == null) 
+            if (!ModelState.IsValid || tripDTO == null)
                 return BadRequest("Invalid model");
 
-            IdentityUser currentUser = GetCurrentUser(); 
+            IdentityUser currentUser = GetCurrentUser();
 
-            if(currentUser == null) 
+            if (currentUser == null)
             {
                 return BadRequest();
             }
@@ -115,43 +116,111 @@ namespace TravelAPI.Controllers
             return Ok();
         }
 
-        //POST: api/Trip/{id}/Item/{itemId}
+        //GET: api/Trips/{id}/tripitems
         /// <summary> 
-        /// Add an existing item to a trip with a certain amount 
-        /// for example : add 5 t-shirts to your trip to canada (t-shirts is already in the category 'clothing')
+        /// Get all trip items of a trip 
         /// </summary> 
-        /// <param name="tripId">The id of the trip</param> 
-        /// <param name="categoryId">The id of the category</param> 
-        /// <param name="itemId">The id of the item</param> 
-        /// <param name="amount">How many times you want to take this item</param> 
-        [HttpPost("{tripId}/Item/{itemId}")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        /// <param name="id">The id of the trip</param> 
+        [HttpGet("{id}/Tripitems")]
         [Authorize(Policy = "User")]
-        public ActionResult<TripItem> AddItemToTrip(int tripId, int itemId, int amount)
+        public ActionResult<TripItemDTO> GetTripsItems(int id)
+        {
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null) return BadRequest();
+            if (id < 0) return NotFound();
+
+            IEnumerable<TripItem> tripItems = _itemRepository.GetTripItems(id);
+
+            if (tripItems == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(tripItems.ToList().Select(t => new TripItemDTO(t)));
+        }
+
+        //PUT: api/Trips/{id}/Trip
+        /// <summary>
+        /// Updates the trip items of the logged in user with the tripid
+        /// </summary>
+        [HttpPut("{id}/TripItems")]
+        [Authorize(Policy = "User")]
+        public ActionResult UpdateItems(List<TripItemDTO> tripItems)
+        {
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null) return BadRequest();
+
+            foreach (TripItemDTO tripItem in tripItems)
+            {
+
+                TripItem ti = _tripRepository.GetTripItem(tripItem.Id);
+                ti.CheckedIn = tripItem.CheckedIn;
+                _tripRepository.UpdateTripItem(ti);
+                _tripRepository.SaveChanges();
+            }
+
+            return Ok();
+        }
+
+        //GET: api/Trip/{id}/Categories
+        /// <summary> 
+        /// Gets the categories of the logged in user
+        /// </summary> 
+        [HttpGet("{id}/Categories")]
+        [Authorize(Policy = "User")]
+        public ActionResult<IEnumerable<CategoryDTO>> GetTripItemCategories(int id)
+        {
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            IEnumerable<CategoryDTO> categories = _itemRepository.GetTripCategories(GetCurrentUser().Id, id).Select(c => new CategoryDTO(c));
+
+            return Ok(categories);
+        }
+
+
+        //POST: api/Trip/{id}/Category
+        /// <summary>
+        /// Add a category for items to a specific trip
+        /// </summary>
+        [HttpPost("{id}/Category")]
+        [Authorize(Policy = "User")]
+        public ActionResult<int> AddTripCategory(int id, CategoryDTO category)
         {
 
-            //if (tripId < 0) return BadRequest();
-            //if (itemId < 0) return BadRequest();
+            Debug.WriteLine(id);
+            Debug.WriteLine(category); 
 
-            //Item item = _itemRepository.GetBy(itemId);
-            //Trip trip = _tripRepository.GetBy(tripId);
+            IdentityUser currentUser = GetCurrentUser();
 
-            //if(item == null || trip == null)
-            //{
-            //    return NotFound(); 
-            //}
+            if (id < 0) return BadRequest();
 
-            //TripItem tripItem = new TripItem() { Trip = trip, Item = item, Amount = amount };
+            if (currentUser == null || String.IsNullOrEmpty(category.Name))
+            {
+                return BadRequest();
+            }
 
-            //_tripRepository.AddTripItem(tripItem);
-            //_tripRepository.SaveChanges();
-            return Ok();
+            Trip trip = _tripRepository.GetBy(id);
+
+            if(trip == null) return NotFound();
+            
+            Category categoryToCreate = new Category(category.Name, currentUser, false, trip);
+            _itemRepository.AddCategory(categoryToCreate);
+            _itemRepository.SaveChanges();
+
+            return Ok(categoryToCreate.Id);
 
         }
 
         private IdentityUser GetCurrentUser()
         {
-            return _userManager.FindByNameAsync(User.Identity.Name).Result; 
+            return _userManager.FindByNameAsync(User.Identity.Name).Result;
         }
         #endregion     
     }

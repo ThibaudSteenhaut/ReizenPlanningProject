@@ -15,6 +15,5 @@ namespace ReizenPlanningProject.Model.IRepositories
         void Delete(int itemId); 
         ObservableCollection<Item> GetItems();
         ObservableCollection<Category> GetCategories();
-        ObservableCollection<TripItem> GetTripItems(int tripId); 
     }
 }

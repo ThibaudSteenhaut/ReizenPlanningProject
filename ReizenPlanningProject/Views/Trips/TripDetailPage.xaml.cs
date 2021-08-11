@@ -1,4 +1,5 @@
 ﻿using ReizenPlanningProject.Model;
+using ReizenPlanningProject.ViewModel.Commands;
 using ReizenPlanningProject.ViewModel.Trips;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ReizenPlanningProject.Views.Trips
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class TripDetailPage : Page
     {
 
