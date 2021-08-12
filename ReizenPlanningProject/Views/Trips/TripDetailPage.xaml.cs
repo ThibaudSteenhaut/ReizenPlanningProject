@@ -1,4 +1,5 @@
 ﻿using ReizenPlanningProject.Model;
+using ReizenPlanningProject.Model.Domain;
 using ReizenPlanningProject.ViewModel.Commands;
 using ReizenPlanningProject.ViewModel.Trips;
 using System;
@@ -38,5 +39,31 @@ namespace ReizenPlanningProject.Views.Trips
             _detailVM.Trip = (Trip)e.Parameter;
             _detailVM.Initialize(); 
         }
+
+        public void MenuFlyout_Opening(object sender, object e)
+        {
+            MenuFlyout senderAsMenuFlyout = sender as MenuFlyout;
+
+            foreach (object menuFlyoutItem in senderAsMenuFlyout.Items)
+            {
+                if (menuFlyoutItem.GetType() == typeof(MenuFlyoutItem))
+                {
+                    // Associate the particular Item with the menu flyout (so the MenuFlyoutItem knows which Item to act upon)
+                    ListViewItem itemContainer = senderAsMenuFlyout.Target as ListViewItem;
+
+                    var data = itemsLv.ItemFromContainer(itemContainer);
+
+                    //(menuFlyoutItem as MenuFlyoutItem).CommandParameter = data;
+                    itemsLv.SelectedItem = data;
+                }
+            }
+        }
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            TripItem ti = (TripItem)itemsLv.SelectedItem;
+            _detailVM.DeleteTripItemCommand.Execute(ti);
+        }
+
     }
 }

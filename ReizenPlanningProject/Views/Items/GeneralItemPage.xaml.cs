@@ -55,7 +55,6 @@ namespace ReizenPlanningProject.Views.Items
         {
 
             Item i = (Item)itemsLv.SelectedItem;
-            Debug.WriteLine(i);
             _itemsVM.DeleteItemCommand.Execute(i);
         }
     }

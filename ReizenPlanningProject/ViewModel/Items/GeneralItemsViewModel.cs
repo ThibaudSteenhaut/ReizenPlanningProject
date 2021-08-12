@@ -51,6 +51,7 @@ namespace ReizenPlanningProject.ViewModel.Items
         public RelayCommand AddItemCommand { get; set; }
         public RelayCommand DeleteItemCommand { get; set; }
         public RelayCommand AddCategoryCommand { get; set; }
+        public RelayCommand DeleteCategoryCommand { get; set; }
 
         #endregion
 
@@ -63,6 +64,7 @@ namespace ReizenPlanningProject.ViewModel.Items
             AddItemCommand = new RelayCommand(param => this.AddItem());
             AddCategoryCommand = new RelayCommand(param => this.AddCategory());
             DeleteItemCommand = new RelayCommand(param => this.DeleteItem(param));
+            DeleteCategoryCommand = new RelayCommand(param => this.DeleteCategory());
         }
 
         #endregion
@@ -119,6 +121,38 @@ namespace ReizenPlanningProject.ViewModel.Items
                         Categories.Add(catToAdd);
                         BuildItemList();
                     }
+                }
+            }
+        }
+
+        private async void DeleteCategory()
+        {
+            DeleteCategoryDialog dialog = new DeleteCategoryDialog(Categories);
+
+            ContentDialogResult result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                if (dialog.SelectedCategory != null)
+                {
+                    _itemRepository.DeleteCategoryWithItems(dialog.SelectedCategory.Id);
+                    Categories.Remove(dialog.SelectedCategory);
+                    DeleteItemsWithCategory(dialog.SelectedCategory);
+                    BuildItemList();
+                }
+            }
+        }
+
+        private void DeleteItemsWithCategory(Category selectedCategory)
+        {
+
+            //Use toList to copy the original collection or we get a collection modified exception 
+
+            foreach (Item item in Items.ToList())
+            {
+                if(item.Category.Id == selectedCategory.Id)
+                {
+                    Items.Remove(item);
                 }
             }
         }

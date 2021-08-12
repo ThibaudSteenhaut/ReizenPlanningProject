@@ -15,6 +15,8 @@ namespace ReizenPlanningProject.Model.Repositories
         ObservableCollection<TripItem> GetTripItems(int tripId);
         void UpdateTripItems(int tripId, List<TripItem> tripItems);
         List<Category> GetTripCategories(int tripId);
+        Task<int> AddTripItem(int tripId, TripItem tripItem);
+        void DeleteTripItem(int tripItemId);
         Task<int> AddTripCategory(int tripId, Category category);
         Task<int> Add(Trip trip);
         Task<bool> Remove(int tripId);

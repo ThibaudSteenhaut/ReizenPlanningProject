@@ -22,13 +22,15 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
 
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal"
+                        Spacing="10"
+                        Margin="10">
                 <Button Content="Add item"
-                        Margin="10"
                         Command="{x:Bind _itemsVM.AddItemCommand}" />
                 <Button Content="Add category"
-                        Margin="10"
                         Command="{x:Bind _itemsVM.AddCategoryCommand}" />
+                <Button Content="Delete category"
+                        Command="{x:Bind _itemsVM.DeleteCategoryCommand}"/>
             </StackPanel>
 
             <ProgressRing IsActive="{x:Bind _itemsVM.IsProgressRingActive, Mode=TwoWay}" />

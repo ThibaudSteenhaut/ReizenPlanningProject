@@ -17,6 +17,7 @@ namespace TravelAPI.Models
         Category GetCategoryBy(int categoryId);
         void Update(Item item);
         void AddCategory(Category category);
+        void DeleteCategoryWithItems(Category category); 
         void Add(Item item);
         void Delete(Item item);
         void SaveChanges();

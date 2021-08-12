@@ -15,24 +15,23 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+
 namespace ReizenPlanningProject.Views.Dialogs
 {
-    public sealed partial class AddTripItemDialog : ContentDialog
+    public sealed partial class DeleteCategoryDialog : ContentDialog
     {
 
-        public string TripItemName { get; set; }
-        public int Amount { get; set; } = 1;
-
         public Category SelectedCategory { get; set; }
+
         public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
 
-        public AddTripItemDialog()
+        public DeleteCategoryDialog()
         {
             this.InitializeComponent();
             this.DataContext = this;
         }
 
-        public AddTripItemDialog(ObservableCollection<Category> categories) : this()
+        public DeleteCategoryDialog(ObservableCollection<Category> categories) : this( )
         {
             categories.OrderBy(c => c.Name).ToList().ForEach(c => Categories.Add(c));
         }

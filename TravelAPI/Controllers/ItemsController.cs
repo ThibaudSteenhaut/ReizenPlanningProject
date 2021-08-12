@@ -70,7 +70,7 @@ namespace TravelAPI.Controllers
 
             if (currentUser == null)
             {
-                return BadRequest();
+                return BadRequest(); 
             }
 
             Category category = _itemRepository.GetCategoryBy(item.Category.Id);
@@ -127,7 +127,7 @@ namespace TravelAPI.Controllers
         }
 
 
-        //POST: api/Items
+        //POST: api/Items/Category
         /// <summary>
         /// Add a general item to the logged in user 
         /// </summary>
@@ -143,13 +143,37 @@ namespace TravelAPI.Controllers
                 return BadRequest();
             }
 
-            Category categoryToCreate = new Category(category.Name, currentUser, false); 
+            Category categoryToCreate = new Category(category.Name, currentUser, true); 
             _itemRepository.AddCategory(categoryToCreate);
             _itemRepository.SaveChanges();
 
             return Ok(categoryToCreate.Id);
 
         }
+
+        //DELETE: api/Items/Category/{id}
+        /// <summary>
+        /// Delete a general category for the logged in user, all relating items will be deleted as well
+        /// </summary>
+        [HttpDelete("category/{id}")]
+        [Authorize(Policy = "User")]
+        public ActionResult DeleteGeneralCategory(int id)
+        {
+
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null) return BadRequest();
+            if (id < 0) return NotFound();
+
+            Category categoryToDelete = _itemRepository.GetCategoryBy(id);
+            _itemRepository.DeleteCategoryWithItems(categoryToDelete);
+            _itemRepository.SaveChanges();
+
+            return Ok();
+
+        }
+
+
 
         private IdentityUser GetCurrentUser()
         {

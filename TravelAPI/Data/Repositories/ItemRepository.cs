@@ -16,13 +16,15 @@ namespace TravelAPI.Data.Repositories
         private readonly DbSet<Item> _items;
         private readonly DbSet<Category> _categories;
         private readonly DbSet<Trip> _trips;
+        private readonly DbSet<TripItem> _tripItems;
 
         public ItemRepository(ApplicationDbContext context)
         {
             _context = context;
             _items = context.Items;
             _categories = context.Categories;
-            _trips = context.Trips; 
+            _trips = context.Trips;
+            _tripItems = context.TripItems;
         }
 
         public IEnumerable<Item> GetGeneralItems(string userId)
@@ -34,6 +36,8 @@ namespace TravelAPI.Data.Repositories
         {
             return _items.FirstOrDefault(i => i.Id == itemId);
         }
+
+        
 
         public Category GetCategoryBy(int categoryId)
         {
@@ -58,6 +62,13 @@ namespace TravelAPI.Data.Repositories
         public void AddCategory(Category category)
         {
             _categories.Add(category);
+        }
+
+        public void DeleteCategoryWithItems(Category category)
+        {
+            _items.RemoveRange(_items.Include(i => i.Category).Where(i => i.Category.Id == category.Id));
+            _tripItems.RemoveRange(_tripItems.Include(ti => ti.Item).ThenInclude(i => i.Category).Where(ti => ti.Item.Category.Id == category.Id));
+            _categories.Remove(category);
         }
 
         public void Add(Item item)

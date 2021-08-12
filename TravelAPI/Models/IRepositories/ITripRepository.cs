@@ -9,15 +9,22 @@ namespace TravelAPI.Models
 {
     public interface ITripRepository
     {
+
         Trip GetBy(int id);
-        IEnumerable<TripDTO> GetTrips(string userId);
-        TripItem GetTripItem(int id);
-        void AddTripItem(TripItem tripItem);
-        void UpdateTripItem(TripItem tripItem);
-        void AddTripCategory(Category category);
+        Trip GetByWithTripItems(int id);
         void Add(Trip trip);
         void Delete(Trip trip);
         void Update(Trip trip);
+
+        TripItem GetTripItem(int id);
+        void AddTripItem(TripItem tripItem);
+        void UpdateTripItem(TripItem tripItem);
+        void DeleteTripItem(TripItem tripItem);
+
+        IEnumerable<TripDTO> GetTrips(string userId);
+
+        void AddTripCategory(Category category);
+
         void SaveChanges();
     }
 }

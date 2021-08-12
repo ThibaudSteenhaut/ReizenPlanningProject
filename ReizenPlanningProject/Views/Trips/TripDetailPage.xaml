@@ -69,8 +69,10 @@
         </Grid>
 
         <StackPanel Grid.Row="2"
-                    Padding="10">
-            <StackPanel Orientation="Horizontal">
+                    Padding="10"
+                    Margin="0,25,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Spacing="10">
                 <TextBlock Text="Items"
                            FontSize="36"
                            FontWeight="SemiBold"
@@ -83,11 +85,9 @@
                         Command="{x:Bind _detailVM.AddCategoryCommand}"/>
                 <Button Content="Add trip item"
                         FontSize="15"
-                        Margin="5"
                         Command="{x:Bind _detailVM.AddTripItemCommand}"/>
                 <Button Content="Add general item"
-                        FontSize="15"
-                        Margin="5"/>
+                        FontSize="15"/>
             </StackPanel>
 
             <Rectangle Fill="DarkGray"
@@ -99,6 +99,15 @@
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment"
                                 Value="Stretch" />
+                        <Setter Property="ContextFlyout">
+                            <Setter.Value>
+                                <MenuFlyout Opening="MenuFlyout_Opening">
+                                    <MenuFlyoutItem Text="Delete"
+                                                    Icon="Delete"
+                                                    Click="MenuFlyoutItem_Click" />
+                                </MenuFlyout>
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>

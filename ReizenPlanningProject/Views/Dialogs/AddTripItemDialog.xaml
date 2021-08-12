@@ -5,13 +5,69 @@
     xmlns:local="using:ReizenPlanningProject.Views.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Title="TITLE"
-    PrimaryButtonText="Button1"
-    SecondaryButtonText="Button2"
+    Title="Add Trip item"
+    PrimaryButtonText="Add"
+    SecondaryButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid>
+    <Grid Padding="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Text="Category " />
+
+        <ComboBox Grid.Row="0"
+                  Grid.Column="1"
+                  ItemsSource="{x:Bind Categories}"
+                  DisplayMemberPath="Name"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Stretch"
+                  Margin="10"
+                  SelectedItem="{x:Bind SelectedCategory, Mode=TwoWay}" />
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Text="Item name" />
+
+        <TextBox Grid.Row="1"
+                 Grid.Column="1"
+                 Margin="10"
+                 HorizontalAlignment="Stretch"
+                 Text="{Binding Path=TripItemName, Mode=TwoWay}" />
+
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Text="Amount"/>
+
+        <controls:NumberBox Grid.Row="2"
+                            Grid.Column="1"
+                            Value="{x:Bind Amount, Mode=TwoWay}"
+                            SpinButtonPlacementMode="Inline"
+                            SmallChange="1"
+                            Minimum="1"
+                            Maximum="999"
+                            Margin="10" />
+        
     </Grid>
 </ContentDialog>

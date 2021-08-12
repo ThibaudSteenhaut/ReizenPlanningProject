@@ -89,5 +89,10 @@ namespace ReizenPlanningProject.Data.Repositories
             await _client.DeleteAsync($"{_baseUrl}/{itemId}");
         }
 
+        public async void DeleteCategoryWithItems(int categoryId)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            await _client.DeleteAsync($"{_baseUrl}/Category/{categoryId}");
+        }
     }
 }

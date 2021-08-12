@@ -37,7 +37,7 @@ namespace TravelAPI.Controllers
 
         //GET: api/Trips 
         /// <summary> 
-        /// Get all routes 
+        /// Get all trips 
         /// </summary> 
         [HttpGet]
         [Authorize(Policy = "User")]
@@ -48,7 +48,7 @@ namespace TravelAPI.Controllers
 
         //GET: api/Trips/{id} 
         /// <summary> 
-        /// Get a trip 
+        /// Get the trip with the certain id
         /// </summary> 
         /// <param name="id">The id of the trip</param> 
         [HttpGet("{id}")]
@@ -93,7 +93,7 @@ namespace TravelAPI.Controllers
 
         //DELETE: api/Trip/{id} 
         /// <summary> 
-        /// Delete a trip 
+        /// Delete the trip with the certain id
         /// </summary> 
         /// <param name="id">The id of the trip to delete</param> 
         [HttpDelete("{id}")]
@@ -116,9 +116,9 @@ namespace TravelAPI.Controllers
             return Ok();
         }
 
-        //GET: api/Trips/{id}/tripitems
+        //GET: api/Trips/{id}/Tripitems
         /// <summary> 
-        /// Get all trip items of a trip 
+        /// Get all tripitems of a trip 
         /// </summary> 
         /// <param name="id">The id of the trip</param> 
         [HttpGet("{id}/Tripitems")]
@@ -140,7 +140,32 @@ namespace TravelAPI.Controllers
             return Ok(tripItems.ToList().Select(t => new TripItemDTO(t)));
         }
 
-        //PUT: api/Trips/{id}/Trip
+        //POST: api/Trips/{id}/TripItems
+        /// <summary>
+        /// Add a tripitem to the trip of the logged in user
+        /// </summary>
+        [HttpPost("{id}/TripItems")]
+        [Authorize(Policy = "User")]
+        public ActionResult<TripItemDTO> AddTripItem(int id, TripItemDTO tripItem)
+        {
+
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null) return BadRequest();
+            
+
+            Category category = _itemRepository.GetCategoryBy(tripItem.Item.Category.Id);
+            Item itemToCreate = new Item(tripItem.Item, category, currentUser);
+            TripItem tripItemToCreate = new TripItem(itemToCreate, tripItem.Amount, tripItem.CheckedIn);
+
+            Trip trip = _tripRepository.GetByWithTripItems(id);
+            trip.TripItems.Add(tripItemToCreate);
+            _tripRepository.SaveChanges();
+
+            return Ok(tripItemToCreate.Id);
+        }
+
+        //PUT: api/Trips/{id}/TripItems
         /// <summary>
         /// Updates the trip items of the logged in user with the tripid
         /// </summary>
@@ -164,9 +189,34 @@ namespace TravelAPI.Controllers
             return Ok();
         }
 
+        //DELETE: api/Trips/TripItems/{id}
+        /// <summary> 
+        /// Delete the tripitem with the certain id
+        /// </summary> 
+        /// <param name="id">The id of the tripitem to delete</param> 
+        [HttpDelete("TripItems/{id}")]
+        [Authorize(Policy = "User")]
+        public ActionResult DeleteTripItem(int id)
+        {
+
+            if (id < 0)
+                return BadRequest("Not a valid trip id");
+
+            TripItem tripitem = _tripRepository.GetTripItem(id);
+
+            if (tripitem == null)
+                return NotFound();
+
+            _tripRepository.DeleteTripItem(tripitem);
+            _tripRepository.SaveChanges();
+            return Ok();
+        }
+
+
+
         //GET: api/Trip/{id}/Categories
         /// <summary> 
-        /// Gets the categories of the logged in user
+        /// Gets the categories of the trip of the logged in user 
         /// </summary> 
         [HttpGet("{id}/Categories")]
         [Authorize(Policy = "User")]

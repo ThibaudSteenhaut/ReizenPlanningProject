@@ -61,9 +61,19 @@ namespace TravelAPI.Data.Repositories
             return _trips.SingleOrDefault(r => r.Id == id);
         }
 
+        public Trip GetByWithTripItems(int id)
+        {
+            return _trips.Include(ti => ti.TripItems).SingleOrDefault(r => r.Id == id);
+        }
+
         public void AddTripItem(TripItem tripItem)
         {
-            _context.TripItems.Add(tripItem);
+            _tripItems.Add(tripItem);
+        }
+
+        public void DeleteTripItem(TripItem tripItem)
+        {
+            _tripItems.Remove(tripItem);
         }
 
         public void Update(Trip trip)

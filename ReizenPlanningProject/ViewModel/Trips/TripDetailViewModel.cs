@@ -41,13 +41,16 @@ namespace ReizenPlanningProject.ViewModel.Trips
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand AddTripItemCommand { get; set; }
         public RelayCommand AddCategoryCommand { get; set; }
+        public RelayCommand DeleteTripItemCommand { get; set; }
 
         #endregion
+        
         public TripDetailViewModel()
         {
             SaveCommand = new RelayCommand(param => SaveItems());
             AddTripItemCommand = new RelayCommand(param => AddTripItem());
             AddCategoryCommand = new RelayCommand(param => AddCategory());
+            DeleteTripItemCommand = new RelayCommand(param => DeleteTripItem(param));
         }
 
         public void Initialize()
@@ -56,9 +59,12 @@ namespace ReizenPlanningProject.ViewModel.Trips
             this.TripItems = _tripRepository.GetTripItems(Trip.Id);
             this.TripCategories = _tripRepository.GetTripCategories(Trip.Id);
 
-            foreach (Category category in TripCategories)
+            foreach (TripItem tripItem in TripItems)
             {
-                Debug.WriteLine(category);
+                if(!TripCategories.Any(c => c.Id == tripItem.Item.Category.Id))
+                {
+                    TripCategories.Add(tripItem.Item.Category);
+                }
             }
 
             BuildItemList();
@@ -111,9 +117,26 @@ namespace ReizenPlanningProject.ViewModel.Trips
             _tripRepository.UpdateTripItems(Trip.Id, TripItems.ToList());
         }
 
-        private void AddTripItem()
+        private async void AddTripItem()
         {
-            throw new NotImplementedException();
+            AddTripItemDialog dialog = new AddTripItemDialog(new ObservableCollection<Category>(TripCategories));
+
+            ContentDialogResult result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                
+                if (!String.IsNullOrEmpty(dialog.TripItemName) && dialog.SelectedCategory != null)
+                {
+
+                    Item i = new Item(dialog.TripItemName, dialog.SelectedCategory);
+                    TripItem ti = new TripItem(i, dialog.Amount, false);
+                    int id = await _tripRepository.AddTripItem(Trip.Id, ti);
+                    ti.Id = id;
+                    TripItems.Add(ti);
+                    BuildItemList();
+                }
+            }
         }
 
         private async void AddCategory()
@@ -136,6 +159,14 @@ namespace ReizenPlanningProject.ViewModel.Trips
                     }
                 }
             }
+        }
+
+        private void DeleteTripItem(object param)
+        {
+            TripItem ti = (TripItem)param;
+            _tripRepository.DeleteTripItem(ti.Id);
+            TripItems.Remove(ti);
+            BuildItemList();
         }
     }
 }
