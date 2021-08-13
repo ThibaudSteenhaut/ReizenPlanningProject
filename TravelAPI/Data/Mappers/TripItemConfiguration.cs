@@ -12,9 +12,10 @@ namespace TravelAPI.Data.Mappers
     {
         public void Configure(EntityTypeBuilder<TripItem> builder)
         {
+            builder.Property(ti => ti.Name).IsRequired();
             builder.Property(ti => ti.Amount).IsRequired();
             builder.Property(ti => ti.CheckedIn).IsRequired();
-            builder.HasOne(ti => ti.Item);
+
         }
     }
 }

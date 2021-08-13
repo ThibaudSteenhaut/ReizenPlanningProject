@@ -4,15 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TravelAPI.Models;
+using TravelAPI.Models.Domain;
 
 namespace TravelAPI.Data.Mappers
 {
-    public class ItemConfiguration : IEntityTypeConfiguration<Item>
+    public class GeneralCategoryConfiguration : IEntityTypeConfiguration<GeneralCategory>
     {
-        public void Configure(EntityTypeBuilder<Item> builder)
+        public void Configure(EntityTypeBuilder<GeneralCategory> builder)
         {
-            builder.Property(i => i.Name).IsRequired();
+            builder.Property(gc => gc.Name).IsRequired();
         }
     }
 }

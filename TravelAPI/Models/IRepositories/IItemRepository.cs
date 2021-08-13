@@ -9,17 +9,26 @@ namespace TravelAPI.Models
 {
     public interface IItemRepository
     {
-        IEnumerable<Item> GetGeneralItems(string userId);
-        Item GetBy(int itemId);
-        IEnumerable<Category> GetGeneralCategories(string userId);
-        IEnumerable<Category> GetTripCategories(string userId, int tripId);
-        IEnumerable<TripItem> GetTripItems(int tripId); 
-        Category GetCategoryBy(int categoryId);
-        void Update(Item item);
-        void AddCategory(Category category);
-        void DeleteCategoryWithItems(Category category); 
-        void Add(Item item);
-        void Delete(Item item);
+
+        #region GeneralItem 
+
+        IEnumerable<GeneralItem> GetGeneralItems(string userId);
+        GeneralItem GetBy(int itemId);
+        void Add(GeneralItem item);
+        void Update(GeneralItem item);
+        void Delete(GeneralItem item);
+
+        #endregion
+
+        #region GeneralCategory
+
+        IEnumerable<GeneralCategory> GetCategories(string userId);
+        GeneralCategory GetCategoryBy(int categoryId);
+        void AddCategory(GeneralCategory category);
+        void DeleteCategoryWithItems(GeneralCategory category);
+
+        #endregion
+
         void SaveChanges();
     }
 }

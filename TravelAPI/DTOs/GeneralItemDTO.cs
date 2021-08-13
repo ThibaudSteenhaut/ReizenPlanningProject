@@ -8,7 +8,7 @@ using TravelAPI.Models.Domain;
 
 namespace TravelAPI.DTOs
 {
-    public class ItemDTO
+    public class GeneralItemDTO
     {
 
         #region Properties 
@@ -17,28 +17,25 @@ namespace TravelAPI.DTOs
 
         public string Name { get; set; }
         
-        public CategoryDTO Category { get; set; }
-
-        public bool IsGeneralItem { get; set; }
+        public GeneralCategoryDTO Category { get; set; }
 
         #endregion
 
         #region Constructors
-        public ItemDTO() { }
 
-        public ItemDTO(Item item)
+        public GeneralItemDTO() { }
+
+        public GeneralItemDTO(GeneralItem item)
         {
             Id = item.Id;
             Name = item.Name;
-            Category = new CategoryDTO(item.Category);
-            IsGeneralItem = item.IsGeneralItem;
+            Category = new GeneralCategoryDTO(item.Category);
         }
 
-        public ItemDTO(string name, CategoryDTO category, bool isGeneralItem)
+        public GeneralItemDTO(string name, GeneralCategoryDTO category)
         {
             Name = name;
             Category = category;
-            IsGeneralItem = isGeneralItem;
         }
         #endregion  
     }

@@ -36,23 +36,23 @@ namespace TravelAPI.Controllers
 
         #region Methods 
 
+        #region Items
+
+
         //GET: api/Items
         /// <summary> 
         /// Gets the general items of the logged in user
         /// </summary> 
         [HttpGet]
         [Authorize(Policy = "User")]
-        public ActionResult<IEnumerable<ItemDTO>> GetItems()
+        public ActionResult<IEnumerable<GeneralItemDTO>> GetItems()
         {
 
             IdentityUser currentUser = GetCurrentUser();
 
-            if (currentUser == null)
-            {
-                return BadRequest();
-            }
+            if (currentUser == null) return BadRequest();
 
-            IEnumerable<ItemDTO> items = _itemRepository.GetGeneralItems(GetCurrentUser().Id).Select(i => new ItemDTO(i));
+            IEnumerable<GeneralItemDTO> items = _itemRepository.GetGeneralItems(GetCurrentUser().Id).Select(i => new GeneralItemDTO(i));
 
             return Ok(items);
         }
@@ -63,18 +63,15 @@ namespace TravelAPI.Controllers
         /// </summary>
         [HttpPost]
         [Authorize(Policy = "User")]
-        public ActionResult<ItemDTO> AddItem(ItemDTO item)
+        public ActionResult<GeneralItemDTO> AddItem(GeneralItemDTO item)
         {
 
             IdentityUser currentUser = GetCurrentUser();
 
-            if (currentUser == null)
-            {
-                return BadRequest(); 
-            }
+            if (currentUser == null) return BadRequest();
 
-            Category category = _itemRepository.GetCategoryBy(item.Category.Id);
-            Item itemToCreate = new Item(item, category, currentUser);
+            GeneralCategory category = _itemRepository.GetCategoryBy(item.Category.Id);
+            GeneralItem itemToCreate = new GeneralItem(item, category, currentUser);
             _itemRepository.Add(itemToCreate);
             _itemRepository.SaveChanges();
 
@@ -87,16 +84,14 @@ namespace TravelAPI.Controllers
         /// </summary> 
         /// <param name="id">The id of the item to delete</param> 
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = "User")]
         public ActionResult<Trip> DeleteItem(int id)
         {
 
             if (id < 0)
-                return BadRequest("Not a valid item id");
+                return NotFound();
 
-            Item item = _itemRepository.GetBy(id);
+            GeneralItem item = _itemRepository.GetBy(id);
 
             if (item == null)
                 return NotFound();
@@ -106,34 +101,35 @@ namespace TravelAPI.Controllers
             return Ok();
         }
 
+        #endregion
+
+        #region Categories 
+
         //GET: api/Items/Categories
         /// <summary> 
-        /// Gets the categories of the logged in user
+        /// Gets the general categories of the logged in user
         /// </summary> 
-        [HttpGet("GeneralCategories")]
+        [HttpGet("Categories")]
         [Authorize(Policy = "User")]
-        public ActionResult<IEnumerable<CategoryDTO>> GetGeneralCategories()
+        public ActionResult<IEnumerable<GeneralCategoryDTO>> GetGeneralCategories()
         {
             IdentityUser currentUser = GetCurrentUser();
 
-            if (currentUser == null)
-            {
-                return BadRequest();
-            }
+            if (currentUser == null) return BadRequest();
 
-            IEnumerable<CategoryDTO> categories = _itemRepository.GetGeneralCategories(GetCurrentUser().Id).Select(c => new CategoryDTO(c));
+            IEnumerable<GeneralCategoryDTO> categories = _itemRepository.GetCategories(GetCurrentUser().Id).Select(c => new GeneralCategoryDTO(c));
 
             return Ok(categories);
         }
 
 
-        //POST: api/Items/Category
+        //POST: api/Items/Categories
         /// <summary>
-        /// Add a general item to the logged in user 
+        /// Add a general category to the logged in user 
         /// </summary>
-        [HttpPost("category")]
+        [HttpPost("Category")]
         [Authorize(Policy = "User")]
-        public ActionResult<int> AddGeneralCategory(CategoryDTO category)
+        public ActionResult<int> AddCategory(GeneralCategoryDTO category)
         {
 
             IdentityUser currentUser = GetCurrentUser();
@@ -143,7 +139,7 @@ namespace TravelAPI.Controllers
                 return BadRequest();
             }
 
-            Category categoryToCreate = new Category(category.Name, currentUser, true); 
+            GeneralCategory categoryToCreate = new GeneralCategory(category.Name, currentUser);
             _itemRepository.AddCategory(categoryToCreate);
             _itemRepository.SaveChanges();
 
@@ -153,9 +149,9 @@ namespace TravelAPI.Controllers
 
         //DELETE: api/Items/Category/{id}
         /// <summary>
-        /// Delete a general category for the logged in user, all relating items will be deleted as well
+        /// Delete a general category for the logged in user, all relating general items will be deleted as well
         /// </summary>
-        [HttpDelete("category/{id}")]
+        [HttpDelete("Category/{id}")]
         [Authorize(Policy = "User")]
         public ActionResult DeleteGeneralCategory(int id)
         {
@@ -165,7 +161,7 @@ namespace TravelAPI.Controllers
             if (currentUser == null) return BadRequest();
             if (id < 0) return NotFound();
 
-            Category categoryToDelete = _itemRepository.GetCategoryBy(id);
+            GeneralCategory categoryToDelete = _itemRepository.GetCategoryBy(id);
             _itemRepository.DeleteCategoryWithItems(categoryToDelete);
             _itemRepository.SaveChanges();
 
@@ -173,13 +169,13 @@ namespace TravelAPI.Controllers
 
         }
 
-
-
         private IdentityUser GetCurrentUser()
         {
             return _userManager.FindByNameAsync(User.Identity.Name).Result;
         }
 
-        #endregion  
+        #endregion
+
+        #endregion
     }
 }

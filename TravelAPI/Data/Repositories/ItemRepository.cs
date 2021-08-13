@@ -13,8 +13,8 @@ namespace TravelAPI.Data.Repositories
     {
 
         private readonly ApplicationDbContext _context;
-        private readonly DbSet<Item> _items;
-        private readonly DbSet<Category> _categories;
+        private readonly DbSet<GeneralItem> _items;
+        private readonly DbSet<GeneralCategory> _categories;
         private readonly DbSet<Trip> _trips;
         private readonly DbSet<TripItem> _tripItems;
 
@@ -27,64 +27,66 @@ namespace TravelAPI.Data.Repositories
             _tripItems = context.TripItems;
         }
 
-        public IEnumerable<Item> GetGeneralItems(string userId)
+        #region General Items
+
+        public IEnumerable<GeneralItem> GetGeneralItems(string userId)
         {
-            return _items.Include(i => i.Category).Where(i => i.User.Id == userId && i.IsGeneralItem == true).OrderBy(i => i.Category).ThenBy(i => i.Name);
+            return _items.Include(i => i.Category).Where(i => i.User.Id == userId).OrderBy(i => i.Category).ThenBy(i => i.Name);
         }
 
-        public Item GetBy(int itemId)
+        public GeneralItem GetBy(int itemId)
         {
             return _items.FirstOrDefault(i => i.Id == itemId);
         }
 
-        
-
-        public Category GetCategoryBy(int categoryId)
+        public void Add(GeneralItem item)
         {
-            return _categories.FirstOrDefault(c => c.Id == categoryId);
+            _items.Attach(item);
         }
 
-        public IEnumerable<Category> GetGeneralCategories(string userId)
-        {
-            return _categories.Where(c => c.User.Id == userId && c.IsGeneralCategory == true).OrderBy(c => c.Name);
-        }
-
-        public IEnumerable<Category> GetTripCategories(string userId, int tripId)
-        {
-            return _categories.Where(c => c.User.Id == userId && c.Trip.Id == tripId).OrderBy(c => c.Name);
-        }
-
-        public IEnumerable<TripItem> GetTripItems(int tripId)
-        {
-            return _trips.Include(tr => tr.TripItems).ThenInclude(ti => ti.Item).ThenInclude(i => i.Category).SingleOrDefault(t => t.Id == tripId).TripItems; 
-        }
-
-        public void AddCategory(Category category)
-        {
-            _categories.Add(category);
-        }
-
-        public void DeleteCategoryWithItems(Category category)
-        {
-            _items.RemoveRange(_items.Include(i => i.Category).Where(i => i.Category.Id == category.Id));
-            _tripItems.RemoveRange(_tripItems.Include(ti => ti.Item).ThenInclude(i => i.Category).Where(ti => ti.Item.Category.Id == category.Id));
-            _categories.Remove(category);
-        }
-
-        public void Add(Item item)
-        {
-            _items.Attach(item); 
-        }
-
-        public void Update(Item item)
+        public void Update(GeneralItem item)
         {
             _context.Update(item);
         }
 
-        public void Delete(Item item)
+        public void Delete(GeneralItem item)
         {
             _items.Remove(item);
         }
+
+        #endregion
+
+
+        #region General Category
+
+        public GeneralCategory GetCategoryBy(int categoryId)
+        {
+            return _categories.FirstOrDefault(c => c.Id == categoryId);
+        }
+
+        public IEnumerable<GeneralCategory> GetCategories(string userId)
+        {
+            return _categories.Where(c => c.User.Id == userId).OrderBy(c => c.Name);
+        }
+
+        public IEnumerable<GeneralCategory> GetTripCategories(string userId, int tripId)
+        {
+            return _categories.Where(c => c.User.Id == userId).OrderBy(c => c.Name);
+        }
+
+        public void AddCategory(GeneralCategory category)
+        {
+            _categories.Add(category);
+        }
+
+        public void DeleteCategoryWithItems(GeneralCategory category)
+        {
+            _items.RemoveRange(_items.Include(i => i.Category).Where(i => i.Category.Id == category.Id));
+            _categories.Remove(category);
+        }
+
+        #endregion
+
 
         public void SaveChanges()
         {

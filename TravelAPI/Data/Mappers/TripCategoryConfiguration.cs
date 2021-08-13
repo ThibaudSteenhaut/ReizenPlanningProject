@@ -8,11 +8,12 @@ using TravelAPI.Models.Domain;
 
 namespace TravelAPI.Data.Mappers
 {
-    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    public class TripCategoryConfiguration : IEntityTypeConfiguration<TripCategory>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<TripCategory> builder)
         {
-            builder.Property(i => i.Name).IsRequired();
+            builder.Property(tc => tc.Name).IsRequired();
         }
+
     }
 }

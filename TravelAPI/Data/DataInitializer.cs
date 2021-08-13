@@ -33,7 +33,6 @@ namespace TravelAPI.Data.Repositories
                 IdentityUser user1 = new IdentityUser { UserName = "thibaud@mail.com", Email = "thibaud@mail.com" };
                 IdentityUser user2 = new IdentityUser { UserName = "thibaud2@mail.com", Email = "thibaud2@mail.com" };
 
-
                 await _userManager.CreateAsync(user1, "Test123456789");
                 await _userManager.AddClaimAsync(user1, new Claim(JwtClaimTypes.Role, "user"));
 
@@ -74,14 +73,16 @@ namespace TravelAPI.Data.Repositories
                 };
 
 
-                Category c1 = new Category("Electronica", user1, true);
-                Category c2 = new Category("Toiletspullen", user1, true);
-                Category c3 = new Category("Kleren", user1, true);
-                Category c4 = new Category("Boeken", user1, true);
-                Category c5 = new Category("Prullen", user1, true);
-                Category c6 = new Category("Alfatest", user1, true);
-                Category c7 = new Category("Books for in Rome", user1, false, t1);
-                Category c8 = new Category("Swimming Gear", user1, false, t1);
+                GeneralCategory c1 = new GeneralCategory("Electronica", user1);
+                GeneralCategory c2 = new GeneralCategory("Toiletspullen", user1);
+                GeneralCategory c3 = new GeneralCategory("Kleren", user1);
+                GeneralCategory c4 = new GeneralCategory("Boeken", user1);
+                GeneralCategory c5 = new GeneralCategory("Prullen", user1);
+                GeneralCategory c6 = new GeneralCategory("Alfatest", user1);
+                
+                TripCategory tc1 = new TripCategory("Books for in Rome", t1);
+                TripCategory tc2 = new TripCategory("Swimming Gear", t1);
+                TripCategory tc3 = new TripCategory("Navigation", t1);
 
                 _context.Categories.Add(c1);
                 _context.Categories.Add(c2);
@@ -89,44 +90,36 @@ namespace TravelAPI.Data.Repositories
                 _context.Categories.Add(c4);
                 _context.Categories.Add(c5);
                 _context.Categories.Add(c6);
-                _context.Categories.Add(c7);
-                _context.Categories.Add(c8);
 
-                Item generalItem1 = new Item("Gsm", c1, user1, true);
-                Item generalItem2 = new Item("Oplader", c1, user1, true);
-                Item generalItem3 = new Item("Fototoestel", c1, user1, true);
-                Item generalItem4 = new Item("Tandenborstel", c1, user1, true);
-                Item generalItem5 = new Item("Broek", c3, user1, true);
-                Item generalItem6 = new Item("T-shirt", c3, user1, true);
-                Item generalItem7 = new Item("Laptop", c1, user1, true);
-                Item generalItem8 = new Item("Laptop oplader", c1, user1, true);
-                Item generalItem9 = new Item("Zwembroek", c3, user1, true);
-                Item generalItem10 = new Item("Bikini", c3, user1, true);
-                Item generalItem11 = new Item("Kam", c2, user1, true);
-                Item generalItem12 = new Item("Rekkers", c2, user1, true);
-                Item generalItem13 = new Item("Boek 1 : Met een iets langere titel", c4, user1, true);
-                Item generalItem14 = new Item("Boek 2 : Blabla", c4, user1, true);
-                Item generalItem15 = new Item("Boek 3 : Blabla", c4, user1, true);
-                Item generalItem16 = new Item("Boek 4 : Blabla", c4, user1, true);
-                Item generalItem17 = new Item("Rekkers", c5, user1, true);
-                Item generalItem18 = new Item("Alfatest", c6, user1, true);
+                _context.TripCategories.Add(tc1);
+                _context.TripCategories.Add(tc1);
 
-                Item item1 = new Item("Map of Paris", c5, user1, false);
-                Item item2 = new Item("Sunglasses", c3, user1, false);
-                Item item3 = new Item("Hat", c3, user1, false);
-                Item item4 = new Item("Love in Paris, JK rowling", c4, user1, false);
-                Item item5 = new Item("Parisland, JK rowling", c4, user1, false);
-                Item item6 = new Item("From Paris with love, JK rowling", c4, user1, false);
-                Item item7 = new Item("A night in Paris, JK rowling", c4, user1, false);
+                GeneralItem generalItem1 = new GeneralItem("Gsm", c1, user1);
+                GeneralItem generalItem2 = new GeneralItem("Oplader", c1, user1);
+                GeneralItem generalItem3 = new GeneralItem("Fototoestel", c1, user1);
+                GeneralItem generalItem4 = new GeneralItem("Tandenborstel", c1, user1);
+                GeneralItem generalItem5 = new GeneralItem("Broek", c3, user1);
+                GeneralItem generalItem6 = new GeneralItem("T-shirt", c3, user1);
+                GeneralItem generalItem7 = new GeneralItem("Laptop", c1, user1);
+                GeneralItem generalItem8 = new GeneralItem("Laptop oplader", c1, user1);
+                GeneralItem generalItem9 = new GeneralItem("Zwembroek", c3, user1);
+                GeneralItem generalItem10 = new GeneralItem("Bikini", c3, user1);
+                GeneralItem generalItem11 = new GeneralItem("Kam", c2, user1);
+                GeneralItem generalItem12 = new GeneralItem("Rekkers", c2, user1);
+                GeneralItem generalItem13 = new GeneralItem("Boek 1 : Met een iets langere titel", c4, user1);
+                GeneralItem generalItem14 = new GeneralItem("Boek 2 : Blabla", c4, user1);
+                GeneralItem generalItem15 = new GeneralItem("Boek 3 : Blabla", c4, user1);
+                GeneralItem generalItem16 = new GeneralItem("Boek 4 : Blabla", c4, user1);
+                GeneralItem generalItem17 = new GeneralItem("Rekkers", c5, user1);
+                GeneralItem generalItem18 = new GeneralItem("Alfatest", c6, user1);
 
-
-                TripItem tripItem1 = new TripItem(item1, 2, false);
-                TripItem tripItem2 = new TripItem(item2, 2, false);
-                TripItem tripItem3 = new TripItem(item3, 3, false);
-                TripItem tripItem4 = new TripItem(item4, 1, false);
-                TripItem tripItem5 = new TripItem(item5, 1, false);
-                TripItem tripItem6 = new TripItem(item6, 1, false);
-                TripItem tripItem7 = new TripItem(item7, 1, false);
+                TripItem tripItem1 = new TripItem("Map of Rome", 1, tc3, false);
+                TripItem tripItem2 = new TripItem("Map of Musea in Rome", 1, tc3, false);
+                TripItem tripItem3 = new TripItem("Swimming pants", 2,  tc2, false);
+                TripItem tripItem4 = new TripItem("Love in Rome, JK rowling", 1, tc1, false);
+                TripItem tripItem5 = new TripItem("History of Rome, JK rowling", 1, tc1, false);
+                TripItem tripItem6 = new TripItem("From Rome with love, JK rowling", 1, tc1, false);
+                TripItem tripItem7 = new TripItem("A night in Rome, JK rowling", 1, tc1, false);
 
                 t1.TripItems.Add(tripItem1);
                 t1.TripItems.Add(tripItem2);

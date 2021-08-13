@@ -12,48 +12,31 @@ namespace TravelAPI.Data.Repositories
     public class TripRepository : ITripRepository
     {
         #region Fields
+
         private readonly ApplicationDbContext _context;
         private readonly DbSet<Trip> _trips;
         private readonly DbSet<TripItem> _tripItems;
-        private readonly DbSet<Category> _categories;
+        private readonly DbSet<TripCategory> _categories;
+
         #endregion
+
+        #region Constructor 
 
         public TripRepository(ApplicationDbContext dbContext)
         {
             _context = dbContext;
             _trips = dbContext.Trips;
             _tripItems = dbContext.TripItems;
-            _categories = dbContext.Categories;
+            _categories = dbContext.TripCategories;
         }
 
-        public void Add(Trip trip)
-        {
-            _trips.Add(trip);
-        }
+        #endregion
 
-        public void Delete(Trip trip)
-        {
-            _trips.Remove(trip);
-        }
-
-        public TripItem GetTripItem(int id)
-        {
-            return _tripItems.SingleOrDefault(ti => ti.Id == id);
-        }
-
-        public void UpdateTripItem(TripItem tripItem)
-        {
-            _tripItems.Update(tripItem);
-        }
+        #region Trip 
 
         public IEnumerable<TripDTO> GetTrips(string userId)
         {
-            return _trips.Where(t => t.User.Id == userId).Where(t => t.ReturnDate > DateTime.Now).OrderBy(t => t.DepartureDate).Select(t => new TripDTO(t)); 
-        }
-
-        public void AddTripCategory(Category category)
-        {
-            _categories.Add(category);
+            return _trips.Where(t => t.User.Id == userId).Where(t => t.ReturnDate > DateTime.Now).OrderBy(t => t.DepartureDate).Select(t => new TripDTO(t));
         }
 
         public Trip GetBy(int id)
@@ -66,6 +49,35 @@ namespace TravelAPI.Data.Repositories
             return _trips.Include(ti => ti.TripItems).SingleOrDefault(r => r.Id == id);
         }
 
+        public void Add(Trip trip)
+        {
+            _trips.Add(trip);
+        }
+
+        public void Delete(Trip trip)
+        {
+            _trips.Remove(trip);
+        }
+
+        public void Update(Trip trip)
+        {
+            _trips.Update(trip);
+        }
+
+        #endregion
+
+        #region TripItem
+
+        public IEnumerable<TripItem> GetTripItems(int tripId)
+        {
+            return _trips.Include(t => t.TripItems).ThenInclude(ti => ti.Category).SingleOrDefault(t => t.Id == tripId).TripItems;
+        }
+
+        public TripItem GetTripItem(int id)
+        {
+            return _tripItems.SingleOrDefault(ti => ti.Id == id);
+        }
+
         public void AddTripItem(TripItem tripItem)
         {
             _tripItems.Add(tripItem);
@@ -76,10 +88,38 @@ namespace TravelAPI.Data.Repositories
             _tripItems.Remove(tripItem);
         }
 
-        public void Update(Trip trip)
+        public void UpdateTripItem(TripItem tripItem)
         {
-            _trips.Update(trip);
+            _tripItems.Update(tripItem);
         }
+
+        #endregion
+
+        #region TripCategory
+
+
+        public IEnumerable<TripCategory> GetTripCategories(int tripId)
+        {
+            return _categories.Where(c => c.Trip.Id == tripId);
+        }
+
+        public TripCategory GetTripCategoryBy(int id)
+        {
+            return _categories.SingleOrDefault(c => c.Id == id); 
+        }
+
+        public void AddTripCategory(TripCategory category)
+        {
+            _categories.Add(category);
+        }
+
+        public void DeleteTripCategoryWithItems(TripCategory category)
+        {
+            _tripItems.RemoveRange(_tripItems.Include(i => i.Category).Where(i => i.Category.Id == category.Id));
+            _categories.Remove(category);
+        }
+
+        #endregion
 
         public void SaveChanges()
         {
