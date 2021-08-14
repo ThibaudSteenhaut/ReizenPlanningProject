@@ -15,6 +15,7 @@ namespace TravelAPI.Models
         IEnumerable<TripDTO> GetTrips(string userId);
         Trip GetBy(int id);
         Trip GetByWithTripItems(int id);
+        Trip GetByWithActivities(int id);
         void Add(Trip trip);
         void Delete(Trip trip);
         void Update(Trip trip);
@@ -37,6 +38,14 @@ namespace TravelAPI.Models
         TripCategory GetTripCategoryBy(int id); 
         void AddTripCategory(TripCategory category);
         void DeleteTripCategoryWithItems(TripCategory category);
+
+        #endregion
+
+        #region Activities
+
+        Activity GetActivityBy(int id);
+        IEnumerable<Activity> GetActivities(int tripId);
+        void DeleteActivity(Activity activity);
 
         #endregion
 

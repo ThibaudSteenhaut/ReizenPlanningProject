@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:data="using:ReizenPlanningProject.Model.Domain"
-      xmlns:domain="using:ReizenPlanningProject.Model"
+      xmlns:groupedLists="using:ReizenPlanningProject.Model.Domain.GroupedLists"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -14,13 +14,19 @@
                               Source="{x:Bind _detailVM.GroupedTripItemsList, Mode=TwoWay}"
                               IsSourceGrouped="True">
         </CollectionViewSource>
+        <CollectionViewSource x:Name="GroupedActivities"
+                              Source="{x:Bind _detailVM.GroupedActivitiesList, Mode=TwoWay}"
+                              IsSourceGrouped="True">
+        </CollectionViewSource>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <TextBlock Grid.Row="0"
                    Text="{x:Bind _detailVM.Trip.Destination, Mode=OneWay}"
                    FontSize="48"
@@ -68,32 +74,44 @@
 
         </Grid>
 
-        <StackPanel Grid.Row="2"
+        <Grid Grid.Row="2"
                     Padding="10"
                     Margin="0,25,0,0">
-            <StackPanel Orientation="Horizontal"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal"
                         Spacing="10">
                 <TextBlock Text="Items"
                            FontSize="36"
                            FontWeight="SemiBold"
                            Padding="5" />
-                <Button Command="{x:Bind _detailVM.SaveCommand}"> 
+                <Button Content="Add Category"
+                        Command="{x:Bind _detailVM.AddCategoryCommand}" />
+                <Button Content="Delete Category"
+                        FontSize="15"
+                        Command="{x:Bind _detailVM.DeleteCategoryCommand}" />
+                <Button Content="Add trip item"
+                        FontSize="15"
+                        Command="{x:Bind _detailVM.AddTripItemCommand}" />
+                <Button Content="Add general item"
+                        FontSize="15"
+                        Command="{x:Bind _detailVM.AddGeneralItemCommand}" />
+                <Button Command="{x:Bind _detailVM.SaveCommand}">
                     <FontIcon FontFamily="Segoe MDL2 Assets"
                               Glyph="&#xE74E;" />
                 </Button>
-                <Button Content="Add Category"
-                        Command="{x:Bind _detailVM.AddCategoryCommand}"/>
-                <Button Content="Add trip item"
-                        FontSize="15"
-                        Command="{x:Bind _detailVM.AddTripItemCommand}"/>
-                <Button Content="Add general item"
-                        FontSize="15"/>
             </StackPanel>
 
-            <Rectangle Fill="DarkGray"
+            <Rectangle Grid.Row="1"
+                       Fill="DarkGray"
                        Height="2"></Rectangle>
-
-            <ListView x:Name="itemsLv"
+            
+            <ListView Grid.Row="2"
+                      x:Name="itemsLv"
                       ItemsSource="{x:Bind GroupedTripItems.View, Mode=OneWay}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -127,7 +145,7 @@
                                            FontSize="18"
                                            FontWeight="SemiBold"
                                            Margin="0,0,5,0" />
-                                <TextBlock Text="{x:Bind Item.Name}"
+                                <TextBlock Text="{x:Bind Name}"
                                            FontSize="18"
                                            VerticalAlignment="Center" />
                             </StackPanel>
@@ -136,7 +154,7 @@
                                       HorizontalContentAlignment="Right"
                                       HorizontalAlignment="Right"
                                       IsChecked="{x:Bind CheckedIn, Mode=TwoWay}"
-                                      FlowDirection="RightToLeft"/>
+                                      FlowDirection="RightToLeft" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -152,7 +170,61 @@
                     </GroupStyle>
                 </ListView.GroupStyle>
             </ListView>
-        </StackPanel>
-        
+        </Grid>
+
+        <Grid Grid.Row="3"
+                    Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal">
+                <TextBlock Text="Activities"
+                           FontSize="36"
+                           FontWeight="SemiBold"
+                           Padding="5" />
+                <Button Content="Add activity"/>
+            </StackPanel>
+            
+            <Rectangle Grid.Row="1"
+                       Fill="DarkGray"
+                       Height="2" />
+
+            <ListView Grid.Row="2"
+                      x:Name="activityLv"
+                      ItemsSource="{x:Bind GroupedActivities.View, Mode=OneWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Activity">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{x:Bind Description}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate x:DataType="groupedLists:GroupActivityList">
+                                <TextBlock FontWeight="Bold"
+                                           FontSize="24"
+                                           Text="{x:Bind Key.ToLongDateString()}" />
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>

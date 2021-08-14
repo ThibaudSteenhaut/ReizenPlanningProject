@@ -45,7 +45,8 @@ namespace TravelAPI.Data.Repositories
                     DepartureDate = new DateTime(2022, 12, 30, 12, 30, 00),
                     ReturnDate = new DateTime(2023, 1, 10, 14, 30, 00),
                     User = user1,
-                    TripItems = new List<TripItem>()
+                    TripItems = new List<TripItem>(),
+                    Activities = new List<Activity>()
                 };
                 Trip t2 = new Trip()
                 {
@@ -53,7 +54,8 @@ namespace TravelAPI.Data.Repositories
                     DepartureDate = new DateTime(2022, 1, 10, 13, 30, 00),
                     ReturnDate = new DateTime(2022, 2, 10, 21, 45, 00),
                     User = user1,
-                    TripItems = new List<TripItem>()
+                    TripItems = new List<TripItem>(),
+                    Activities = new List<Activity>()
                 };
                 Trip t4 = new Trip()
                 {
@@ -61,7 +63,8 @@ namespace TravelAPI.Data.Repositories
                     DepartureDate = new DateTime(2021, 1, 10, 13, 30, 00),
                     ReturnDate = new DateTime(2021, 2, 10, 21, 45, 00),
                     User = user1,
-                    TripItems = new List<TripItem>()
+                    TripItems = new List<TripItem>(),
+                    Activities = new List<Activity>()
                 };
 
                 Trip t3 = new Trip()
@@ -69,7 +72,9 @@ namespace TravelAPI.Data.Repositories
                     Destination = "Praag",
                     DepartureDate = new DateTime(2021, 2, 21, 6, 15, 00),
                     ReturnDate = new DateTime(2021, 3, 10, 23, 45, 00),
-                    User = user2
+                    User = user2,
+                    TripItems = new List<TripItem>(),
+                    Activities = new List<Activity>()
                 };
 
 
@@ -121,6 +126,14 @@ namespace TravelAPI.Data.Repositories
                 TripItem tripItem6 = new TripItem("From Rome with love, JK rowling", 1, tc1, false);
                 TripItem tripItem7 = new TripItem("A night in Rome, JK rowling", 1, tc1, false);
 
+                Activity a1 = new Activity("Sightseeing the Colosseum", new DateTime(2022, 12, 31));
+                Activity a2 = new Activity("Visit musea", new DateTime(2022, 12, 31));
+                Activity a3 = new Activity("Visit the Sistine Chapel", new DateTime(2023, 1, 1));
+                Activity a4 = new Activity("Eating a classic italian pizza", new DateTime(2023, 1, 2));
+                Activity a5 = new Activity("Daytrip to the country side", new DateTime(2023, 1, 2));
+                Activity a6 = new Activity("Sightseeing the Pantheon", new DateTime(2022, 12, 31));
+                Activity a7 = new Activity("Sightseeing the AS ROMA Stadium", new DateTime(2022, 12, 31));
+
                 t1.TripItems.Add(tripItem1);
                 t1.TripItems.Add(tripItem2);
                 t1.TripItems.Add(tripItem3);
@@ -128,6 +141,14 @@ namespace TravelAPI.Data.Repositories
                 t1.TripItems.Add(tripItem5);
                 t1.TripItems.Add(tripItem6);
                 t1.TripItems.Add(tripItem7);
+
+                t1.Activities.Add(a1);
+                t1.Activities.Add(a2);
+                t1.Activities.Add(a3);
+                t1.Activities.Add(a4);
+                t1.Activities.Add(a5);
+                t1.Activities.Add(a6);
+                t1.Activities.Add(a7);
 
                 _context.Trips.Add(t1);
                 _context.Trips.Add(t2);

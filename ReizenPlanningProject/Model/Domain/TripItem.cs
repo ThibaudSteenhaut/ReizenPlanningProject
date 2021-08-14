@@ -14,7 +14,8 @@ namespace ReizenPlanningProject.Model.Domain
         public int Id { get; set; }
         public bool CheckedIn { get; set; }
         public int Amount { get; set; }
-        public Item Item { get; set; }
+        public string Name { get; set; }
+        public Category Category { get; set; }
 
         #endregion
 
@@ -25,9 +26,10 @@ namespace ReizenPlanningProject.Model.Domain
 
         }
 
-        public TripItem(Item item, int amount, bool checkedIn)
+        public TripItem(string name, Category tripCategory, int amount, bool checkedIn = false)
         {
-            Item = item;
+            Name = name;
+            Category = tripCategory;
             Amount = amount;
             CheckedIn = CheckedIn;
         }

@@ -77,7 +77,7 @@ namespace ReizenPlanningProject.Data.Repositories
         public ObservableCollection<Category> GetCategories()
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
-            var json = _client.GetStringAsync($"{_baseUrl}/GeneralCategories").Result;
+            var json = _client.GetStringAsync($"{_baseUrl}/Categories").Result;
             var categories = JsonConvert.DeserializeObject<ObservableCollection<Category>>(json);
 
             return categories;

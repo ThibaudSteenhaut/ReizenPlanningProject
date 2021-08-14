@@ -25,6 +25,8 @@ namespace ReizenPlanningProject.Model.Repositories
 
         }
 
+        #region Trip
+
         public async Task<int> Add(Trip tripToAdd)
         {
 
@@ -65,24 +67,55 @@ namespace ReizenPlanningProject.Model.Repositories
             return trips;
         }
 
+        #endregion
+
+        #region TripItem
 
         public ObservableCollection<TripItem> GetTripItems(int tripId)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
-            var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/tripitems").Result;
+            var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/Tripitems").Result;
             var items = JsonConvert.DeserializeObject<ObservableCollection<TripItem>>(json);
 
             return items;
         }
 
-        public async void UpdateTripItems(int tripId, List<TripItem> tripItems)
+        public async void UpdateTripItems(List<TripItem> tripItems)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
             var tripItemsJson = JsonConvert.SerializeObject(tripItems);
             var stringContent = new StringContent(tripItemsJson, Encoding.UTF8, "application/json");
-            await _client.PutAsync($"{_baseUrl}/{tripId}/TripItems", stringContent);
+            await _client.PutAsync($"{_baseUrl}/TripItems", stringContent);
         }
 
+        public async Task<int> AddTripItem(int tripId, TripItem tripItem)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            var tripItemJson = JsonConvert.SerializeObject(tripItem);
+            var stringContent = new StringContent(tripItemJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync($"{_baseUrl}/{tripId}/TripItems", stringContent);
+
+            string categoryId = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return Int32.Parse(categoryId);
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public async void DeleteTripItem(int tripItemId)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            await _client.DeleteAsync($"{_baseUrl}/TripItems/{tripItemId}");
+        }
+
+        #endregion
+
+        #region TripCategory 
 
         public List<Category> GetTripCategories(int tripId)
         {
@@ -114,29 +147,37 @@ namespace ReizenPlanningProject.Model.Repositories
             }
         }
 
-        public async Task<int> AddTripItem(int tripId, TripItem tripItem)
+        public async void DeleteCategoryWithItems(int categoryId)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
-            var tripItemJson = JsonConvert.SerializeObject(tripItem);
-            var stringContent = new StringContent(tripItemJson, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _client.PostAsync($"{_baseUrl}/{tripId}/TripItems", stringContent);
-
-            string categoryId = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                return Int32.Parse(categoryId);
-            }
-            else
-            {
-                return -1;
-            }
+            await _client.DeleteAsync($"{_baseUrl}/Category/{categoryId}");
         }
 
-        public async void DeleteTripItem(int tripItemId)
+        #endregion
+
+        #region Activity 
+
+        public List<Domain.Activity> GetActivities(int tripId)
         {
+
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
-            await _client.DeleteAsync($"{_baseUrl}/TripItems/{tripItemId}");
+            var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/Activities").Result;
+            var activities = JsonConvert.DeserializeObject<List<Domain.Activity>>(json);
+
+            return activities;
+
         }
+
+        public Task<int> AddActivity(int tripId, Domain.Activity activity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteActivity(int activityId)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

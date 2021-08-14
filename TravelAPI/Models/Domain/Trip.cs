@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using TravelAPI.DTOs;
+using TravelAPI.Models.Domain;
 
 namespace TravelAPI.Models
 {
@@ -19,6 +20,7 @@ namespace TravelAPI.Models
         public DateTime ReturnDate { get; set; }
         public IdentityUser User { get; set; }
         public List<TripItem> TripItems { get; set; }
+        public List<Activity> Activities { get; set; }
 
         #endregion
 
@@ -35,7 +37,8 @@ namespace TravelAPI.Models
             DepartureDate = departure;
             ReturnDate = returnDate;
             User = user;
-            TripItems = new List<TripItem>(); 
+            TripItems = new List<TripItem>();
+            Activities = new List<Activity>();
         }
 
         public Trip(TripDTO tripDTO, IdentityUser user)
@@ -45,6 +48,7 @@ namespace TravelAPI.Models
             ReturnDate = tripDTO.ReturnDate;
             User = user;
             TripItems = new List<TripItem>();
+            Activities = new List<Activity>();
         }
         #endregion
 

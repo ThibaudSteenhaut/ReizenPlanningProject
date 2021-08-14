@@ -23,7 +23,7 @@ namespace ReizenPlanningProject.Views.Dialogs
     public sealed partial class AddItemDialog : ContentDialog
     {
 
-        public string Name { get; set; }
+        public string ItemName { get; set; }
 
         public Category SelectedCategory { get; set; }
 

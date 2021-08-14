@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using TravelAPI.DTOs;
 using TravelAPI.Models;
 using TravelAPI.Models.Domain;
+using Activity = TravelAPI.Models.Domain.Activity;
 
 namespace TravelAPI.Controllers
 {
@@ -155,6 +156,8 @@ namespace TravelAPI.Controllers
         public ActionResult<TripItemDTO> AddTripItem(int id, TripItemDTO tripItem)
         {
 
+            if (id < 0) return NotFound();
+
             IdentityUser currentUser = GetCurrentUser();
 
             if (currentUser == null) return BadRequest();
@@ -225,7 +228,7 @@ namespace TravelAPI.Controllers
         /// <summary> 
         /// Gets the categories of the trip of the logged in user 
         /// </summary> 
-        [HttpGet("{id}/Category")]
+        [HttpGet("{id}/Categories")]
         [Authorize(Policy = "User")]
         public ActionResult<IEnumerable<TripCategoryDTO>> GetTripItemCategories(int id)
         {
@@ -294,6 +297,76 @@ namespace TravelAPI.Controllers
 
         }
 
+
+        #endregion
+
+        #region Activities 
+
+        //GET: api/Trips/{id}/Activities
+        /// <summary> 
+        /// Get all activities from the trip
+        /// </summary> 
+        [HttpGet("{id}/Activities")]
+        [Authorize(Policy = "User")]
+        public ActionResult<IEnumerable<Models.Domain.Activity>> GetActivities(int id)
+        {
+            IdentityUser currentUser = GetCurrentUser();
+            if (currentUser == null) return BadRequest();
+
+            return Ok(_tripRepository.GetActivities(id));
+        }
+
+        //POST: api/Trip/{id}/Activities
+        /// <summary> 
+        /// Add a new activity to the trip
+        /// </summary> 
+        [HttpPost("{id}/Activity")]
+        [Authorize(Policy = "User")]
+        public ActionResult<int> PostActivity(int id, Activity activity)
+        {
+
+            if (id < 0) return NotFound();
+
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            Trip trip = _tripRepository.GetByWithActivities(id);
+
+            if (trip == null) return NotFound();
+
+            trip.Activities.Add(activity);
+            _tripRepository.SaveChanges();
+            return Ok(activity.Id);
+        }
+
+
+        //DELETE: api/Trips/Activity/{activityId}
+        /// <summary> 
+        /// Delete the activity from the trip
+        /// </summary> 
+        [HttpDelete("Activity/{id}")]
+        [Authorize(Policy = "User")]
+        public ActionResult DeleteActivity(int id)
+        {
+
+            if (id < 0) return NotFound();
+
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            Activity a = _tripRepository.GetActivityBy(id);
+            _tripRepository.DeleteActivity(a);
+            _tripRepository.SaveChanges();
+            return Ok();
+        }
 
         #endregion
 

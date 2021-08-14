@@ -122,8 +122,10 @@
     <Compile Include="Data\Repositories\ItemRepository.cs" />
     <Compile Include="Model\Authentication\LoginRequest.cs" />
     <Compile Include="Model\Authentication\RegisterRequest.cs" />
-    <Compile Include="Model\Domain\GroupItemList.cs" />
-    <Compile Include="Model\Domain\GroupTripItemList.cs" />
+    <Compile Include="Model\Domain\Activity.cs" />
+    <Compile Include="Model\Domain\GroupedLists\GroupActivityList.cs" />
+    <Compile Include="Model\Domain\GroupedLists\GroupItemList.cs" />
+    <Compile Include="Model\Domain\GroupedLists\GroupTripItemList.cs" />
     <Compile Include="Model\Domain\TripItem.cs" />
     <Compile Include="Model\IRepositories\IAccountRepository.cs" />
     <Compile Include="Model\IRepositories\IItemRepository.cs" />
@@ -139,6 +141,9 @@
     <Compile Include="ViewModel\Trips\TripDetailViewModel.cs" />
     <Compile Include="Views\Dialogs\AddCategoryDialog.xaml.cs">
       <DependentUpon>AddCategoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AddGeneralItemDialog.xaml.cs">
+      <DependentUpon>AddGeneralItemDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\AddItemDialog.xaml.cs">
       <DependentUpon>AddItemDialog.xaml</DependentUpon>
@@ -202,6 +207,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Views\Dialogs\AddCategoryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\AddGeneralItemDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

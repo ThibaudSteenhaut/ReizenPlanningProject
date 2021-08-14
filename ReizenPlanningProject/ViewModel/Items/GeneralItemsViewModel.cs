@@ -92,9 +92,9 @@ namespace ReizenPlanningProject.ViewModel.Items
 
             if (result == ContentDialogResult.Primary)
             {
-                if (!String.IsNullOrEmpty(dialog.Name) && dialog.SelectedCategory != null)
+                if (!String.IsNullOrEmpty(dialog.ItemName) && dialog.SelectedCategory != null)
                 {
-                    Item itemToAdd = new Item(dialog.Name, dialog.SelectedCategory);
+                    Item itemToAdd = new Item(dialog.ItemName, dialog.SelectedCategory);
                     int id = await _itemRepository.Add(itemToAdd);
                     itemToAdd.Id = id;
                     Items.Add(itemToAdd);
