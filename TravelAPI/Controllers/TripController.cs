@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using TravelAPI.DTOs;
 using TravelAPI.Models;
 using TravelAPI.Models.Domain;
-using Activity = TravelAPI.Models.Domain.Activity;
+using TripTask = TravelAPI.Models.Domain.TripTask;
 
 namespace TravelAPI.Controllers
 {
@@ -178,7 +178,7 @@ namespace TravelAPI.Controllers
         /// </summary>
         [HttpPut("TripItems")]
         [Authorize(Policy = "User")]
-        public ActionResult UpdateItems(List<TripItemDTO> tripItems)
+        public ActionResult UpdateTripItems(List<TripItemDTO> tripItems)
         {
             IdentityUser currentUser = GetCurrentUser();
 
@@ -302,71 +302,84 @@ namespace TravelAPI.Controllers
 
         #region Activities 
 
-        //GET: api/Trips/{id}/Activities
+        //GET: api/Trips/{id}/TripTasks
         /// <summary> 
-        /// Get all activities from the trip
+        /// Get all tasks from the trip
         /// </summary> 
-        [HttpGet("{id}/Activities")]
+        [HttpGet("{id}/TripTasks")]
         [Authorize(Policy = "User")]
-        public ActionResult<IEnumerable<Models.Domain.Activity>> GetActivities(int id)
+        public ActionResult<IEnumerable<TripTask>> GetTripTasks(int id)
         {
             IdentityUser currentUser = GetCurrentUser();
             if (currentUser == null) return BadRequest();
 
-            return Ok(_tripRepository.GetActivities(id));
+            return Ok(_tripRepository.GetTripTasks(id));
         }
 
-        //POST: api/Trip/{id}/Activities
+        //POST: api/Trip/{id}/TripTask
         /// <summary> 
-        /// Add a new activity to the trip
+        /// Add a new task to the trip
         /// </summary> 
-        [HttpPost("{id}/Activity")]
+        [HttpPost("{id}/TripTask")]
         [Authorize(Policy = "User")]
-        public ActionResult<int> PostActivity(int id, Activity activity)
+        public ActionResult<int> PostTripTask(int id, TripTask activity)
         {
 
             if (id < 0) return NotFound();
 
             IdentityUser currentUser = GetCurrentUser();
-
-            if (currentUser == null)
-            {
-                return BadRequest();
-            }
-
+            if (currentUser == null) return BadRequest();
+           
             Trip trip = _tripRepository.GetByWithActivities(id);
 
             if (trip == null) return NotFound();
 
-            trip.Activities.Add(activity);
+            trip.TripTasks.Add(activity);
             _tripRepository.SaveChanges();
             return Ok(activity.Id);
         }
 
 
-        //DELETE: api/Trips/Activity/{activityId}
+        //DELETE: api/Trips/TripTask/{tripTaskId}
         /// <summary> 
-        /// Delete the activity from the trip
+        /// Delete the task from the trip
         /// </summary> 
-        [HttpDelete("Activity/{id}")]
+        [HttpDelete("TripTask/{id}")]
         [Authorize(Policy = "User")]
-        public ActionResult DeleteActivity(int id)
+        public ActionResult DeleteTripTask(int id)
         {
 
             if (id < 0) return NotFound();
 
             IdentityUser currentUser = GetCurrentUser();
 
-            if (currentUser == null)
-            {
-                return BadRequest();
-            }
-
-            Activity a = _tripRepository.GetActivityBy(id);
-            _tripRepository.DeleteActivity(a);
+            if (currentUser == null) return BadRequest();
+            
+            TripTask a = _tripRepository.GetTripTaskBy(id);
+            _tripRepository.DeleteTripTask(a);
             _tripRepository.SaveChanges();
             return Ok();
         }
+
+        //PUT: api/Trips/TripTasks
+        /// <summary>
+        /// Updates the trip tasks of the logged in user
+        /// </summary>
+        [HttpPut("TripTasks")]
+        [Authorize(Policy = "User")]
+        public ActionResult UpdateTripTasks(IEnumerable<TripTask> tripTasks)
+        {
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null) return BadRequest();
+
+            _tripRepository.UpdateTripTasks(tripTasks);
+            _tripRepository.SaveChanges(); 
+
+            return Ok();
+        }
+
+
 
         #endregion
 

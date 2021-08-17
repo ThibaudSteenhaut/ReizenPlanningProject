@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ReizenPlanningProject.Model.Domain.GroupedLists
 {
-    public class GroupActivityList : List<Activity>
+    public class GroupActivityList : List<TripTask>
     {
-        public GroupActivityList(IEnumerable<Activity> activities) : base(activities)
+        public GroupActivityList(IEnumerable<TripTask> activities) : base(activities)
         {
 
         }

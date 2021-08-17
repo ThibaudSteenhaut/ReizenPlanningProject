@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="using:ReizenPlanningProject"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:data="using:ReizenPlanningProject.Model"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:conv="using:ReizenPlanningProject.Converters"
       mc:Ignorable="d"
@@ -28,7 +29,7 @@
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="data:Trip">
                         <Grid HorizontalAlignment="Stretch"
                               Margin="5">
                             <Grid.RowDefinitions>
@@ -61,7 +62,7 @@
                                        FontSize="18"
                                        Grid.Row="2"
                                        Grid.Column="0">
-                                <Run Text="Leaving: "
+                                <Run Text="From: "
                                      FontWeight="SemiBold" /> 
                                 <Run Text="{Binding DepartureDate, Converter= { StaticResource DateConverter } }" />
                             </TextBlock>
@@ -70,7 +71,7 @@
                                        FontSize="18"
                                        Grid.Row="3"
                                        Grid.Column="0">
-                                <Run Text="Returning: "
+                                <Run Text="To: "
                                      FontWeight="SemiBold" />
                                 <Run Text="{Binding ReturnDate , Converter= { StaticResource DateConverter }}" />
                             </TextBlock>
@@ -78,14 +79,14 @@
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         Orientation="Horizontal">
-                                <TextBlock Text="Items checked in"
+                                <TextBlock Text="Preparation done"
                                            FontSize="18"
                                            VerticalAlignment="Center"
                                            Margin="0,0,10,0"
                                            FontWeight="SemiBold" />
                                 <ProgressBar Width="300"
                                              Height="30"
-                                             Value="90"
+                                             Value="{x:Bind Path=PreparationCompleted}"
                                              Foreground="#FF67DA5C" />
                             </StackPanel>
                         </Grid>

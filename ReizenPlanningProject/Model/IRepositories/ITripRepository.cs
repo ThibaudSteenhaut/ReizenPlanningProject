@@ -36,11 +36,12 @@ namespace ReizenPlanningProject.Model.Repositories
 
         #endregion
 
-        #region Activity 
+        #region TripTask 
 
-        List<Activity> GetActivities(int tripId);
-        Task<int> AddActivity(int tripId, Activity activity);
-        void DeleteActivity(int activityId); 
+        ObservableCollection<TripTask> GetTripTasks(int tripId);
+        Task<int> AddTripTask(int tripId, TripTask activity);
+        void DeleteTripTask(int activityId);
+        void UpdateTripTasks(IEnumerable<TripTask> tripTasks); 
 
         #endregion
     }

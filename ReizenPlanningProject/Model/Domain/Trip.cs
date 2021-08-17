@@ -13,13 +13,15 @@ namespace ReizenPlanningProject.Model
         public string Destination { get; set; }
         public DateTime DepartureDate { get; set; }
         public DateTime ReturnDate { get; set; }
+        public int PreparationCompleted { get; set; }
 
-        
-        public Trip(string destination, DateTime departureDate, DateTime returnDate)
+
+        public Trip(string destination, DateTime departureDate, DateTime returnDate, int prepCompleted)
         {
             this.Destination = destination;
             this.DepartureDate = departureDate;
             this.ReturnDate = returnDate;
+            this.PreparationCompleted = prepCompleted;
         }
 
         public Trip()

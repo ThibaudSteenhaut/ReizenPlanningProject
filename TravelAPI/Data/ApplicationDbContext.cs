@@ -18,7 +18,7 @@ namespace TravelAPI.Data
         public DbSet<GeneralCategory> Categories { get; set; }
         public DbSet<TripItem> TripItems { get; set; }
         public DbSet<TripCategory> TripCategories { get; set; }
-        public DbSet<Activity> Activities { get; set; }
+        public DbSet<TripTask> TripTasks { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         { 
@@ -34,7 +34,7 @@ namespace TravelAPI.Data
             builder.ApplyConfiguration(new GeneralItemConfiguration());
             builder.ApplyConfiguration(new TripItemConfiguration());
             builder.ApplyConfiguration(new TripCategoryConfiguration());
-            builder.ApplyConfiguration(new ActivityConfiguration());   
+            builder.ApplyConfiguration(new TripTaskConfiguration());   
         }
     }
 }

@@ -8,12 +8,11 @@ using TravelAPI.Models.Domain;
 
 namespace TravelAPI.Data.Mappers
 {
-    public class ActivityConfiguration : IEntityTypeConfiguration<Activity>
+    public class TripTaskConfiguration : IEntityTypeConfiguration<TripTask>
     {
-        public void Configure(EntityTypeBuilder<Activity> builder)
+        public void Configure(EntityTypeBuilder<TripTask> builder)
         {
-            builder.Property(a => a.Description).IsRequired();
-            builder.Property(a => a.Day).IsRequired();
+            builder.Property(tt => tt.Description).IsRequired();
         }
     }
 }

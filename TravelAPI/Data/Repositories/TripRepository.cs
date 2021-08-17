@@ -17,7 +17,7 @@ namespace TravelAPI.Data.Repositories
         private readonly DbSet<Trip> _trips;
         private readonly DbSet<TripItem> _tripItems;
         private readonly DbSet<TripCategory> _categories;
-        private readonly DbSet<Activity> _activities;
+        private readonly DbSet<TripTask> _tripTasks;
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace TravelAPI.Data.Repositories
             _trips = dbContext.Trips;
             _tripItems = dbContext.TripItems;
             _categories = dbContext.TripCategories;
-            _activities = dbContext.Activities;
+            _tripTasks = dbContext.TripTasks;
         }
 
         #endregion
@@ -38,7 +38,12 @@ namespace TravelAPI.Data.Repositories
 
         public IEnumerable<TripDTO> GetTrips(string userId)
         {
-            return _trips.Where(t => t.User.Id == userId).Where(t => t.ReturnDate > DateTime.Now).OrderBy(t => t.DepartureDate).Select(t => new TripDTO(t));
+            return _trips.Include(t => t.TripItems)
+                .Include(t => t.TripTasks)
+                .Where(t => t.User.Id == userId)
+                .Where(t => t.ReturnDate > DateTime.Now)
+                .OrderBy(t => t.DepartureDate)
+                .Select(t => new TripDTO(t));
         }
 
         public Trip GetBy(int id)
@@ -53,7 +58,7 @@ namespace TravelAPI.Data.Repositories
 
         public Trip GetByWithActivities(int id)
         {
-            return _trips.Include(t => t.Activities).SingleOrDefault(t => t.Id == id);
+            return _trips.Include(t => t.TripTasks).SingleOrDefault(t => t.Id == id);
         }
 
         public void Add(Trip trip)
@@ -128,21 +133,26 @@ namespace TravelAPI.Data.Repositories
 
         #endregion
 
-        #region Activities 
+        #region TripTasks 
 
-        public Activity GetActivityBy(int id)
+        public TripTask GetTripTaskBy(int id)
         {
-            return _activities.SingleOrDefault(a => a.Id == id); 
+            return _tripTasks.SingleOrDefault(a => a.Id == id); 
         }
 
-        public IEnumerable<Activity> GetActivities(int tripId)
+        public IEnumerable<TripTask> GetTripTasks(int tripId)
         {
-            return _trips.Include(t => t.Activities).SingleOrDefault(t => t.Id == tripId).Activities.OrderBy(a => a.Day);
+            return _trips.Include(t => t.TripTasks).SingleOrDefault(t => t.Id == tripId).TripTasks.OrderBy(a => a.Description);
         }
 
-        public void DeleteActivity(Activity activity)
+        public void DeleteTripTask(TripTask tripTask)
         {
-            _activities.Remove(activity);
+            _tripTasks.Remove(tripTask);
+        }
+
+        public void UpdateTripTasks(IEnumerable<TripTask> tripTasks)
+        {
+            _tripTasks.UpdateRange(tripTasks);
         }
 
         #endregion

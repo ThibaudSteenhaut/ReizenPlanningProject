@@ -65,7 +65,7 @@ namespace ReizenPlanningProject.ViewModel.Trips
                 DepartureDate = DepartureDate.AddHours(DepartureTime.Hours).AddMinutes(DepartureTime.Minutes);
                 ReturnDate = ReturnDate.AddHours(ReturnTime.Hours).AddMinutes(ReturnTime.Minutes);
 
-                await _tripRepository.Add(new Trip(Destination, DepartureDate, ReturnDate));
+                await _tripRepository.Add(new Trip(Destination, DepartureDate, ReturnDate, 0));
                 NavigateToListOverview();
             }
 

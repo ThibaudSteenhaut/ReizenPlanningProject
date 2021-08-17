@@ -155,27 +155,36 @@ namespace ReizenPlanningProject.Model.Repositories
 
         #endregion
 
-        #region Activity 
+        #region TripTask 
 
-        public List<Domain.Activity> GetActivities(int tripId)
+        public ObservableCollection<TripTask> GetTripTasks(int tripId)
         {
 
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
-            var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/Activities").Result;
-            var activities = JsonConvert.DeserializeObject<List<Domain.Activity>>(json);
+            var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/TripTasks").Result;
+            var tripTasks = JsonConvert.DeserializeObject<ObservableCollection<TripTask>>(json);
 
-            return activities;
+            return tripTasks;
 
         }
 
-        public Task<int> AddActivity(int tripId, Domain.Activity activity)
+        public Task<int> AddTripTask(int tripId, TripTask activity)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteActivity(int activityId)
+        public async void DeleteTripTask(int tripTaskId)
         {
-            throw new NotImplementedException();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            await _client.DeleteAsync($"{_baseUrl}/TripTask/{tripTaskId}");
+        }
+
+        public async void UpdateTripTasks(IEnumerable<TripTask> tripTasks)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            var tripTaskjson = JsonConvert.SerializeObject(tripTasks);
+            var stringContent = new StringContent(tripTaskjson, Encoding.UTF8, "application/json");
+            await _client.PutAsync($"{_baseUrl}/TripTasks", stringContent);
         }
 
         #endregion

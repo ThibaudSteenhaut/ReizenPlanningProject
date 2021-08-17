@@ -20,7 +20,7 @@ namespace TravelAPI.Models
         public DateTime ReturnDate { get; set; }
         public IdentityUser User { get; set; }
         public List<TripItem> TripItems { get; set; }
-        public List<Activity> Activities { get; set; }
+        public List<TripTask> TripTasks { get; set; }
 
         #endregion
 
@@ -38,7 +38,7 @@ namespace TravelAPI.Models
             ReturnDate = returnDate;
             User = user;
             TripItems = new List<TripItem>();
-            Activities = new List<Activity>();
+            TripTasks = new List<TripTask>();
         }
 
         public Trip(TripDTO tripDTO, IdentityUser user)
@@ -48,7 +48,7 @@ namespace TravelAPI.Models
             ReturnDate = tripDTO.ReturnDate;
             User = user;
             TripItems = new List<TripItem>();
-            Activities = new List<Activity>();
+            TripTasks = new List<TripTask>();
         }
         #endregion
 

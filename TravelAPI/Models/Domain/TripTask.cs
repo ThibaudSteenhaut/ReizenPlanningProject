@@ -5,28 +5,28 @@ using System.Threading.Tasks;
 
 namespace TravelAPI.Models.Domain
 {
-    public class Activity
+    public class TripTask
     {
 
         #region Properties
 
         public int Id { get; set; }
         public string Description { get; set; }
-        public DateTime Day { get; set; }
-
+        public bool Done { get; set; }
+        
         #endregion
 
         #region Constructor
 
-        public Activity()
+        public TripTask()
         {
 
         }
 
-        public Activity(string description, DateTime day)
+        public TripTask(string description, bool done = false)
         {
             Description = description;
-            Day = day;
+            Done = done;
         }
 
         #endregion

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using TripTask = ReizenPlanningProject.Model.Domain.TripTask;
 
 namespace ReizenPlanningProject.ViewModel.Trips
 {
@@ -30,11 +31,12 @@ namespace ReizenPlanningProject.ViewModel.Trips
 
         public Trip Trip { get; set; }
         public List<Category> TripCategories { get; set; }
-        public List<Model.Domain.Activity> Activities { get; set; }
+        public List<Model.Domain.TripTask> Activities { get; set; }
 
         public ObservableCollection<TripItem> TripItems { get; set; }
         public ObservableCollection<GroupTripItemList> GroupedTripItemsList = new ObservableCollection<GroupTripItemList>();
-        public ObservableCollection<GroupActivityList> GroupedActivitiesList = new ObservableCollection<GroupActivityList>(); 
+        public ObservableCollection<TripTask> TripTasks { get; set; }
+        
 
         #endregion
 
@@ -46,6 +48,8 @@ namespace ReizenPlanningProject.ViewModel.Trips
         public RelayCommand AddCategoryCommand { get; set; }
         public RelayCommand DeleteCategoryCommand { get; set; }
         public RelayCommand AddGeneralItemCommand { get; set; }
+        public RelayCommand DeleteActivityCommand { get; set; }
+        public RelayCommand SaveTasksCommand { get; set; }
 
         #endregion
 
@@ -57,6 +61,9 @@ namespace ReizenPlanningProject.ViewModel.Trips
             AddCategoryCommand = new RelayCommand(param => AddCategory());
             DeleteTripItemCommand = new RelayCommand(param => DeleteTripItem(param));
             DeleteCategoryCommand = new RelayCommand(param => DeleteCategory());
+            DeleteActivityCommand = new RelayCommand(param => DeleteActivity(param));
+            SaveTasksCommand = new RelayCommand(param => SaveTasks());
+            
         }
 
         public void Initialize()
@@ -64,9 +71,8 @@ namespace ReizenPlanningProject.ViewModel.Trips
 
             this.TripItems = _tripRepository.GetTripItems(Trip.Id);
             this.TripCategories = _tripRepository.GetTripCategories(Trip.Id);
-            this.Activities = _tripRepository.GetActivities(Trip.Id);
+            this.TripTasks = _tripRepository.GetTripTasks(Trip.Id);
 
-            BuildActivityList();
             BuildItemList();
         }
 
@@ -95,39 +101,6 @@ namespace ReizenPlanningProject.ViewModel.Trips
 
             groupedTripItems.Sort((g1, g2) => string.Compare(g1.Key, g2.Key));
             groupedTripItems.ForEach(g => GroupedTripItemsList.Add(g));
-        }
-
-        public void BuildActivityList()
-        {
-
-            this.GroupedActivitiesList.Clear();
-            List<GroupActivityList> groupedActivitiesList = GetGroupActivityLists();
-            groupedActivitiesList.ForEach(g => GroupedActivitiesList.Add(g));
-
-
-            foreach (GroupActivityList list in groupedActivitiesList)
-            {
-                Debug.WriteLine(list.Key.ToLongDateString());
-
-                foreach (Model.Domain.Activity a in list)
-                {
-                    Debug.WriteLine(a);
-                }
-            }
-        }
-
-        private List<GroupActivityList> GetGroupActivityLists()
-        {
-
-            //groups the items into individual list per category
-
-            var query = from activity in Activities
-                        group activity by activity.Day into g
-                        orderby g.Key
-                        select new GroupActivityList(g) { Key = g.Key };
-
-            return new List<GroupActivityList>(query);
-
         }
 
         public List<GroupTripItemList> GetTripItemsGrouped()
@@ -171,6 +144,11 @@ namespace ReizenPlanningProject.ViewModel.Trips
         private void SaveItems()
         {
             _tripRepository.UpdateTripItems(TripItems.ToList());
+        }
+
+        private void SaveTasks()
+        {
+            _tripRepository.UpdateTripTasks(TripTasks.ToList());
         }
 
         private async void AddTripItem()
@@ -235,6 +213,13 @@ namespace ReizenPlanningProject.ViewModel.Trips
             _tripRepository.DeleteTripItem(ti.Id);
             TripItems.Remove(ti);
             BuildItemList();
+        }
+
+        private void DeleteActivity(object param)
+        {
+            TripTask tripTask = (TripTask)param;
+            _tripRepository.DeleteTripTask(tripTask.Id);
+            TripTasks.Remove(tripTask);
         }
 
         private async Task AddItem(string name, Category category, int amount)

@@ -41,11 +41,12 @@ namespace TravelAPI.Models
 
         #endregion
 
-        #region Activities
+        #region Task
 
-        Activity GetActivityBy(int id);
-        IEnumerable<Activity> GetActivities(int tripId);
-        void DeleteActivity(Activity activity);
+        TripTask GetTripTaskBy(int id);
+        IEnumerable<TripTask> GetTripTasks(int tripId);
+        void UpdateTripTasks(IEnumerable<TripTask> tripTasks);
+        void DeleteTripTask(TripTask tripTask);
 
         #endregion
 

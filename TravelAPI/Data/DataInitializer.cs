@@ -27,6 +27,7 @@ namespace TravelAPI.Data.Repositories
         {
 
             _context.Database.EnsureDeleted();
+
             if (_context.Database.EnsureCreated())
             {
 
@@ -41,12 +42,12 @@ namespace TravelAPI.Data.Repositories
 
                 Trip t1 = new Trip()
                 {
-                    Destination = "Rome",
+                    Destination = "Rome, 2022",
                     DepartureDate = new DateTime(2022, 12, 30, 12, 30, 00),
                     ReturnDate = new DateTime(2023, 1, 10, 14, 30, 00),
                     User = user1,
                     TripItems = new List<TripItem>(),
-                    Activities = new List<Activity>()
+                    TripTasks = new List<TripTask>()
                 };
                 Trip t2 = new Trip()
                 {
@@ -55,7 +56,7 @@ namespace TravelAPI.Data.Repositories
                     ReturnDate = new DateTime(2022, 2, 10, 21, 45, 00),
                     User = user1,
                     TripItems = new List<TripItem>(),
-                    Activities = new List<Activity>()
+                    TripTasks = new List<TripTask>()
                 };
                 Trip t4 = new Trip()
                 {
@@ -64,7 +65,7 @@ namespace TravelAPI.Data.Repositories
                     ReturnDate = new DateTime(2021, 2, 10, 21, 45, 00),
                     User = user1,
                     TripItems = new List<TripItem>(),
-                    Activities = new List<Activity>()
+                    TripTasks = new List<Models.Domain.TripTask>()
                 };
 
                 Trip t3 = new Trip()
@@ -74,7 +75,7 @@ namespace TravelAPI.Data.Repositories
                     ReturnDate = new DateTime(2021, 3, 10, 23, 45, 00),
                     User = user2,
                     TripItems = new List<TripItem>(),
-                    Activities = new List<Activity>()
+                    TripTasks = new List<Models.Domain.TripTask>()
                 };
 
 
@@ -118,21 +119,21 @@ namespace TravelAPI.Data.Repositories
                 GeneralItem generalItem17 = new GeneralItem("Rekkers", c5, user1);
                 GeneralItem generalItem18 = new GeneralItem("Alfatest", c6, user1);
 
-                TripItem tripItem1 = new TripItem("Map of Rome", 1, tc3, false);
-                TripItem tripItem2 = new TripItem("Map of Musea in Rome", 1, tc3, false);
-                TripItem tripItem3 = new TripItem("Swimming pants", 2,  tc2, false);
-                TripItem tripItem4 = new TripItem("Love in Rome, JK rowling", 1, tc1, false);
+                TripItem tripItem1 = new TripItem("Map of Rome", 1, tc3, true);
+                TripItem tripItem2 = new TripItem("Map of Musea in Rome", 1, tc3, true);
+                TripItem tripItem3 = new TripItem("Swimming pants", 2,  tc2, true);
+                TripItem tripItem4 = new TripItem("Love in Rome, JK rowling", 1, tc1, true);
                 TripItem tripItem5 = new TripItem("History of Rome, JK rowling", 1, tc1, false);
                 TripItem tripItem6 = new TripItem("From Rome with love, JK rowling", 1, tc1, false);
                 TripItem tripItem7 = new TripItem("A night in Rome, JK rowling", 1, tc1, false);
 
-                Activity a1 = new Activity("Sightseeing the Colosseum", new DateTime(2022, 12, 31));
-                Activity a2 = new Activity("Visit musea", new DateTime(2022, 12, 31));
-                Activity a3 = new Activity("Visit the Sistine Chapel", new DateTime(2023, 1, 1));
-                Activity a4 = new Activity("Eating a classic italian pizza", new DateTime(2023, 1, 2));
-                Activity a5 = new Activity("Daytrip to the country side", new DateTime(2023, 1, 2));
-                Activity a6 = new Activity("Sightseeing the Pantheon", new DateTime(2022, 12, 31));
-                Activity a7 = new Activity("Sightseeing the AS ROMA Stadium", new DateTime(2022, 12, 31));
+                TripTask tt1 = new TripTask("Charge batteries for all devices");
+                TripTask tt2 = new TripTask("Get covid tests done");
+                TripTask tt3 = new TripTask("Check website for information about covid rules");
+                TripTask tt4 = new TripTask("Get some maps about the city");
+                TripTask tt5 = new TripTask("Check if we need extra medicines");
+                TripTask tt6 = new TripTask("Sightseeing the Pantheon");
+                TripTask tt7 = new TripTask("Sightseeing the AS ROMA Stadium");
 
                 t1.TripItems.Add(tripItem1);
                 t1.TripItems.Add(tripItem2);
@@ -142,13 +143,13 @@ namespace TravelAPI.Data.Repositories
                 t1.TripItems.Add(tripItem6);
                 t1.TripItems.Add(tripItem7);
 
-                t1.Activities.Add(a1);
-                t1.Activities.Add(a2);
-                t1.Activities.Add(a3);
-                t1.Activities.Add(a4);
-                t1.Activities.Add(a5);
-                t1.Activities.Add(a6);
-                t1.Activities.Add(a7);
+                t1.TripTasks.Add(tt1);
+                t1.TripTasks.Add(tt2);
+                t1.TripTasks.Add(tt3);
+                t1.TripTasks.Add(tt4);
+                t1.TripTasks.Add(tt5);
+                t1.TripTasks.Add(tt6);
+                t1.TripTasks.Add(tt7);
 
                 _context.Trips.Add(t1);
                 _context.Trips.Add(t2);

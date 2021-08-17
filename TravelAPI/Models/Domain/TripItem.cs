@@ -32,7 +32,7 @@ namespace TravelAPI.Models
             Name = name;
             Category = category; 
             Amount = amount;
-            CheckedIn = CheckedIn;
+            CheckedIn = checkedIn;
         }
         #endregion
     }
