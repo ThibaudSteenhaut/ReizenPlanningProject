@@ -36,34 +36,58 @@ namespace ReizenPlanningProject.ViewModel.Trips
         public ObservableCollection<TripItem> TripItems { get; set; }
         public ObservableCollection<GroupTripItemList> GroupedTripItemsList = new ObservableCollection<GroupTripItemList>();
         public ObservableCollection<TripTask> TripTasks { get; set; }
-        
+
 
         #endregion
 
         #region Commands
 
-        public RelayCommand SaveCommand { get; set; }
         public RelayCommand AddTripItemCommand { get; set; }
         public RelayCommand DeleteTripItemCommand { get; set; }
+        public RelayCommand AddGeneralItemCommand { get; set; }
+        public RelayCommand SaveItemsCommand { get; set; }
+
         public RelayCommand AddCategoryCommand { get; set; }
         public RelayCommand DeleteCategoryCommand { get; set; }
-        public RelayCommand AddGeneralItemCommand { get; set; }
-        public RelayCommand DeleteActivityCommand { get; set; }
+
+        public RelayCommand AddTripTaskCommand { get; set; }
+        public RelayCommand DeleteTripTaskCommand { get; set; }
         public RelayCommand SaveTasksCommand { get; set; }
 
         #endregion
 
         public TripDetailViewModel()
         {
-            SaveCommand = new RelayCommand(param => SaveItems());
             AddTripItemCommand = new RelayCommand(param => AddTripItem());
             AddGeneralItemCommand = new RelayCommand(param => AddGeneralItem());
-            AddCategoryCommand = new RelayCommand(param => AddCategory());
             DeleteTripItemCommand = new RelayCommand(param => DeleteTripItem(param));
+            SaveItemsCommand = new RelayCommand(param => SaveItems());
+           
+            AddCategoryCommand = new RelayCommand(param => AddCategory());
             DeleteCategoryCommand = new RelayCommand(param => DeleteCategory());
-            DeleteActivityCommand = new RelayCommand(param => DeleteActivity(param));
+
+            AddTripTaskCommand = new RelayCommand(param => AddTripTask());
+            DeleteTripTaskCommand = new RelayCommand(param => DeleteTripTask(param));
             SaveTasksCommand = new RelayCommand(param => SaveTasks());
             
+        }
+
+        private async void AddTripTask()
+        {
+            AddTripTaskDialog dialog = new AddTripTaskDialog();
+
+            ContentDialogResult result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                if (!String.IsNullOrEmpty(dialog.Description))
+                {
+                    TripTask tripTask = new TripTask(dialog.Description, false);
+                    int tripTaskId = await _tripRepository.AddTripTask(Trip.Id, tripTask);
+                    tripTask.Id = tripTaskId;
+                    TripTasks.Add(tripTask); 
+                }
+            }
         }
 
         public void Initialize()
@@ -215,7 +239,7 @@ namespace ReizenPlanningProject.ViewModel.Trips
             BuildItemList();
         }
 
-        private void DeleteActivity(object param)
+        private void DeleteTripTask(object param)
         {
             TripTask tripTask = (TripTask)param;
             _tripRepository.DeleteTripTask(tripTask.Id);

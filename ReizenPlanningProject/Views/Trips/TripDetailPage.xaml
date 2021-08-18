@@ -19,6 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -66,9 +67,14 @@
                        FontSize="24" />
         </StackPanel>
 
-        <Grid Grid.Row="2"
-              Grid.Column="0"
-              Margin="0,25,0,0">
+        <Button Grid.Row="2"
+                Content="Itinerary"
+                FontSize="16"
+                Margin="10"
+                Click="Button_Click"/> 
+
+        <Grid Grid.Row="3"
+              Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -96,10 +102,10 @@
                               PlaceholderText="Action">
                         <x:String>Add category</x:String>
                         <x:String>Delete category</x:String>
-                        <x:String>Add item</x:String>
+                        <x:String>Add trip item</x:String>
                         <x:String>Add general item</x:String>
                     </ComboBox>
-                    <Button Command="{x:Bind _detailVM.SaveCommand}">
+                    <Button Command="{x:Bind _detailVM.SaveItemsCommand}">
                         <FontIcon FontFamily="Segoe MDL2 Assets"
                                   Glyph="&#xE74E;" />
                     </Button>
@@ -170,9 +176,8 @@
             </ListView>
         </Grid>
 
-        <Grid Grid.Row="2"
-              Grid.Column="1"
-              Margin="0,25,0,0">
+        <Grid Grid.Row="3"
+              Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -199,7 +204,7 @@
                             Margin="10"
                             Spacing="10"
                             Orientation="Horizontal">
-                    <Button>
+                    <Button Command="{x:Bind _detailVM.AddTripTaskCommand}">
                         <FontIcon FontFamily="Segoe MDL2 Assets"
                                   Glyph="&#xE948;" />
                     </Button>

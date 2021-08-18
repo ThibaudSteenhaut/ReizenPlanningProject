@@ -2,6 +2,7 @@
 using ReizenPlanningProject.Model.Domain;
 using ReizenPlanningProject.ViewModel.Commands;
 using ReizenPlanningProject.ViewModel.Trips;
+using ReizenPlanningProject.Views.Itinerary;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -90,7 +91,7 @@ namespace ReizenPlanningProject.Views.Trips
         private void TripTaskMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             TripTask a = (TripTask)tripTaskLv.SelectedItem;
-            _detailVM.DeleteActivityCommand.Execute(a);
+            _detailVM.DeleteTripTaskCommand.Execute(a);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -114,7 +115,7 @@ namespace ReizenPlanningProject.Views.Trips
                     _detailVM.AddTripItemCommand.Execute(null);
                     break;
 
-                case "Add item":
+                case "Add general item":
                     _detailVM.AddGeneralItemCommand.Execute(null);
                     break;
 
@@ -123,6 +124,11 @@ namespace ReizenPlanningProject.Views.Trips
             }
 
             c.SelectedItem = null;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ItineraryPage), _detailVM.Trip);
         }
     }
 }

@@ -168,9 +168,24 @@ namespace ReizenPlanningProject.Model.Repositories
 
         }
 
-        public Task<int> AddTripTask(int tripId, TripTask activity)
+        public async Task<int> AddTripTask(int tripId, TripTask tripTask)
         {
-            throw new NotImplementedException();
+
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            var tripTaskJson = JsonConvert.SerializeObject(tripTask);
+            var stringContent = new StringContent(tripTaskJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync($"{_baseUrl}/{tripId}/TripTask", stringContent);
+
+            string tripTaskId = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return Int32.Parse(tripTaskId);
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         public async void DeleteTripTask(int tripTaskId)
@@ -185,6 +200,46 @@ namespace ReizenPlanningProject.Model.Repositories
             var tripTaskjson = JsonConvert.SerializeObject(tripTasks);
             var stringContent = new StringContent(tripTaskjson, Encoding.UTF8, "application/json");
             await _client.PutAsync($"{_baseUrl}/TripTasks", stringContent);
+        }
+
+        #endregion
+
+        #region ItineraryItem
+
+        public ObservableCollection<ItineraryItem> GetItineraryItems(int tripId)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/ItineraryItems").Result;
+            Debug.WriteLine(json);
+            var itineraryItems = JsonConvert.DeserializeObject<ObservableCollection<ItineraryItem>>(json);
+
+            return itineraryItems;
+        }
+
+        public async Task<int> AddItineraryItem(int tripId, ItineraryItem itineraryItem)
+        {
+
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            var iiJson = JsonConvert.SerializeObject(itineraryItem);
+            var stringContent = new StringContent(iiJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync($"{_baseUrl}/{tripId}/ItineraryItem", stringContent);
+
+            string iiId = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return Int32.Parse(iiId);
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public async void DeleteItineraryItem(int id)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            await _client.DeleteAsync($"{_baseUrl}/ItineraryItem/{id}");
         }
 
         #endregion

@@ -15,7 +15,7 @@ namespace ReizenPlanningProject.Converters
                 return null;
 
             DateTime dt = DateTime.Parse(value.ToString());
-            return dt.ToString("dddd d MMMM yyyy 'at' HH:mm");
+            return dt.ToString("dddd d MMMM yyyy");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

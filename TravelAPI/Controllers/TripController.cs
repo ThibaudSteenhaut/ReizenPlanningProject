@@ -383,6 +383,85 @@ namespace TravelAPI.Controllers
 
         #endregion
 
+        #region ItineraryItems 
+
+        //GET: api/Trips/{id}/ItineraryItems
+        /// <summary> 
+        /// Get all Itinerary items of a trip 
+        /// </summary> 
+        /// <param name="id">The id of the trip</param> 
+        [HttpGet("{id}/ItineraryItems")]
+        [Authorize(Policy = "User")]
+        public ActionResult<IEnumerable<ItineraryItemDTO>> GetItineraryItems(int id)
+        {
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null) return BadRequest();
+            if (id < 0) return NotFound();
+
+            IEnumerable<ItineraryItem> itineraryItems = _tripRepository.GetItineraryItems(id);
+
+            if (itineraryItems == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(itineraryItems.ToList().Select(ii => new ItineraryItemDTO(ii)));
+        }
+
+        //POST: api/Trips/{id}/ItineraryItem
+        /// <summary>
+        /// Add a itineraryitem to the trip of the logged in user
+        /// </summary>
+        [HttpPost("{id}/ItineraryItem")]
+        [Authorize(Policy = "User")]
+        public ActionResult<TripItemDTO> AddItineraryItem(int id, ItineraryItem itineraryItem)
+        {
+
+            if (id < 0) return NotFound();
+
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null) return BadRequest();
+
+            ItineraryItem iiToCreate = new ItineraryItem(itineraryItem.Description, itineraryItem.Date);
+            Trip trip = _tripRepository.GetByWithItineraryItems(id);
+            trip.ItineraryItems.Add(iiToCreate);
+            _tripRepository.SaveChanges();
+
+            return Ok(iiToCreate.Id);
+        }
+
+
+        //DELETE: api/Trips/ItineraryItem/{id}
+        /// <summary> 
+        /// Delete the tripitem with the certain id
+        /// </summary> 
+        /// <param name="id">The id of the tripitem to delete</param> 
+        [HttpDelete("ItineraryItem/{id}")]
+        [Authorize(Policy = "User")]
+        public ActionResult DeleteItineraryItem(int id)
+        {
+
+            if (id < 0) return BadRequest();
+
+            IdentityUser currentUser = GetCurrentUser();
+
+            if (currentUser == null) return BadRequest();
+
+            ItineraryItem itineraryItem = _tripRepository.GetItineraryItemBy(id);
+
+            if (itineraryItem == null)
+                return NotFound();
+
+            _tripRepository.DeleteItineraryItem(itineraryItem);
+            _tripRepository.SaveChanges();
+            return Ok();
+        }
+
+        #endregion
+
+
         private IdentityUser GetCurrentUser()
         {
             return _userManager.FindByNameAsync(User.Identity.Name).Result;

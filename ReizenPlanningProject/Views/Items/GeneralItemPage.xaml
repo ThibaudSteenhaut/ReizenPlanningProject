@@ -14,7 +14,7 @@
                               IsSourceGrouped="True">
         </CollectionViewSource>
     </Page.Resources>
-    <ScrollViewer>
+    <ScrollViewer Background="WhiteSmoke">
         <StackPanel>
             <TextBlock Text="General items"
                        FontSize="48"

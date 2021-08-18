@@ -21,6 +21,7 @@ namespace TravelAPI.Models
         public IdentityUser User { get; set; }
         public List<TripItem> TripItems { get; set; }
         public List<TripTask> TripTasks { get; set; }
+        public List<ItineraryItem> ItineraryItems { get; set; }
 
         #endregion
 
@@ -39,6 +40,7 @@ namespace TravelAPI.Models
             User = user;
             TripItems = new List<TripItem>();
             TripTasks = new List<TripTask>();
+            ItineraryItems = new List<ItineraryItem>();
         }
 
         public Trip(TripDTO tripDTO, IdentityUser user)
@@ -49,6 +51,7 @@ namespace TravelAPI.Models
             User = user;
             TripItems = new List<TripItem>();
             TripTasks = new List<TripTask>();
+            ItineraryItems = new List<ItineraryItem>();
         }
         #endregion
 

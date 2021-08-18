@@ -16,6 +16,7 @@ namespace TravelAPI.Models
         Trip GetBy(int id);
         Trip GetByWithTripItems(int id);
         Trip GetByWithActivities(int id);
+        Trip GetByWithItineraryItems(int id);
         void Add(Trip trip);
         void Delete(Trip trip);
         void Update(Trip trip);
@@ -41,12 +42,20 @@ namespace TravelAPI.Models
 
         #endregion
 
-        #region Task
+        #region TripTask
 
         TripTask GetTripTaskBy(int id);
         IEnumerable<TripTask> GetTripTasks(int tripId);
         void UpdateTripTasks(IEnumerable<TripTask> tripTasks);
         void DeleteTripTask(TripTask tripTask);
+
+        #endregion
+
+        #region Itinerary
+
+        ItineraryItem GetItineraryItemBy(int id); 
+        IEnumerable<ItineraryItem> GetItineraryItems(int tripId); 
+        void DeleteItineraryItem(ItineraryItem itineraryItem);
 
         #endregion
 

@@ -18,6 +18,7 @@ namespace TravelAPI.Data.Repositories
         private readonly DbSet<TripItem> _tripItems;
         private readonly DbSet<TripCategory> _categories;
         private readonly DbSet<TripTask> _tripTasks;
+        private readonly DbSet<ItineraryItem> _itineraryItems;
 
         #endregion
 
@@ -30,6 +31,7 @@ namespace TravelAPI.Data.Repositories
             _tripItems = dbContext.TripItems;
             _categories = dbContext.TripCategories;
             _tripTasks = dbContext.TripTasks;
+            _itineraryItems = dbContext.ItineraryItems; 
         }
 
         #endregion
@@ -59,6 +61,11 @@ namespace TravelAPI.Data.Repositories
         public Trip GetByWithActivities(int id)
         {
             return _trips.Include(t => t.TripTasks).SingleOrDefault(t => t.Id == id);
+        }
+
+        public Trip GetByWithItineraryItems(int id)
+        {
+            return _trips.Include(t => t.ItineraryItems).SingleOrDefault(t => t.Id == id);
         }
 
         public void Add(Trip trip)
@@ -153,6 +160,25 @@ namespace TravelAPI.Data.Repositories
         public void UpdateTripTasks(IEnumerable<TripTask> tripTasks)
         {
             _tripTasks.UpdateRange(tripTasks);
+        }
+
+        #endregion
+
+        #region ItineraryItems
+
+        public ItineraryItem GetItineraryItemBy(int id)
+        {
+            return _itineraryItems.SingleOrDefault(ii => ii.Id == id);
+        }
+
+        public IEnumerable<ItineraryItem> GetItineraryItems(int tripId)
+        {
+            return _trips.Include(t => t.ItineraryItems).SingleOrDefault(t => t.Id == tripId).ItineraryItems.OrderBy(ii => ii.Date);
+        }
+
+        public void DeleteItineraryItem(ItineraryItem itineraryItem)
+        {
+            _itineraryItems.Remove(itineraryItem);
         }
 
         #endregion

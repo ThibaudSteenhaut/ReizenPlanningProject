@@ -41,7 +41,15 @@ namespace ReizenPlanningProject.Model.Repositories
         ObservableCollection<TripTask> GetTripTasks(int tripId);
         Task<int> AddTripTask(int tripId, TripTask activity);
         void DeleteTripTask(int activityId);
-        void UpdateTripTasks(IEnumerable<TripTask> tripTasks); 
+        void UpdateTripTasks(IEnumerable<TripTask> tripTasks);
+
+        #endregion
+
+        #region ItineraryItems 
+
+        ObservableCollection<ItineraryItem> GetItineraryItems(int tripId);
+        Task<int> AddItineraryItem(int tripId, ItineraryItem itineraryItem); 
+        void DeleteItineraryItem(int itineraryId);
 
         #endregion
     }

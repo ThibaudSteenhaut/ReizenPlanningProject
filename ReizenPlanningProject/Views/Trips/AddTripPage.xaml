@@ -12,7 +12,7 @@
         <c:DateTimeConverter x:Name="DateTimeConverter" />
     </Page.Resources>
     
-    <StackPanel Background="GhostWhite">
+    <StackPanel Background="WhiteSmoke">
         <TextBlock Text="Add a new trip"
                    FontSize="48"
                    FontWeight="SemiBold"
