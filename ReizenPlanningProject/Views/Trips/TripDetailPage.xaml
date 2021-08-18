@@ -69,7 +69,7 @@
 
         <Button Grid.Row="2"
                 Content="Itinerary"
-                FontSize="16"
+                FontSize="18"
                 Margin="10"
                 Click="Button_Click"/> 
 

@@ -12,7 +12,7 @@
         <c:DateTimeConverter x:Name="DateTimeConverter" />
     </Page.Resources>
     
-    <StackPanel Background="WhiteSmoke">
+    <StackPanel>
         <TextBlock Text="Add a new trip"
                    FontSize="48"
                    FontWeight="SemiBold"
@@ -20,7 +20,8 @@
                    VerticalAlignment="Center"
                    Margin="0,0,0,35" />
 
-        <Grid BorderBrush="DarkGray"
+        <Grid Background="WhiteSmoke"
+              BorderBrush="DarkGray"
               BorderThickness="3"
               Padding="25"
               HorizontalAlignment="Center">
@@ -54,6 +55,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1">
+                
                 <TextBox PlaceholderText="Destination" 
                          Text="{x:Bind _addTripVM.Destination, Mode=TwoWay}"/>
 

@@ -11,7 +11,7 @@
     <Page.Resources>
         <conv:DateFormatter x:Key="DateConverter" />
     </Page.Resources>
-    <ScrollViewer Background="WhiteSmoke">
+    <ScrollViewer>
         <StackPanel>
             <TextBlock Text="Planned trips"
                        FontSize="48"
@@ -20,7 +20,7 @@
                        VerticalAlignment="Center" />
             
             <ListView x:Name="tripLv"
-                      ItemsSource="{Binding Trips}"
+                      ItemsSource="{x:Bind _tripOverviewViewModel.Trips}"
                       SelectionChanged="tripLv_SelectionChanged">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -30,8 +30,11 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:Trip">
-                        <Grid HorizontalAlignment="Stretch"
-                              Margin="5">
+                        <Grid Background="WhiteSmoke"
+                              BorderBrush="DarkGray"
+                              BorderThickness="2"
+                              Padding="10"
+                              Margin="10">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -45,35 +48,35 @@
 
                             <TextBlock Grid.Row="1"
                                        Grid.Column="0"
-                                       Text="{Binding Destination}"
+                                       Text="{x:Bind Destination}"
                                        FontSize="40"
-                                       Margin="5,0,0,0"
                                        FontWeight="SemiBold" />
 
-                            <Button Content="X"
-                                    FontWeight="SemiBold"
-                                    Grid.Row="1"
+                            <Button Grid.Row="1"
                                     Grid.Column="1"
+                                    FontWeight="SemiBold"
                                     HorizontalAlignment="Right"
-                                    Click="DeleteTrip_Click" />
+                                    Click="DeleteTrip_Click">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;"/> 
+                             </Button>
 
-                            <TextBlock Style="{ThemeResource CaptionTextBlockStyle}"
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="0"
+                                       Style="{ThemeResource CaptionTextBlockStyle}"
                                        Margin="5"
-                                       FontSize="18"
-                                       Grid.Row="2"
-                                       Grid.Column="0">
+                                       FontSize="18">
                                 <Run Text="From: "
                                      FontWeight="SemiBold" /> 
-                                <Run Text="{Binding DepartureDate, Converter= { StaticResource DateConverter } }" />
+                                <Run Text="{x:Bind DepartureDate, Converter= { StaticResource DateConverter } }" />
                             </TextBlock>
-                            <TextBlock Style="{ThemeResource CaptionTextBlockStyle}"
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="0"
+                                       Style="{ThemeResource CaptionTextBlockStyle}"
                                        Margin="5"
-                                       FontSize="18"
-                                       Grid.Row="3"
-                                       Grid.Column="0">
+                                       FontSize="18">
                                 <Run Text="To: "
                                      FontWeight="SemiBold" />
-                                <Run Text="{Binding ReturnDate , Converter= { StaticResource DateConverter }}" />
+                                <Run Text="{x:Bind ReturnDate , Converter= { StaticResource DateConverter }}" />
                             </TextBlock>
                             <StackPanel Grid.Row="3"
                                         Grid.Column="1"
