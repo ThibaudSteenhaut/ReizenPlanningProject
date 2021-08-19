@@ -14,7 +14,7 @@
                               IsSourceGrouped="True">
         </CollectionViewSource>
     </Page.Resources>
-    <ScrollViewer Background="WhiteSmoke">
+    <ScrollViewer>
         <StackPanel>
             <TextBlock Text="General items"
                        FontSize="48"
@@ -57,7 +57,8 @@
                         <TextBlock Grid.Column="0"
                                    Text="{x:Bind Name}"
                                    FontSize="18"
-                                   VerticalAlignment="Center" />
+                                   VerticalAlignment="Center" 
+                                   TextWrapping="Wrap"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.GroupStyle>
@@ -66,7 +67,8 @@
                             <DataTemplate x:DataType="data:GroupItemList">
                                 <TextBlock FontWeight="Bold"
                                            FontSize="24"
-                                           Text="{x:Bind Key}" />
+                                           Text="{x:Bind Key}" 
+                                           TextWrapping="Wrap"/>
                             </DataTemplate>
                         </GroupStyle.HeaderTemplate>
                     </GroupStyle>

@@ -30,7 +30,8 @@
                    FontWeight="SemiBold"
                    Text="Category " />
 
-        <ComboBox Grid.Row="0"
+        <ComboBox x:Name="comboBox"
+                  Grid.Row="0"
                   Grid.Column="1"
                   ItemsSource="{x:Bind Categories}"
                   DisplayMemberPath="Name"
@@ -50,7 +51,9 @@
                  Grid.Column="1"
                  Margin="10"
                  HorizontalAlignment="Stretch"
-                 Text="{Binding Path=ItemName, Mode=TwoWay}" />
+                 Text="{Binding Path=ItemName, Mode=TwoWay}" 
+                 MaxWidth="{Binding ElementName=comboBox, Path=ActualWidth}"
+                 MaxLength="500"/>
 
     </Grid>
 </ContentDialog>

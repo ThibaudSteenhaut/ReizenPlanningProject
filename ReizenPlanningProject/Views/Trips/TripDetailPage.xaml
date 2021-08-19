@@ -15,246 +15,297 @@
                               IsSourceGrouped="True">
         </CollectionViewSource>
     </Page.Resources>
-    <Grid Background="WhiteSmoke">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0"
-                   Grid.ColumnSpan="2"
-                   Text="{x:Bind _detailVM.Trip.Destination, Mode=OneWay}"
-                   FontSize="48"
-                   FontWeight="SemiBold"
-                   HorizontalAlignment="Center"
-                   Margin="0,0,0,25" />
-        
-        <StackPanel Grid.Row="1"
-                    Grid.Column="0"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    BorderBrush="DarkGray"
-                    BorderThickness="2"
-                    Background="LightGray"
-                    Padding="15">
-            <TextBlock Text="From:"
-                       FontSize="24"
-                       FontWeight="SemiBold"
-                       Margin="0,0,5,0" />
-            <TextBlock Text="{x:Bind _detailVM.Trip.DepartureDate.ToLongDateString(), Mode=OneWay}"
-                       FontSize="24" />
-        </StackPanel>
+    <ScrollViewer>
+ 
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Large">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="mainGrid.ColumnDefinitions[1].Width"
+                                Value="*" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="toStkPnl.(Grid.Row)"
+                                Value="3" />
+                        <Setter Target="toStkPnl.(Grid.Column)"
+                                Value="0" />
+                        <Setter Target="ItineraryBtn.(Grid.Row)"
+                                Value="4" />
+                        <Setter Target="itemGrid.(Grid.Row)"
+                                Value="5" />
+                        <Setter Target="taskGrid.(Grid.Row)"
+                                Value="6" />
+                        <Setter Target="taskGrid.(Grid.Column)"
+                                Value="0" />
+                        <Setter Target="mainGrid.ColumnDefinitions[1].Width"
+                                Value="Auto" />
+                        <Setter Target="toStkPnl.Margin" 
+                                Value="10"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
-        <StackPanel Grid.Row="1"
-                    Grid.Column="1"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    BorderBrush="DarkGray"
-                    BorderThickness="2"
-                    Background="LightGray"
-                    Padding="15">
-            <TextBlock Text="To:"
-                       FontSize="24"
-                       FontWeight="SemiBold"
-                       Margin="0,0,5,0" />
-            <TextBlock Text="{x:Bind _detailVM.Trip.ReturnDate.ToLongDateString(), Mode=OneWay}"
-                       FontSize="24" />
-        </StackPanel>
-
-        <Button Grid.Row="2"
-                Content="Itinerary"
-                FontSize="18"
-                Margin="10"
-                Click="Button_Click"/> 
-
-        <Grid Grid.Row="3"
-              Grid.Column="0">
+        <Grid x:Name="mainGrid"
+              Background="WhiteSmoke">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0"
-                  Background="LightGray"
-                  BorderBrush="DarkGray"
-                  BorderThickness="2"
-                  Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0"
-                           Text="Items"
-                           FontSize="28"
-                           FontWeight="Bold"
-                           Padding="5" />
-                <StackPanel Grid.Column="1"
-                            Orientation="Horizontal"
-                            Spacing="10"
-                            Margin="10">
-                    <ComboBox SelectionChanged="ComboBox_SelectionChanged"
-                              VerticalAlignment="Center"
-                              PlaceholderText="Action">
-                        <x:String>Add category</x:String>
-                        <x:String>Delete category</x:String>
-                        <x:String>Add trip item</x:String>
-                        <x:String>Add general item</x:String>
-                    </ComboBox>
-                    <Button Command="{x:Bind _detailVM.SaveItemsCommand}">
-                        <FontIcon FontFamily="Segoe MDL2 Assets"
-                                  Glyph="&#xE74E;" />
-                    </Button>
-                </StackPanel>
-            </Grid>
-            <ListView Grid.Row="2"
-                      x:Name="itemsLv"
-                      ItemsSource="{x:Bind GroupedTripItems.View, Mode=OneWay}"
-                      Margin="10"
-                      BorderBrush="DarkGray"
-                      BorderThickness="1">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch" />
-                        <Setter Property="ContextFlyout">
-                            <Setter.Value>
-                                <MenuFlyout Opening="MenuFlyout_Opening">
-                                    <MenuFlyoutItem Text="Delete"
-                                                    Icon="Delete"
-                                                    Click="MenuFlyoutItem_Click" />
-                                </MenuFlyout>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="data:TripItem">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0"
-                                        Orientation="Horizontal"
-                                        VerticalAlignment="Center">
-                                <TextBlock Text="{x:Bind Amount}"
-                                           FontSize="18"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Text="x"
-                                           FontSize="18"
-                                           FontWeight="SemiBold"
-                                           Margin="0,0,5,0" />
-                                <TextBlock Text="{x:Bind Name}"
-                                           FontSize="18"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-                            <CheckBox Grid.Column="1"
-                                      VerticalAlignment="Center"
-                                      HorizontalContentAlignment="Right"
-                                      HorizontalAlignment="Right"
-                                      IsChecked="{x:Bind CheckedIn, Mode=TwoWay}"
-                                      FlowDirection="RightToLeft" />
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate x:DataType="data:GroupTripItemList">
-                                <TextBlock FontWeight="SemiBold"
-                                           FontSize="20"
-                                           Text="{x:Bind Key}" />
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListView.GroupStyle>
-            </ListView>
-        </Grid>
-
-        <Grid Grid.Row="3"
-              Grid.Column="1">
-            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0"
-                  Background="LightGray"
-                  BorderBrush="DarkGray"
-                  BorderThickness="2"
-                  Margin="10">
-                
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                
-                <TextBlock Grid.Column="0"
-                           Text="Things to do"
-                           FontSize="28"
-                           FontWeight="Bold"
-                           Padding="5" />
-                
-                <StackPanel Grid.Column="1"
-                            Margin="10"
-                            Spacing="10"
-                            Orientation="Horizontal">
-                    <Button Command="{x:Bind _detailVM.AddTripTaskCommand}">
-                        <FontIcon FontFamily="Segoe MDL2 Assets"
-                                  Glyph="&#xE948;" />
-                    </Button>
-                    <Button Command="{x:Bind _detailVM.SaveTasksCommand}">
-                        <FontIcon FontFamily="Segoe MDL2 Assets"
-                                  Glyph="&#xE74E;" />
-                    </Button>
-                </StackPanel>
-            </Grid>
-            
-            <ListView x:Name="tripTaskLv"
-                      Grid.Row="2"
-                      ItemsSource="{x:Bind _detailVM.TripTasks, Mode=OneWay}"
-                      Margin="10"
+            <TextBlock Grid.Row="0"
+                       Grid.ColumnSpan="2"
+                       Text="{x:Bind _detailVM.Trip.Destination, Mode=OneWay}"
+                       FontSize="48"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,25" />
+
+            <StackPanel x:Name="fromStkPnl"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        BorderBrush="DarkGray"
+                        BorderThickness="2"
+                        Background="LightGray"
+                        Padding="15">
+                <TextBlock Text="From:"
+                           FontSize="24"
+                           FontWeight="SemiBold"
+                           Margin="0,0,5,0" />
+                <TextBlock Text="{x:Bind _detailVM.Trip.DepartureDate.ToLongDateString(), Mode=OneWay}"
+                           FontSize="24" />
+            </StackPanel>
+
+            <StackPanel x:Name="toStkPnl"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        BorderBrush="DarkGray"
+                        BorderThickness="2"
+                        Background="LightGray"
+                        Padding="15"
+                        Width="{Binding ElementName=fromStkPnl,Path=ActualWidth}">
+                <TextBlock Text="To:"
+                           FontSize="24"
+                           FontWeight="SemiBold"
+                           Margin="0,0,5,0" />
+                <TextBlock Text="{x:Bind _detailVM.Trip.ReturnDate.ToLongDateString(), Mode=OneWay}"
+                           FontSize="24" />
+            </StackPanel>
+
+            <Button x:Name="ItineraryBtn"
+                    Grid.Row="2"
+                    Content="Itinerary"
+                    FontSize="18"
+                    Margin="10"
+                    Click="Button_Click" />
+
+            <Grid x:Name="itemGrid"
+                  Grid.Row="3"
+                  Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0"
+                      Background="LightGray"
                       BorderBrush="DarkGray"
-                      BorderThickness="1">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch" />
-                        <Setter Property="ContextFlyout">
-                            <Setter.Value>
-                                <MenuFlyout Opening="MenuFlyoutTripTask_Opening">
-                                    <MenuFlyoutItem Text="Delete"
-                                                    Icon="Delete"
-                                                    Click="TripTaskMenuFlyoutItem_Click" />
-                                </MenuFlyout>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="data:TripTask">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{x:Bind Description}"
-                                       FontSize="18" />
-                            <CheckBox Grid.Column="1"
-                                      VerticalAlignment="Center"
-                                      HorizontalContentAlignment="Right"
-                                      HorizontalAlignment="Right"
-                                      IsChecked="{x:Bind Done, Mode=TwoWay}"
-                                      FlowDirection="RightToLeft" />
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                      BorderThickness="2"
+                      Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Text="Items"
+                               FontSize="28"
+                               FontWeight="Bold"
+                               Padding="5" />
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                Spacing="10"
+                                Margin="10">
+                        <ComboBox SelectionChanged="ComboBox_SelectionChanged"
+                                  VerticalAlignment="Center"
+                                  PlaceholderText="Action">
+                            <x:String>Add category</x:String>
+                            <x:String>Delete category</x:String>
+                            <x:String>Add trip item</x:String>
+                            <x:String>Add general item</x:String>
+                        </ComboBox>
+                        <Button Command="{x:Bind _detailVM.SaveItemsCommand}">
+                            <FontIcon FontFamily="Segoe MDL2 Assets"
+                                      Glyph="&#xE74E;" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                <ListView Grid.Row="2"
+                          x:Name="itemsLv"
+                          ItemsSource="{x:Bind GroupedTripItems.View, Mode=OneWay}"
+                          Margin="10"
+                          BorderBrush="DarkGray"
+                          BorderThickness="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Stretch" />
+                            <Setter Property="ContextFlyout">
+                                <Setter.Value>
+                                    <MenuFlyout Opening="MenuFlyout_Opening">
+                                        <MenuFlyoutItem Text="Delete"
+                                                        Icon="Delete"
+                                                        Click="MenuFlyoutItem_Click" />
+                                    </MenuFlyout>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:TripItem">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0"
+                                            Orientation="Horizontal"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="{x:Bind Amount}"
+                                               FontSize="18"
+                                               FontWeight="SemiBold" />
+                                    <TextBlock Text="x"
+                                               FontSize="18"
+                                               FontWeight="SemiBold"
+                                               Margin="0,0,5,0" />
+                                    <TextBlock Text="{x:Bind Name}"
+                                               FontSize="18"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                                <CheckBox Grid.Column="1"
+                                          VerticalAlignment="Center"
+                                          HorizontalContentAlignment="Right"
+                                          HorizontalAlignment="Right"
+                                          IsChecked="{x:Bind CheckedIn, Mode=TwoWay}"
+                                          FlowDirection="RightToLeft" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate x:DataType="data:GroupTripItemList">
+                                    <TextBlock FontWeight="SemiBold"
+                                               FontSize="20"
+                                               Text="{x:Bind Key}" />
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                </ListView>
+            </Grid>
+
+            <Grid x:Name="taskGrid"
+                  Grid.Row="3"
+                  Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0"
+                      Background="LightGray"
+                      BorderBrush="DarkGray"
+                      BorderThickness="2"
+                      Margin="10">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0"
+                               Text="Things to do"
+                               FontSize="28"
+                               FontWeight="Bold"
+                               Padding="5" />
+
+                    <StackPanel Grid.Column="1"
+                                Margin="10"
+                                Spacing="10"
+                                Orientation="Horizontal">
+                        <Button Command="{x:Bind _detailVM.AddTripTaskCommand}">
+                            <FontIcon FontFamily="Segoe MDL2 Assets"
+                                      Glyph="&#xE948;" />
+                        </Button>
+                        <Button Command="{x:Bind _detailVM.SaveTasksCommand}">
+                            <FontIcon FontFamily="Segoe MDL2 Assets"
+                                      Glyph="&#xE74E;" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <ListView x:Name="tripTaskLv"
+                          Grid.Row="2"
+                          ItemsSource="{x:Bind _detailVM.TripTasks, Mode=OneWay}"
+                          Margin="10"
+                          BorderBrush="DarkGray"
+                          BorderThickness="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Stretch" />
+                            <Setter Property="ContextFlyout">
+                                <Setter.Value>
+                                    <MenuFlyout Opening="MenuFlyoutTripTask_Opening">
+                                        <MenuFlyoutItem Text="Delete"
+                                                        Icon="Delete"
+                                                        Click="TripTaskMenuFlyoutItem_Click" />
+                                    </MenuFlyout>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:TripTask">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{x:Bind Description}"
+                                           FontSize="18" />
+                                <CheckBox Grid.Column="1"
+                                          VerticalAlignment="Center"
+                                          HorizontalContentAlignment="Right"
+                                          HorizontalAlignment="Right"
+                                          IsChecked="{x:Bind Done, Mode=TwoWay}"
+                                          FlowDirection="RightToLeft" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </Page>

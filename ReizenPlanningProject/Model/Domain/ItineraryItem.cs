@@ -16,7 +16,7 @@ namespace ReizenPlanningProject.Model
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public int DaysRemaining { get; set; }
-
+       
         #endregion
 
         #region Constructor

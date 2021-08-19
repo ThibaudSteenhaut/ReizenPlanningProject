@@ -32,14 +32,16 @@
                        FontWeight="SemiBold"
                        Text="Category " />
 
-            <ComboBox Grid.Row="0"
+            <ComboBox x:Name="comboBox"
+                      Grid.Row="0"
                       Grid.Column="1"
                       ItemsSource="{x:Bind Categories}"
                       DisplayMemberPath="Name"
                       VerticalAlignment="Center"
                       HorizontalAlignment="Stretch"
                       Margin="10"
-                      SelectedItem="{x:Bind SelectedCategory, Mode=TwoWay}" />
+                      SelectedItem="{x:Bind SelectedCategory, Mode=TwoWay}" 
+                      MaxWidth="{Binding ElementName=comboBox, Path=ActualWidth}"/>
         </Grid>
     </StackPanel>
     

@@ -12,6 +12,7 @@
         <conv:DateFormatter x:Key="DateConverter" />
     </Page.Resources>
     <ScrollViewer>
+        
         <StackPanel>
             <TextBlock Text="Planned trips"
                        FontSize="48"
@@ -30,69 +31,105 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:Trip">
-                        <Grid Background="WhiteSmoke"
-                              BorderBrush="DarkGray"
-                              BorderThickness="2"
-                              Padding="10"
-                              Margin="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="2*" />
-                            </Grid.ColumnDefinitions>
+                        <UserControl>
+                            <Grid Background="WhiteSmoke"
+                                  BorderBrush="DarkGray"
+                                  BorderThickness="2"
+                                  Padding="10"
+                                  Margin="10">
 
-                            <TextBlock Grid.Row="1"
-                                       Grid.Column="0"
-                                       Text="{x:Bind Destination}"
-                                       FontSize="40"
-                                       FontWeight="SemiBold" />
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup>
+                                        <VisualState x:Name="Large">
+                                            <VisualState.StateTriggers>
+                                                <AdaptiveTrigger MinWindowWidth="720" />
+                                            </VisualState.StateTriggers>
+                                        </VisualState>
+                                        <VisualState x:Name="Small">
+                                            <VisualState.StateTriggers>
+                                                <AdaptiveTrigger MinWindowWidth="0" />
+                                            </VisualState.StateTriggers>
+                                            <VisualState.Setters>
+                                                <Setter Target="progressPanel.(Grid.Row)"
+                                                        Value="4" />
+                                                <Setter Target="progressPanel.(Grid.Column)"
+                                                        Value="0" />
+                                                <Setter Target="progressPanel.HorizontalAlignment"
+                                                        Value="Left" />
+                                                <Setter Target="progressBar.Width"
+                                                        Value="225" />
+                                                <Setter Target="progressBar.(Grid.ColumnSpan)"
+                                                        Value="2" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
 
-                            <Button Grid.Row="1"
-                                    Grid.Column="1"
-                                    FontWeight="SemiBold"
-                                    HorizontalAlignment="Right"
-                                    Click="DeleteTrip_Click">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;"/> 
-                             </Button>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Row="2"
-                                       Grid.Column="0"
-                                       Style="{ThemeResource CaptionTextBlockStyle}"
-                                       Margin="5"
-                                       FontSize="18">
-                                <Run Text="From: "
-                                     FontWeight="SemiBold" /> 
-                                <Run Text="{x:Bind DepartureDate, Converter= { StaticResource DateConverter } }" />
-                            </TextBlock>
-                            <TextBlock Grid.Row="3"
-                                       Grid.Column="0"
-                                       Style="{ThemeResource CaptionTextBlockStyle}"
-                                       Margin="5"
-                                       FontSize="18">
-                                <Run Text="To: "
-                                     FontWeight="SemiBold" />
-                                <Run Text="{x:Bind ReturnDate , Converter= { StaticResource DateConverter }}" />
-                            </TextBlock>
-                            <StackPanel Grid.Row="3"
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right"
-                                        Orientation="Horizontal">
-                                <TextBlock Text="Preparation done"
-                                           FontSize="18"
-                                           VerticalAlignment="Center"
-                                           Margin="0,0,10,0"
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="0"
+                                           Text="{x:Bind Destination}"
+                                           FontSize="40"
                                            FontWeight="SemiBold" />
-                                <ProgressBar Width="300"
-                                             Height="30"
-                                             Value="{x:Bind Path=PreparationCompleted}"
-                                             Foreground="#FF67DA5C" />
-                            </StackPanel>
-                        </Grid>
+
+                                <Button Grid.Row="1"
+                                        Grid.Column="1"
+                                        FontWeight="SemiBold"
+                                        HorizontalAlignment="Right"
+                                        Click="DeleteTrip_Click">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets"
+                                              Glyph="&#xE74D;" />
+                                </Button>
+
+                                <TextBlock Grid.Row="2"
+                                           Grid.Column="0"
+                                           Style="{ThemeResource CaptionTextBlockStyle}"
+                                           Margin="5"
+                                           FontSize="18">
+                                    <Run Text="From: "
+                                         FontWeight="SemiBold" /> 
+                                    <Run Text="{x:Bind DepartureDate, Converter= { StaticResource DateConverter } }" />
+                                </TextBlock>
+                                <TextBlock Grid.Row="3"
+                                           Grid.Column="0"
+                                           Style="{ThemeResource CaptionTextBlockStyle}"
+                                           Margin="5"
+                                           FontSize="18">
+                                    <Run Text="To: "
+                                         FontWeight="SemiBold" />
+                                    <Run Text="{x:Bind ReturnDate , Converter= { StaticResource DateConverter }}" />
+                                </TextBlock>
+                                <StackPanel Grid.Row="3"
+                                            Grid.Column="1"
+                                            x:Name="progressPanel"
+                                            HorizontalAlignment="Right"
+                                            Orientation="Horizontal"
+                                            Margin="5"
+                                            Spacing="10">
+                                    <TextBlock Text="Preparation done"
+                                               FontSize="18"
+                                               VerticalAlignment="Center"
+                                               FontWeight="SemiBold"
+                                               TextWrapping="Wrap"/>
+                                    <ProgressBar x:Name="progressBar"
+                                                 Width="300"
+                                                 Height="30"
+                                                 Value="{x:Bind Path=PreparationCompleted}"
+                                                 Foreground="#FF67DA5C" />
+                                </StackPanel>
+                            </Grid>
+                        </UserControl>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

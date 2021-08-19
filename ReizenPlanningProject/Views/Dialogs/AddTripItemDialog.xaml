@@ -31,7 +31,8 @@
                    FontWeight="SemiBold"
                    Text="Category " />
 
-        <ComboBox Grid.Row="0"
+        <ComboBox x:Name="catComboBox"
+                  Grid.Row="0"
                   Grid.Column="1"
                   ItemsSource="{x:Bind Categories}"
                   DisplayMemberPath="Name"
@@ -51,7 +52,8 @@
                  Grid.Column="1"
                  Margin="10"
                  HorizontalAlignment="Stretch"
-                 Text="{Binding Path=TripItemName, Mode=TwoWay}" />
+                 Text="{Binding Path=TripItemName, Mode=TwoWay}" 
+                 MaxWidth="{Binding ElementName=catComboBox, Path=ActualWidth}"/>
 
         <TextBlock Grid.Row="2"
                    Grid.Column="0"

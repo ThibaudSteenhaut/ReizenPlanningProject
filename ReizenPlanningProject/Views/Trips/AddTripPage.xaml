@@ -23,7 +23,7 @@
         <Grid Background="WhiteSmoke"
               BorderBrush="DarkGray"
               BorderThickness="3"
-              Padding="25"
+              Padding="15"
               HorizontalAlignment="Center">
             
             <Grid.ColumnDefinitions>

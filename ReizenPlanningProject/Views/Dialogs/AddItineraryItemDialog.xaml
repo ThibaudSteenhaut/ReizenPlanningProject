@@ -37,7 +37,7 @@
 
         <CalendarDatePicker Grid.Row="0"
                             Grid.Column="1"
-                            x:Name="DepartureDate"
+                            x:Name="date"
                             Margin="10"
                             HorizontalAlignment="Stretch"
                             MinDate="{x:Bind Trip.DepartureDate}"
@@ -67,7 +67,8 @@
         <TextBox Grid.Row="2"
                  Grid.Column="1"
                  Margin="10"
-                 Text="{x:Bind Description, Mode=TwoWay}" />
+                 Text="{x:Bind Description, Mode=TwoWay}" 
+                 MaxWidth="{Binding ElementName=date, Path=ActualWidth}"/>
         
     </Grid>
 </ContentDialog>

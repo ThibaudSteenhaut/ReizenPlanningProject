@@ -28,7 +28,9 @@
                    FontWeight="SemiBold"
                    VerticalAlignment="Center"/>
         
-        <TextBox Grid.Column="1"
-                 Text="{x:Bind CategoryName, Mode=TwoWay}"/> 
+        <TextBox x:Name="txtBox"
+                 Grid.Column="1"
+                 Text="{x:Bind CategoryName, Mode=TwoWay}"
+                 MaxWidth="{Binding ElementName=txtBox, Path=ActualWidth}"/> 
     </Grid>
 </ContentDialog>

@@ -16,6 +16,7 @@ namespace TravelAPI.DTOs
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public int DaysRemaining { get; set; }
+        public string FullDescription { get; set; }
 
         #endregion
 
@@ -28,7 +29,7 @@ namespace TravelAPI.DTOs
 
         public ItineraryItemDTO(ItineraryItem itineraryItem)
         {
-            Description = itineraryItem.Description;
+            Description = $"{itineraryItem.Description} at {itineraryItem.Date:H:mm}";
             Date = itineraryItem.Date;
             DaysRemaining = (itineraryItem.Date - DateTime.Now).Days;
         }
