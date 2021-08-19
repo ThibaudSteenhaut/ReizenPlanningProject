@@ -11,8 +11,14 @@ namespace ReizenPlanningProject.ViewModel.Commands
     public class RelayCommand : ICommand
     {
 
+        #region Fields 
+
         private readonly Action<object> _execute;
         private readonly Predicate<object> _canExecute;
+
+        #endregion
+
+        #region Constructor
 
         public RelayCommand(Action<object> execute) : this(execute, null) {}
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
@@ -22,6 +28,10 @@ namespace ReizenPlanningProject.ViewModel.Commands
 
         }
 
+        #endregion
+
+        #region Methods 
+
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter) => _canExecute == null ? true : _canExecute(parameter);
@@ -30,6 +40,6 @@ namespace ReizenPlanningProject.ViewModel.Commands
 
         public void OnCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
-
+        #endregion
     }
 }

@@ -23,9 +23,16 @@ namespace TravelAPI.Controllers
     [ApiController]
     public class TripController : ControllerBase
     {
+
+        #region Fields 
+
         private readonly ITripRepository _tripRepository;
         private readonly IItemRepository _itemRepository;
         private readonly UserManager<IdentityUser> _userManager;
+
+        #endregion
+
+        #region Constructors 
 
         public TripController(ITripRepository tripRepo, IItemRepository itemRepo, UserManager<IdentityUser> userManager)
         {
@@ -34,8 +41,9 @@ namespace TravelAPI.Controllers
             _userManager = userManager;
         }
 
-        #region Methods
+        #endregion
 
+        #region Methods
 
         #region Trip 
 
@@ -237,7 +245,6 @@ namespace TravelAPI.Controllers
 
         #endregion
 
-
         #region TripCategories
 
         //GET: api/Trip/{id}/Categories
@@ -316,7 +323,7 @@ namespace TravelAPI.Controllers
 
         #endregion
 
-        #region Activities 
+        #region TripTasks 
 
         //GET: api/Trips/{id}/TripTasks
         /// <summary> 
@@ -476,7 +483,6 @@ namespace TravelAPI.Controllers
         }
 
         #endregion
-
 
         private IdentityUser GetCurrentUser()
         {

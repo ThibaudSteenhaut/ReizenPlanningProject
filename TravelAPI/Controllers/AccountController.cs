@@ -22,9 +22,15 @@ namespace TravelAPI.Controllers
     public class AccountController : ControllerBase
     {
 
+        #region Fields 
+
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _config;
+
+        #endregion
+
+        #region Constructor
 
         public AccountController(
           SignInManager<IdentityUser> signInManager,
@@ -35,6 +41,10 @@ namespace TravelAPI.Controllers
             _userManager = userManager;
             _config = config;
         }
+
+        #endregion
+
+        #region Methods 
 
         /// <summary>
         /// Login
@@ -119,5 +129,8 @@ namespace TravelAPI.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        #endregion
+
     }
 }

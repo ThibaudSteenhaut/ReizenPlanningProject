@@ -10,14 +10,25 @@ namespace ReizenPlanningProject.Model
 {
     public class Category
     {
+
+        #region Properties 
+
         public int Id { get; set; }
         public string Name { get; set; }
-       
-       
+
+        #endregion
+
+
+        #region Constructors 
+
         public Category()
         {
 
         }
+
+        #endregion
+
+        #region Methods 
 
         public Category(string name)
         {
@@ -28,5 +39,7 @@ namespace ReizenPlanningProject.Model
         {
             return JsonConvert.SerializeObject(this);
         }
+
+        #endregion
     }
 }

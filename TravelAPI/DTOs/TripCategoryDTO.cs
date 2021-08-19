@@ -17,7 +17,6 @@ namespace TravelAPI.DTOs
 
         #endregion
 
-
         #region Constructors 
 
         public TripCategoryDTO()

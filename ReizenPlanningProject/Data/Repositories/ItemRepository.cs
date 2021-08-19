@@ -17,13 +17,24 @@ namespace ReizenPlanningProject.Data.Repositories
 {
     public class ItemRepository : IItemRepository
     {
+
+        #region Methods 
+
         private static readonly HttpClient _client = new HttpClient();
         private static readonly string _baseUrl = "https://localhost:44316/api/items";
 
+        #endregion
+
+        #region Constructors 
+
         public ItemRepository()
         {
-              
+
         }
+
+        #endregion
+
+        #region Methods 
 
         public ObservableCollection<Item> GetItems()
         {
@@ -94,5 +105,8 @@ namespace ReizenPlanningProject.Data.Repositories
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
             await _client.DeleteAsync($"{_baseUrl}/Category/{categoryId}");
         }
+
+        #endregion
+
     }
 }

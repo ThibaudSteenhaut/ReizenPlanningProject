@@ -16,7 +16,6 @@ namespace TravelAPI.Models.Domain
 
         #endregion
 
-
         #region Constructors 
 
         public TripCategory()

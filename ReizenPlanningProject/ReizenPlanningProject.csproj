@@ -123,7 +123,6 @@
     <Compile Include="Model\Authentication\LoginRequest.cs" />
     <Compile Include="Model\Authentication\RegisterRequest.cs" />
     <Compile Include="Model\Domain\TripTask.cs" />
-    <Compile Include="Model\Domain\GroupedLists\GroupActivityList.cs" />
     <Compile Include="Model\Domain\GroupedLists\GroupItemList.cs" />
     <Compile Include="Model\Domain\GroupedLists\GroupTripItemList.cs" />
     <Compile Include="Model\Domain\TripItem.cs" />

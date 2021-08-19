@@ -41,6 +41,5 @@ namespace TravelAPI.DTOs
 
         #endregion
 
-
     }
 }

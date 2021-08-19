@@ -48,6 +48,10 @@ namespace ReizenPlanningProject.ViewModel.Itinerary
             AddItineraryItemCommand = new RelayCommand(param => AddItineraryItem());
         }
 
+        #endregion  
+
+        #region Methods 
+
         public void Initialize()
         {
             _itineraryItems = _tripRepository.GetItineraryItems(Trip.Id).ToList();

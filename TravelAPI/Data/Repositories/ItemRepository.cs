@@ -12,11 +12,17 @@ namespace TravelAPI.Data.Repositories
     public class ItemRepository : IItemRepository
     {
 
+        #region Fields 
+
         private readonly ApplicationDbContext _context;
         private readonly DbSet<GeneralItem> _items;
         private readonly DbSet<GeneralCategory> _categories;
         private readonly DbSet<Trip> _trips;
         private readonly DbSet<TripItem> _tripItems;
+
+        #endregion
+
+        #region Constructor 
 
         public ItemRepository(ApplicationDbContext context)
         {
@@ -26,6 +32,8 @@ namespace TravelAPI.Data.Repositories
             _trips = context.Trips;
             _tripItems = context.TripItems;
         }
+
+        #endregion
 
         #region General Items
 
@@ -56,7 +64,6 @@ namespace TravelAPI.Data.Repositories
 
         #endregion
 
-
         #region General Category
 
         public GeneralCategory GetCategoryBy(int categoryId)
@@ -86,7 +93,6 @@ namespace TravelAPI.Data.Repositories
         }
 
         #endregion
-
 
         public void SaveChanges()
         {

@@ -22,9 +22,15 @@ namespace TravelAPI.Controllers
     public class ItemsController : ControllerBase
     {
 
+        #region Fields 
+
         private readonly ITripRepository _tripRepository;
         private readonly IItemRepository _itemRepository;
         private readonly UserManager<IdentityUser> _userManager;
+
+        #endregion
+
+        #region Constructor 
 
         public ItemsController(ITripRepository tripRepo, IItemRepository itemRepo, UserManager<IdentityUser> userManager)
         {
@@ -34,10 +40,11 @@ namespace TravelAPI.Controllers
             _userManager = userManager;
         }
 
+        #endregion
+
         #region Methods 
 
         #region Items
-
 
         //GET: api/Items
         /// <summary> 

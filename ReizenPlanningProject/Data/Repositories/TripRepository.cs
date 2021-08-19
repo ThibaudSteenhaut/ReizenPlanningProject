@@ -16,14 +16,23 @@ namespace ReizenPlanningProject.Model.Repositories
     public class TripRepository : ITripRepository
     {
 
+        #region Fields 
+
         private static readonly HttpClient _client = new HttpClient();
         private static readonly string _baseUrl = "https://localhost:44316/api/trip";
 
+        #endregion
+
+        #region Constructors 
 
         public TripRepository()
         {
 
         }
+
+        #endregion
+
+        #region Methods 
 
         #region Trip
 
@@ -251,6 +260,8 @@ namespace ReizenPlanningProject.Model.Repositories
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
             await _client.DeleteAsync($"{_baseUrl}/ItineraryItem/{id}");
         }
+
+        #endregion
 
         #endregion
     }

@@ -13,9 +13,15 @@ namespace ReizenPlanningProject.Data.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
-        
+
+        #region Fields 
+
         private static readonly HttpClient _client = new HttpClient();
         private static readonly string _baseUrl = "https://localhost:44316/api/Account";
+
+        #endregion
+
+        #region Methods 
 
         public async Task<string> Login(LoginRequest request)
         {
@@ -45,5 +51,7 @@ namespace ReizenPlanningProject.Data.Repositories
             
             return response.IsSuccessStatusCode;
         }
+
+        #endregion
     }
 }

@@ -1,7 +1,6 @@
 ﻿using ReizenPlanningProject.Data.Repositories;
 using ReizenPlanningProject.Model;
 using ReizenPlanningProject.Model.Domain;
-using ReizenPlanningProject.Model.Domain.GroupedLists;
 using ReizenPlanningProject.Model.IRepositories;
 using ReizenPlanningProject.Model.Repositories;
 using ReizenPlanningProject.ViewModel.Commands;
@@ -56,6 +55,8 @@ namespace ReizenPlanningProject.ViewModel.Trips
 
         #endregion
 
+        #region Constructor
+
         public TripDetailViewModel()
         {
             AddTripItemCommand = new RelayCommand(param => AddTripItem());
@@ -71,6 +72,10 @@ namespace ReizenPlanningProject.ViewModel.Trips
             SaveTasksCommand = new RelayCommand(param => SaveTasks());
             
         }
+
+        #endregion
+
+        #region Methods 
 
         private async void AddTripTask()
         {
@@ -267,5 +272,7 @@ namespace ReizenPlanningProject.ViewModel.Trips
                 }
             }
         }
+
+        #endregion 
     }
 }
