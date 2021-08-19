@@ -13,6 +13,7 @@ namespace TravelAPI.Models
         #region Trip     
 
         IEnumerable<TripDTO> GetTrips(string userId);
+        IEnumerable<TripDTO> GetPastTrips(string userId); 
         Trip GetBy(int id);
         Trip GetByWithTripItems(int id);
         Trip GetByWithActivities(int id);

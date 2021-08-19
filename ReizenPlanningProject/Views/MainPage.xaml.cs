@@ -55,6 +55,10 @@ namespace ReizenPlanningProject
                     contentFrame.Navigate(typeof(GeneralItemPage));
                     break;
 
+                case "PastTripList":
+                    contentFrame.Navigate(typeof(PastTripsOverviewPage));
+                    break;
+
             }
         }
 

@@ -14,6 +14,7 @@ namespace ReizenPlanningProject.Model.Repositories
         #region Trip
 
         ObservableCollection<Trip> GetTrips();
+        ObservableCollection<Trip> GetPastTrips();
         Task<int> Add(Trip trip);
         Task<bool> Remove(int tripId);
 

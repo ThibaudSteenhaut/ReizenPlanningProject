@@ -53,6 +53,22 @@ namespace TravelAPI.Controllers
             return Ok(_tripRepository.GetTrips(GetCurrentUser().Id));
         }
 
+        //GET: api/Trips/Past
+        /// <summary> 
+        /// Get all past trips 
+        /// </summary> 
+        [HttpGet("Past")]
+        [Authorize(Policy = "User")]
+        public ActionResult<IEnumerable<TripDTO>> GetPastTrips()
+        {
+            IdentityUser currentUser = GetCurrentUser();
+            if (currentUser == null) return BadRequest();
+
+            return Ok(_tripRepository.GetPastTrips(GetCurrentUser().Id));
+        }
+
+
+
         //GET: api/Trips/{id} 
         /// <summary> 
         /// Get the trip with the certain id

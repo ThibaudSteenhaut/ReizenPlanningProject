@@ -67,6 +67,17 @@ namespace ReizenPlanningProject.Model.Repositories
             return trips;
         }
 
+
+        public ObservableCollection<Trip> GetPastTrips()
+        {
+
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
+            var json = _client.GetStringAsync($"{_baseUrl}/Past").Result;
+            var trips = JsonConvert.DeserializeObject<ObservableCollection<Trip>>(json);
+
+            return trips;
+        }
+
         #endregion
 
         #region TripItem

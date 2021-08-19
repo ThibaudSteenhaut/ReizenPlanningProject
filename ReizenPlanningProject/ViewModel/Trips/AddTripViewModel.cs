@@ -25,15 +25,9 @@ namespace ReizenPlanningProject.ViewModel.Trips
         #region Properties 
 
         public DateTimeOffset Today = new DateTimeOffset(DateTime.Now.ToUniversalTime());
-
         public string Destination { get; set; }
-
         public DateTime DepartureDate { get; set; }
-        public TimeSpan DepartureTime { get; set; }
-
         public DateTime ReturnDate { get; set; }
-        public TimeSpan ReturnTime { get; set; }
-
 
         #endregion
 
@@ -49,7 +43,6 @@ namespace ReizenPlanningProject.ViewModel.Trips
         {
             AddTripCommand = new RelayCommand(parm => AddTrip());
             DepartureDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-            DepartureTime = DateTime.Now.TimeOfDay;
             ReturnDate = DepartureDate.AddDays(7); 
         }
 
@@ -59,18 +52,12 @@ namespace ReizenPlanningProject.ViewModel.Trips
 
         public async void AddTrip()
         {
-
             if(!String.IsNullOrEmpty(Destination))
             {
-                DepartureDate = DepartureDate.AddHours(DepartureTime.Hours).AddMinutes(DepartureTime.Minutes);
-                ReturnDate = ReturnDate.AddHours(ReturnTime.Hours).AddMinutes(ReturnTime.Minutes);
-
                 await _tripRepository.Add(new Trip(Destination, DepartureDate, ReturnDate, 0));
                 NavigateToListOverview();
             }
-
         }
-
 
         private void NavigateToListOverview()
         {

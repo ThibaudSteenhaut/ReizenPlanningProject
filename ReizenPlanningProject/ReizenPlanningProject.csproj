@@ -140,6 +140,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DateFormatter.cs" />
+    <Compile Include="ViewModel\Trips\PastTripsViewModel.cs" />
     <Compile Include="ViewModel\Trips\TripDetailViewModel.cs" />
     <Compile Include="Views\Dialogs\AddCategoryDialog.xaml.cs">
       <DependentUpon>AddCategoryDialog.xaml</DependentUpon>
@@ -185,6 +186,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Trips\AddTripPage.xaml.cs">
       <DependentUpon>AddTripPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Trips\PastTripsOverviewPage.xaml.cs">
+      <DependentUpon>PastTripsOverviewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Trips\TripDetailPage.xaml.cs">
       <DependentUpon>TripDetailPage.xaml</DependentUpon>
@@ -266,6 +270,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Trips\AddTripPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Trips\PastTripsOverviewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

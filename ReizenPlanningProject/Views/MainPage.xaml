@@ -30,7 +30,8 @@
                                 Content="Items"
                                 Icon="Edit" />
             
-            <NavigationViewItem Content="History">
+            <NavigationViewItem x:Name="PastTripList"
+                                Content="History">
                 <NavigationViewItem.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets"
                               Glyph="&#xE81C;" />

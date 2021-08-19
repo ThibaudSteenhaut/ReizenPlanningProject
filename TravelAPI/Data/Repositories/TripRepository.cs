@@ -48,6 +48,16 @@ namespace TravelAPI.Data.Repositories
                 .Select(t => new TripDTO(t));
         }
 
+        public IEnumerable<TripDTO> GetPastTrips(string userId)
+        {
+            return _trips.Include(t => t.TripItems)
+                .Include(t => t.TripTasks)
+                .Where(t => t.User.Id == userId)
+                .Where(t => t.ReturnDate < DateTime.Now)
+                .OrderBy(t => t.DepartureDate)
+                .Select(t => new TripDTO(t));
+        }
+
         public Trip GetBy(int id)
         {
             return _trips.SingleOrDefault(t => t.Id == id);

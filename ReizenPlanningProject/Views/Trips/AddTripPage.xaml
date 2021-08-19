@@ -36,68 +36,45 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="0"
-                        Margin="0,0,20,0">
+                        Spacing="30"
+                        Margin="10">
 
                 <TextBlock  Text="Destination"
                             FontSize="23"
                             FontWeight="SemiBold" />
 
                 <TextBlock  Text="Departure date"
-                            Margin="0,40,0,0"
                             FontSize="23"
                             FontWeight="SemiBold" />
 
                 <TextBlock  Text="Return date"
-                            Margin="0,40,0,0"
                             FontSize="23"
                             FontWeight="SemiBold" />
 
             </StackPanel>
 
-            <StackPanel Grid.Column="1">
+            <StackPanel Grid.Column="1"
+                        Margin="10"
+                        Spacing="30">
                 
                 <TextBox PlaceholderText="Destination" 
                          Text="{x:Bind _addTripVM.Destination, Mode=TwoWay}"/>
 
-                <StackPanel Orientation="Horizontal"
-                            Margin="0,40,0,0">
 
-                    <CalendarDatePicker x:Name="DepartureDate"
-                                        MinDate="{x:Bind _addTripVM.Today}"
-                                        Date="{x:Bind _addTripVM.DepartureDate, Mode=TwoWay, Converter={StaticResource DateTimeConverter}}"
-                                        DateFormat="{}{dayofweek.full}‎, ‎{month.full}‎ ‎{day.integer}‎, ‎{year.full}"
-                                        Width="250"
-                                        DateChanged="CalendarDatePicker_DateChanged"/> 
-                    
-                    <TextBlock Text="at"
-                               FontSize="23"
-                               FontWeight="SemiBold"
-                               VerticalAlignment="Center"
-                               Margin="10,0,10,0" />
-                    
-                    <TimePicker SelectedTime="{x:Bind _addTripVM.DepartureTime, Mode=TwoWay}"
-                                MinuteIncrement="10"/>
-                </StackPanel>
+                <CalendarDatePicker x:Name="DepartureDate"
+                                    MinDate="{x:Bind _addTripVM.Today}"
+                                    Date="{x:Bind _addTripVM.DepartureDate, Mode=TwoWay, Converter={StaticResource DateTimeConverter}}"
+                                    DateFormat="{}{dayofweek.full}‎, ‎{month.full}‎ ‎{day.integer}‎, ‎{year.full}"
+                                    Width="250"
+                                    DateChanged="CalendarDatePicker_DateChanged" />
 
-                <StackPanel Orientation="Horizontal"
-                            Margin="0,40,0,0">
 
-                    <CalendarDatePicker x:Name="ReturnDate"
-                                        Date="{x:Bind _addTripVM.ReturnDate, Mode=TwoWay, Converter={StaticResource DateTimeConverter}}"
-                                        DateFormat="{}{dayofweek.full}‎, ‎{month.full}‎ ‎{day.integer}‎, ‎{year.full}" 
-                                        MinDate="{Binding Date, ElementName=DepartureDate}"
-                                        Width="250"/>
-                    
-                    <TextBlock Text="at"
-                               FontSize="23"
-                               FontWeight="SemiBold"
-                               VerticalAlignment="Center"
-                               Margin="10,0,10,0" />
-                    
-                    <TimePicker SelectedTime="{x:Bind _addTripVM.ReturnTime, Mode=TwoWay}"
-                                MinuteIncrement="10"/>
-                    
-                </StackPanel>
+                <CalendarDatePicker x:Name="ReturnDate"
+                                    Date="{x:Bind _addTripVM.ReturnDate, Mode=TwoWay, Converter={StaticResource DateTimeConverter}}"
+                                    DateFormat="{}{dayofweek.full}‎, ‎{month.full}‎ ‎{day.integer}‎, ‎{year.full}"
+                                    MinDate="{Binding Date, ElementName=DepartureDate}"
+                                    Width="250" />
+
             </StackPanel>
             
             <Button Grid.Row="1"
