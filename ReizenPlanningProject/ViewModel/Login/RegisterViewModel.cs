@@ -78,25 +78,32 @@ namespace ReizenPlanningProject.ViewModel.Login
             {
                 if (Request.Password.Equals(Request.PasswordConfirmation))
                 {
-                    bool nameAvailable = await _accountRepo.CheckAvailableUserName(Request.Email);
-
-                    if (nameAvailable)
+                    if (Request.Password.Length >= 10)
                     {
-                        bool succes = await _accountRepo.Register(Request);
+                        bool nameAvailable = await _accountRepo.CheckAvailableUserName(Request.Email);
 
-                        if (succes)
+                        if (nameAvailable)
                         {
-                            Frame frame = (Frame)Window.Current.Content;
-                            frame.Navigate(typeof(LoginPage), true);
+                            bool succes = await _accountRepo.Register(Request);
+
+                            if (succes)
+                            {
+                                Frame frame = (Frame)Window.Current.Content;
+                                frame.Navigate(typeof(LoginPage), true);
+                            }
+                            else
+                            {
+                                DisplayError("Something went wrong, try again later.");
+                            }
                         }
                         else
                         {
-                            DisplayError("Something went wrong, try again later.");
+                            DisplayError("This e-mail is already in use.");
                         }
                     }
                     else
                     {
-                        DisplayError("This e-mail is already in use.");
+                        DisplayError("Password must be at least 10 characters.");
                     }
                 }
                 else
@@ -107,7 +114,7 @@ namespace ReizenPlanningProject.ViewModel.Login
 
             else
             {
-                DisplayError("Please fill in all fields.");
+                DisplayError("Please fill out all fields.");
             }
         }
 

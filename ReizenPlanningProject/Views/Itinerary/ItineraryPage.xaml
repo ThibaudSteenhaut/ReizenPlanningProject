@@ -23,13 +23,14 @@
                        VerticalAlignment="Center" 
                        TextWrapping="Wrap"/>
 
-            <Button Content="Add"
+            <Button Content="Add item"
                     FontSize="16"
-                    Margin="10" 
+                    Margin="20 0 0 10" 
                     Command="{x:Bind ItineraryVM.AddItineraryItemCommand}"/>
             
             <ListView x:Name="itineraryLv"
-                      ItemsSource="{x:Bind ItineraryVM.ItineraryItems}">
+                      ItemsSource="{x:Bind ItineraryVM.ItineraryItems}"
+                      >
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment"

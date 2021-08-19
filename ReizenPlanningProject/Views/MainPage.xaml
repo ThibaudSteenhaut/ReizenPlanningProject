@@ -14,7 +14,8 @@
     </Page.Resources>
     <NavigationView x:Name="nvMain" 
                     SelectionChanged="nvMain_SelectionChanged"
-                    IsBackEnabled="True">
+                    IsBackEnabled="False"
+                    IsBackButtonVisible="Collapsed">
         <NavigationView.MenuItems>
             
             <NavigationViewItem x:Name="TripListItem"
@@ -50,6 +51,6 @@
         </NavigationView.PaneFooter>
 
         <Frame x:Name="contentFrame" />
-
+        
     </NavigationView>
 </Page>

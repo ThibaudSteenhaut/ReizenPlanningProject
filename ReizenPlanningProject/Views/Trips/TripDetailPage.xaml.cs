@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -34,6 +35,9 @@ namespace ReizenPlanningProject.Views.Trips
             this.InitializeComponent();
             _detailVM = new TripDetailViewModel();
             this.DataContext = _detailVM;
+
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += (object sender, BackRequestedEventArgs e) => this.NavigateToTripList();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -54,10 +58,7 @@ namespace ReizenPlanningProject.Views.Trips
                     ListViewItem itemContainer = senderAsMenuFlyout.Target as ListViewItem;
 
                     var data = itemsLv.ItemFromContainer(itemContainer);
-
-                    //(menuFlyoutItem as MenuFlyoutItem).CommandParameter = data;
                     itemsLv.SelectedItem = data;
-                   
                 }
             }
         }
@@ -74,10 +75,7 @@ namespace ReizenPlanningProject.Views.Trips
                     ListViewItem itemContainer = senderAsMenuFlyout.Target as ListViewItem;
 
                     var data = tripTaskLv.ItemFromContainer(itemContainer);
-
-                    //(menuFlyoutItem as MenuFlyoutItem).CommandParameter = data;
                     tripTaskLv.SelectedItem = data;
-
                 }
             }
         }
@@ -129,6 +127,11 @@ namespace ReizenPlanningProject.Views.Trips
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(ItineraryPage), _detailVM.Trip);
+        }
+
+        private void NavigateToTripList()
+        {
+            Frame.Navigate(typeof(TripsOverviewPage));
         }
     }
 }

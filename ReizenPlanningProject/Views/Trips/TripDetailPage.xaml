@@ -17,7 +17,6 @@
     </Page.Resources>
 
     <ScrollViewer>
- 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Large">

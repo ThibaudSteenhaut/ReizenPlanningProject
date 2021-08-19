@@ -12,8 +12,8 @@
         <conv:DateFormatter x:Key="DateConverter" />
     </Page.Resources>
     <ScrollViewer>
-        
         <StackPanel>
+
             <TextBlock Text="Planned trips"
                        FontSize="48"
                        FontWeight="SemiBold"

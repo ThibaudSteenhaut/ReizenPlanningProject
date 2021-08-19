@@ -13,6 +13,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,6 +34,13 @@ namespace ReizenPlanningProject
             this.InitializeComponent();
             contentFrame.Navigate(typeof(TripsOverviewPage));
 
+           
+
+        }
+
+        private void NavigateToMain()
+        {
+            Debug.WriteLine("breep peep");
         }
 
         private void nvMain_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

@@ -221,7 +221,6 @@ namespace ReizenPlanningProject.Model.Repositories
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenVault.Token);
             var json = _client.GetStringAsync($"{_baseUrl}/{tripId}/ItineraryItems").Result;
-            Debug.WriteLine(json);
             var itineraryItems = JsonConvert.DeserializeObject<ObservableCollection<ItineraryItem>>(json);
 
             return itineraryItems;

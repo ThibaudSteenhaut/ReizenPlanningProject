@@ -12,7 +12,8 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid VerticalAlignment="Center">
+    <Grid VerticalAlignment="Center"
+          Width="350">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -28,7 +29,10 @@
                    FontWeight="SemiBold"
                    VerticalAlignment="Center" />
 
-        <TextBox Grid.Column="1"
-                 Text="{x:Bind Description, Mode=TwoWay}" />
+        <TextBox x:Name="textBox"
+                 Grid.Column="1"
+                 HorizontalAlignment="Stretch"
+                 Text="{x:Bind Description, Mode=TwoWay}" 
+                 />
     </Grid>
 </ContentDialog>

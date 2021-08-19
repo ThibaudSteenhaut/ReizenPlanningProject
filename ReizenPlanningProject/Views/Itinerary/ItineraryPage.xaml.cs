@@ -1,5 +1,6 @@
 ﻿using ReizenPlanningProject.Model;
 using ReizenPlanningProject.ViewModel.Itinerary;
+using ReizenPlanningProject.Views.Trips;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,7 +29,10 @@ namespace ReizenPlanningProject.Views.Itinerary
         public ItineraryPage()
         {
             this.InitializeComponent();
-            this.ItineraryVM = new ItineraryViewModel(); 
+            this.ItineraryVM = new ItineraryViewModel();
+
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += (object sender, BackRequestedEventArgs e) => this.NavigateToDetailPage(ItineraryVM.Trip);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -59,6 +64,11 @@ namespace ReizenPlanningProject.Views.Itinerary
         {
             ItineraryItem ii = (ItineraryItem)itineraryLv.SelectedItem;
             ItineraryVM.DeleteItineraryItemCommand.Execute(ii);
+        }
+
+        private void NavigateToDetailPage(Trip trip)
+        {
+            Frame.Navigate(typeof(TripDetailPage), trip);
         }
     }
 }

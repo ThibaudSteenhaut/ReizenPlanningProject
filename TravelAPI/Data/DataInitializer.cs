@@ -157,12 +157,12 @@ namespace TravelAPI.Data.Repositories
                 TripTask tt6 = new TripTask("Eating a real italian pizza");
                 TripTask tt7 = new TripTask("Going to the beach and relax");
 
-                ItineraryItem ii1 = new ItineraryItem("Take a taxi to the airport", new DateTime(2022, 12, 30, 6, 30, 0));
-                ItineraryItem ii2 = new ItineraryItem("Plane to Rome", new DateTime(2022, 12, 30, 8, 30, 0));
-                ItineraryItem ii3 = new ItineraryItem("Take the bus to the hotel", new DateTime(2022, 12, 30, 14, 15, 0));
-                ItineraryItem ii4 = new ItineraryItem("Take the bus back to the airport", new DateTime(2023, 1, 10, 6, 15, 0));
-                ItineraryItem ii5 = new ItineraryItem("Plane back to Belgium", new DateTime(2023, 1, 10, 8, 15, 0));
-                ItineraryItem ii6 = new ItineraryItem("Dad drives us back home", new DateTime(2023, 1, 10, 14, 30, 0));
+                ItineraryItem ii1 = new ItineraryItem("Take a taxi to the airport", new DateTime(2022, 1, 10, 6, 30, 0));
+                ItineraryItem ii2 = new ItineraryItem("Plane to Rome", new DateTime(2022, 1, 10, 8, 30, 0));
+                ItineraryItem ii3 = new ItineraryItem("Take the bus to the hotel", new DateTime(2022, 1, 10, 14, 15, 0));
+                ItineraryItem ii4 = new ItineraryItem("Take the bus back to the airport", new DateTime(2022, 2, 10, 6, 15, 0));
+                ItineraryItem ii5 = new ItineraryItem("Plane back to Belgium", new DateTime(2022, 2, 10, 8, 15, 0));
+                ItineraryItem ii6 = new ItineraryItem("Dad drives us back home", new DateTime(2022, 2, 10, 14, 30, 0));
 
                 t1.TripItems.Add(tripItem1);
                 t1.TripItems.Add(tripItem2);

@@ -60,7 +60,11 @@ namespace TravelAPI.Data.Repositories
 
         public Trip GetBy(int id)
         {
-            return _trips.SingleOrDefault(t => t.Id == id);
+            return _trips
+                .Include(t => t.TripItems)
+                .Include(t => t.TripTasks)
+                .Include(t => t.ItineraryItems)
+                .SingleOrDefault(t => t.Id == id);
         }
 
         public Trip GetByWithTripItems(int id)
@@ -85,6 +89,10 @@ namespace TravelAPI.Data.Repositories
 
         public void Delete(Trip trip)
         {
+            _tripItems.RemoveRange(trip.TripItems);
+            _tripTasks.RemoveRange(trip.TripTasks);
+            _itineraryItems.RemoveRange(trip.ItineraryItems);
+            _categories.RemoveRange(_categories.Include(c => c.Trip).Where(c => c.Trip.Id == trip.Id));
             _trips.Remove(trip);
         }
 

@@ -26,11 +26,14 @@
                         Spacing="10"
                         Margin="10">
                 <Button Content="Add item"
-                        Command="{x:Bind _itemsVM.AddItemCommand}" />
+                        Command="{x:Bind _itemsVM.AddItemCommand}"
+                        FontSize="16"/>
                 <Button Content="Add category"
-                        Command="{x:Bind _itemsVM.AddCategoryCommand}" />
+                        Command="{x:Bind _itemsVM.AddCategoryCommand}"
+                        FontSize="16"/>
                 <Button Content="Delete category"
-                        Command="{x:Bind _itemsVM.DeleteCategoryCommand}"/>
+                        Command="{x:Bind _itemsVM.DeleteCategoryCommand}"
+                        FontSize="16"/>
             </StackPanel>
 
             <ProgressRing IsActive="{x:Bind _itemsVM.IsProgressRingActive, Mode=TwoWay}" />
@@ -66,7 +69,7 @@
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate x:DataType="data:GroupItemList">
                                 <TextBlock FontWeight="Bold"
-                                           FontSize="24"
+                                           FontSize="28"
                                            Text="{x:Bind Key}" 
                                            TextWrapping="Wrap"/>
                             </DataTemplate>

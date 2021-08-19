@@ -69,6 +69,7 @@ namespace ReizenPlanningProject.ViewModel.Itinerary
                     ItineraryItem ii = new ItineraryItem(dialog.Description, time, (time.Date - DateTime.Now).Days);
                     int id = await _tripRepository.AddItineraryItem(Trip.Id, ii);
                     ii.Id = id;
+                    ii.Description = $"{ii.Description} at {ii.Date:H:mm}";
                     _itineraryItems.Add(ii);
                     BuildItineraryList();
                 }
